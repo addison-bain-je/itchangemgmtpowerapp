@@ -1,0 +1,3452 @@
+Scn_SystemAdmin As screen:
+    Fill: =RGBA(237, 237, 237, 1)
+
+    Lbl_AppVersion_SystemAdmin As label:
+        Height: =23
+        PaddingLeft: =15
+        Size: =7
+        Text: =""&LookUp(ConfigGenParam,Title="AppVersion",ParamValue)
+        Width: =90
+        Y: =745
+        ZIndex: =1
+
+    Container_SysAdminScn_Header As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(253, 222, 207, 1)
+        Height: =77
+        Width: =1366
+        ZIndex: =2
+
+        SysAdmin_AppHeader As label:
+            Align: =Align.Center
+            FontWeight: =FontWeight.Bold
+            Height: =76
+            Size: =20
+            Text: ="System Configuration"
+            Width: =500
+            X: =456
+            ZIndex: =1
+
+        SysAdmin_JE_Logo As image:
+            Height: =63
+            Image: =JE_Logo
+            X: =35
+            Y: =6
+            ZIndex: =2
+
+        SysAdmin_UserImage As image:
+            Height: =53
+            Image: =VarUserImage
+            RadiusBottomLeft: =50
+            RadiusBottomRight: =50
+            RadiusTopLeft: =50
+            RadiusTopRight: =50
+            Tooltip: |-
+                =Proper(VarUserFullName)&"
+                "&VarUserEmail
+            Width: =53
+            X: =1277
+            Y: =11
+            ZIndex: =3
+
+        Back_Arrow_Nav_Home As arrow.backArrow:
+            Fill: =RGBA(0, 0, 0, 1)
+            Height: =37
+            OnSelect: =Navigate(Scn_Home)
+            Width: =37
+            X: =153
+            Y: =19
+            ZIndex: =4
+
+    Container_SystemAdmin_Nav_Bar As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =50
+        Width: =1297
+        X: =38
+        Y: =88
+        ZIndex: =3
+
+        Grp_Btn_ChangeMangersConfig As group:
+            Height: =5
+            Width: =5
+            X: =-50
+            Y: =-57
+            ZIndex: =6
+
+            Button_ChangeMangersConfig As button:
+                BorderStyle: =BorderStyle.None
+                Color: =RGBA(77, 77, 77, 1)
+                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                DisabledColor: =RGBA(0, 0, 0, 0)
+                DisabledFill: =RGBA(0, 0, 0, 0)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =33
+                HoverColor: =RGBA(251, 188, 159, 1)
+                HoverFill: =RGBA(0, 0, 0, 0)
+                OnSelect: =Set(SystemAdminGalFilterBtn, "ChangeManager")
+                PressedColor: =RGBA(246, 88, 16, 1)
+                PressedFill: =RGBA(0, 0, 0, 0)
+                Size: =11
+                Text: ="Change Managers"
+                Width: =190
+                Y: =8
+                ZIndex: =4
+
+            Rectangle3_3 As rectangle:
+                Fill: =RGBA(250, 155, 112, 1)
+                Height: =10
+                Visible: =If(SystemAdminGalFilterBtn="ChangeManager", true, false)
+                Width: =190
+                ZIndex: =5
+
+        Grp_Btn_InfoSecConfig As group:
+            Height: =5
+            Width: =5
+            X: =-50
+            Y: =-57
+            ZIndex: =9
+
+            Button_InfoSecConfig As button:
+                BorderStyle: =BorderStyle.None
+                Color: =RGBA(77, 77, 77, 1)
+                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                DisabledColor: =RGBA(0, 0, 0, 0)
+                DisabledFill: =RGBA(0, 0, 0, 0)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =33
+                HoverColor: =RGBA(251, 188, 159, 1)
+                HoverFill: =RGBA(0, 0, 0, 0)
+                OnSelect: =Set(SystemAdminGalFilterBtn, "InfoSecurity")
+                PressedColor: =RGBA(246, 88, 16, 1)
+                PressedFill: =RGBA(0, 0, 0, 0)
+                Size: =11
+                Text: ="Info Security Team"
+                Width: =190
+                X: =190
+                Y: =8
+                ZIndex: =7
+
+            Rectangle3_4 As rectangle:
+                Fill: =RGBA(250, 155, 112, 1)
+                Height: =8
+                Visible: =If(SystemAdminGalFilterBtn="InfoSecurity", true, false)
+                Width: =190
+                X: =190
+                ZIndex: =8
+
+        Grp_Btn_CABConfig As group:
+            Height: =5
+            Width: =5
+            X: =-150
+            Y: =9
+            ZIndex: =11
+
+            Button_CABConfig As button:
+                BorderStyle: =BorderStyle.None
+                Color: =RGBA(77, 77, 77, 1)
+                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                DisabledColor: =RGBA(0, 0, 0, 0)
+                DisabledFill: =RGBA(0, 0, 0, 0)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =33
+                HoverColor: =RGBA(251, 188, 159, 1)
+                HoverFill: =RGBA(0, 0, 0, 0)
+                OnSelect: |-
+                    =Set(SystemAdminGalFilterBtn, "CAB");
+                    Set(SelectedCABGroup,Blank());
+                PressedColor: =RGBA(246, 88, 16, 1)
+                PressedFill: =RGBA(0, 0, 0, 0)
+                Size: =11
+                Text: ="Change Advisory Boards"
+                Width: =190
+                X: =381
+                Y: =8
+                ZIndex: =9
+
+            Rectangle3_5 As rectangle:
+                Fill: =RGBA(250, 155, 112, 1)
+                Height: =8
+                Visible: |
+                    =If(SystemAdminGalFilterBtn="CAB", true, false)
+                Width: =190
+                X: =381
+                ZIndex: =10
+
+        Button_SystemAdminList As button:
+            BorderStyle: =BorderStyle.None
+            Color: =RGBA(221, 79, 14, 1)
+            DisabledBorderColor: =RGBA(0, 0, 0, 0)
+            DisabledColor: =RGBA(0, 0, 0, 0)
+            DisabledFill: =RGBA(0, 0, 0, 0)
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =33
+            HoverColor: =RGBA(251, 188, 159, 1)
+            HoverFill: =RGBA(0, 0, 0, 0)
+            OnSelect: =Launch(LookUp(ConfigGenParam,Title="SysAdminList",ParamValue),Blank(),LaunchTarget.New)
+            PressedColor: =RGBA(246, 88, 16, 1)
+            PressedFill: =RGBA(0, 0, 0, 0)
+            Size: =11
+            Text: ="System Administrators"
+            Underline: =true
+            Width: =190
+            X: =1095
+            Y: =8
+            ZIndex: =13
+
+        Grp_Btn_ImplementationGrpConfig As group:
+            Height: =5
+            Width: =5
+            X: =-150
+            Y: =9
+            ZIndex: =13
+
+            Button_ImplementationGrpConfig As button:
+                BorderStyle: =BorderStyle.None
+                Color: =RGBA(77, 77, 77, 1)
+                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                DisabledColor: =RGBA(0, 0, 0, 0)
+                DisabledFill: =RGBA(0, 0, 0, 0)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =33
+                HoverColor: =RGBA(251, 188, 159, 1)
+                HoverFill: =RGBA(0, 0, 0, 0)
+                OnSelect: |-
+                    =Set(SystemAdminGalFilterBtn, "ImplementationGroups");
+                    Set(SelectedImplementationGroup,Blank());
+                    Reset(TextInput_SearchImplementationGal);
+                PressedColor: =RGBA(246, 88, 16, 1)
+                PressedFill: =RGBA(0, 0, 0, 0)
+                Size: =11
+                Text: ="Implementation Groups"
+                Width: =190
+                X: =593
+                Y: =8
+                ZIndex: =11
+
+            Rectangle3_6 As rectangle:
+                Fill: =RGBA(250, 155, 112, 1)
+                Height: =8
+                Visible: =If(SystemAdminGalFilterBtn="ImplementationGroups", true, false)
+                Width: =190
+                X: =593
+                ZIndex: =12
+
+        Grp_Btn_TemplatesConfig As group:
+            Height: =5
+            Width: =5
+            X: =40
+            Y: =40
+            ZIndex: =16
+
+            Button_TemplatesConfig As button:
+                BorderStyle: =BorderStyle.None
+                Color: =RGBA(77, 77, 77, 1)
+                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                DisabledColor: =RGBA(0, 0, 0, 0)
+                DisabledFill: =RGBA(0, 0, 0, 0)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =33
+                HoverColor: =RGBA(251, 188, 159, 1)
+                HoverFill: =RGBA(0, 0, 0, 0)
+                OnSelect: =Set(SystemAdminGalFilterBtn, "Templates")
+                PressedColor: =RGBA(246, 88, 16, 1)
+                PressedFill: =RGBA(0, 0, 0, 0)
+                Size: =11
+                Text: ="Config Templates"
+                Width: =190
+                X: =788
+                Y: =8
+                ZIndex: =14
+
+            Rectangle3_8 As rectangle:
+                Fill: =RGBA(250, 155, 112, 1)
+                Height: =10
+                Visible: =If(SystemAdminGalFilterBtn="Templates", true, false)
+                Width: =190
+                X: =788
+                ZIndex: =15
+
+    Grp_Config_ChangeManagers As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =12
+
+        Container_ChangeMgr_Gal As groupContainer.manualLayoutContainer:
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =540
+            Visible: =If(SystemAdminGalFilterBtn="ChangeManager", true, false)
+            Width: =1297
+            X: =38
+            Y: =184
+            ZIndex: =4
+
+            Lbl_Gal_ChangeMgr_Hdr_Location As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =22
+                Size: =10
+                Text: ="Location"
+                Width: =86
+                X: =754
+                Y: =10
+                ZIndex: =1
+
+            Lbl_Gal_ChangeMgr_Hdr_ChangeMgr As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Change Manager"
+                Width: =179
+                X: =139
+                Y: =5
+                ZIndex: =2
+
+            Lbl_Gal_ChangeMgr_Hdr_Scope As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Scope"
+                Width: =86
+                X: =572
+                Y: =5
+                ZIndex: =3
+
+            Lbl_Gal_ChangeMgr_Hdr_Region As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Region"
+                Width: =98
+                X: =20
+                Y: =5
+                ZIndex: =4
+
+            Lbl_Gal_ChangeMgr_Hdr_Created As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Created"
+                Width: =138
+                X: =956
+                Y: =5
+                ZIndex: =5
+
+            Lbl_Gal_ChangeMgr_Hdr_LastMod As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: |-
+                    ="Last Modified
+                    "
+                Width: =115
+                X: =1098
+                Y: =5
+                ZIndex: =6
+
+            Lbl_Gal_ChangeMgr_Hdr_JobTitle As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Job Title"
+                Width: =148
+                X: =367
+                Y: =5
+                ZIndex: =7
+
+            Lbl_Gal_ChangeMgr_Hdr_Active As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Active"
+                Width: =61
+                X: =893
+                Y: =5
+                ZIndex: =8
+
+            "Gallery_ChangeMgrConfig As gallery.'BrowseLayout_Vertical_TwoTextVariant_ver5.0'":
+                '#CopilotOverlayLabel': ="Filtered"
+                BorderColor: =RGBA(102, 102, 102, 1)
+                BorderStyle: =BorderStyle.None
+                BorderThickness: =1
+                DelayItemLoading: =true
+                Height: =474
+                Items: |
+                    =//Connect to SharePoint List
+                    Switch(Dropdown_Filter_ChangeManger_Region.Selected.Value,
+                    "Global",Filter(ConfigChangeManagers,Region.Value="Global"),
+                    "Asia",Filter(ConfigChangeManagers,Region.Value="Asia"),
+                    "Europe",Filter(ConfigChangeManagers,Region.Value="Europe"),
+                    "Americas",Filter(ConfigChangeManagers,Region.Value="Americas"),
+                    "OBS",Filter(ConfigChangeManagers,Region.Value="OBS"),
+                    ConfigChangeManagers)
+                Layout: =Layout.Vertical
+                LoadingSpinner: =LoadingSpinner.Data
+                NavigationStep: =2
+                OnSelect: =Set(SelectedChangeManagerAccount, Gallery_ChangeMgrConfig.Selected);
+                TemplatePadding: =0
+                TemplateSize: =59
+                Width: =1297
+                Y: =45
+                ZIndex: =9
+
+                Gal_ChangeMgr_Name As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =28
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.ChangeManager.DisplayName
+                    Width: =160
+                    X: =182
+                    Y: =15
+                    ZIndex: =2
+
+                Gal_Seperator_1 As rectangle:
+                    Height: =8
+                    OnSelect: =Select(Parent)
+                    Width: =Parent.TemplateWidth
+                    Y: =Parent.TemplateHeight - Self.Height
+                    ZIndex: =4
+
+                Gal_RectSelect_1 As rectangle:
+                    Fill: =RGBA(250, 155, 112, 1)
+                    Height: =Parent.TemplateHeight - Gal_Seperator_1.Height
+                    OnSelect: =Select(Parent)
+                    Visible: =ThisItem.IsSelected
+                    Width: =4
+                    ZIndex: =5
+
+                Gal_Lbl_ChangeMgr_Location As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =28
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: |-
+                        =//Office365Users.UserProfileV2(ThisItem.ChangeManager.Email).officeLocation
+                        If(!IsBlank(ThisItem.ChangeManager), Office365Users.UserProfileV2(ThisItem.ChangeManager.Email).officeLocation)
+                    Width: =126
+                    X: =760
+                    Y: =16
+                    ZIndex: =6
+
+                Lbl_Gal_ChangeMgr_LastMod As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =22
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.Modified
+                    Width: =137
+                    X: =1104
+                    Y: =20
+                    ZIndex: =12
+
+                Lbl_Gal_ChangeMgr_JobTitle As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =39
+                    OnSelect: =Select(Parent)
+                    Size: =9
+                    Text: =ThisItem.ChangeManager.JobTitle
+                    Width: =175
+                    X: =362
+                    Y: =6
+                    ZIndex: =13
+
+                Lbl_Gal_ChangeMgr_Region As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =22
+                    OnSelect: =Select(Parent)
+                    Size: =9
+                    Text: =ThisItem.Region.Value
+                    Width: =69
+                    X: =26
+                    Y: =18
+                    ZIndex: =14
+
+                Lbl_Gal_ChangeMgr_Created As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =22
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.Created
+                    Width: =137
+                    X: =962
+                    Y: =20
+                    ZIndex: =16
+
+                Lbl_Gal_ChangeMgr_Scope As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =34
+                    OnSelect: =Select(Parent)
+                    Size: =9
+                    Text: =ThisItem.Scope
+                    Tooltip: =ThisItem.Description
+                    Width: =155
+                    X: =577
+                    Y: =13
+                    ZIndex: =17
+
+                Lbl_Gal_ChangeMgr_Photo As image:
+                    Height: =33
+                    Image: =ThisItem.ChangeManager.Picture
+                    RadiusBottomLeft: =50
+                    RadiusBottomRight: =50
+                    RadiusTopLeft: =50
+                    RadiusTopRight: =50
+                    Tooltip: =ThisItem.ChangeManager.Email
+                    Width: =33
+                    X: =141
+                    Y: =12
+                    ZIndex: =18
+
+                Lbl_Gal_ChangeMgr_Active As label:
+                    Align: =Align.Center
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =22
+                    OnSelect: =Select(Parent)
+                    Size: =9
+                    Text: =ThisItem.ActiveFlag
+                    Tooltip: =ThisItem.Description
+                    Width: =39
+                    X: =899
+                    Y: =19
+                    ZIndex: =19
+
+        Dropdown_Filter_ChangeManger_Region As dropdown:
+            BorderColor: =RGBA(51, 51, 51, 1)
+            BorderThickness: =1
+            ChevronBackground: =RGBA(250, 155, 112, 1)
+            Default: ="All"
+            Height: =25
+            Items: =["All","Global","Asia","Europe","Americas","OBS"]
+            SelectionFill: =RGBA(253, 222, 207, 1)
+            Size: =10
+            Visible: =If(SystemAdminGalFilterBtn="ChangeManager", true, false)
+            Width: =120
+            X: =47
+            Y: =148
+            ZIndex: =5
+
+        Btn_AddChangeManager As icon.Add:
+            Color: =RGBA(255, 125, 35, 1)
+            DisabledColor: =RGBA(219, 219, 219, 1)
+            Height: =25
+            Icon: =Icon.Add
+            OnSelect: |-
+                =Set(EditChangeManagerContainer,false);
+                Set(AddChangeManagerContainer,true);
+            Tooltip: ="Add New Change Manager"
+            Visible: =If(SystemAdminGalFilterBtn="ChangeManager", true, false)
+            Width: =30
+            X: =1158
+            Y: =148
+            ZIndex: =6
+
+        Btn_EditChangeManager As icon.Add:
+            Color: =RGBA(255, 125, 35, 1)
+            DisabledBorderColor: =RGBA(102, 102, 102, 1)
+            DisabledColor: =RGBA(219, 219, 219, 1)
+            DisplayMode: =If(IsBlank(SelectedChangeManagerAccount), DisplayMode.Disabled, DisplayMode.Edit)
+            Height: =25
+            Icon: =Icon.Edit
+            OnSelect: |-
+                =Set(AddChangeManagerContainer,false);
+                Set(EditChangeManagerContainer,true);
+            Tooltip: ="Edit Change Manager"
+            Visible: =If(SystemAdminGalFilterBtn="ChangeManager", true, false)
+            Width: =30
+            X: =1205
+            Y: =148
+            ZIndex: =7
+
+        Btn_DisableChangeManger As icon.Add:
+            Color: =RGBA(255, 125, 35, 1)
+            DisabledBorderColor: =RGBA(128, 128, 128, 1)
+            DisabledColor: =RGBA(219, 219, 219, 1)
+            DisplayMode: =If(IsBlank(SelectedChangeManagerAccount) Or SelectedChangeManagerAccount.ActiveFlag<>"Y", DisplayMode.Disabled, DisplayMode.Edit)
+            Height: =25
+            Icon: =Icon.Blocked
+            OnSelect: |-
+                =//Set Change Manager account to Inactive
+                Patch(
+                    ConfigChangeManagers,
+                    LookUp(
+                        ConfigChangeManagers,
+                        ID = SelectedChangeManagerAccount.ID
+                    ),
+                    {ActiveFlag: "N"}
+                );
+                
+                Set(SelectedChangeManagerAccount,Blank());
+            Tooltip: ="Set Change Manager to Inactive"
+            Visible: =If(SystemAdminGalFilterBtn="ChangeManager", true, false)
+            Width: =30
+            X: =1251
+            Y: =148
+            ZIndex: =8
+
+        Container_Box_AddChangeManager As groupContainer.manualLayoutContainer:
+            Fill: =RGBA(219, 219, 219, 0.75)
+            Height: =768
+            Visible: =AddChangeManagerContainer
+            Width: =1366
+            ZIndex: =9
+
+            Container_AddChangeManager As groupContainer.manualLayoutContainer:
+                BorderThickness: =2
+                Fill: =RGBA(253, 222, 207, 1)
+                Height: =398
+                Width: =529
+                X: =411
+                Y: =183
+                ZIndex: =8
+
+                Label4 As label:
+                    Align: =Align.Right
+                    Height: =37
+                    Text: ="Staff  *"
+                    Width: =117
+                    X: =5
+                    Y: =69
+                    ZIndex: =1
+
+                Label4_1 As label:
+                    Align: =Align.Right
+                    Height: =37
+                    Text: ="Region  *"
+                    Width: =117
+                    X: =5
+                    Y: =123
+                    ZIndex: =2
+
+                Label4_2 As label:
+                    Align: =Align.Right
+                    Height: =37
+                    Text: ="Scope  *"
+                    Width: =117
+                    X: =5
+                    Y: =170
+                    ZIndex: =3
+
+                Label4_3 As label:
+                    Align: =Align.Right
+                    Height: =37
+                    Text: ="Description"
+                    Width: =117
+                    X: =5
+                    Y: =220
+                    ZIndex: =4
+
+                Rect_Lbl_AddChangeMgr_Header As rectangle:
+                    Fill: =RGBA(250, 155, 112, 1)
+                    Height: =49
+                    Width: =919
+                    X: =1
+                    ZIndex: =5
+
+                Lbl_AddChangeMgr_Header As label:
+                    Align: =Align.Center
+                    FontWeight: =FontWeight.Bold
+                    Height: =35
+                    Size: =14
+                    Text: ="Add Change Manager"
+                    Width: =228
+                    X: =158
+                    Y: =7
+                    ZIndex: =6
+
+                Btn_CancelAddChangeMgr As button:
+                    Fill: =RGBA(149, 149, 149, 1)
+                    Height: =28
+                    OnSelect: |-
+                        =//Close pop-up container
+                        Set(AddChangeManagerContainer,false);
+                        
+                        //Reset controls
+                        Reset(ComboBox_AddChangeManager_PeoplePicker);
+                        Reset(Dropdown_AddChangeManager_RegionSelect);
+                        Reset(TextInput_AddChangeManager_Scope);
+                        Reset(TextInput_AddChangeManager_Description);
+                        Reset(Checkbox_AddChangeManager_Active);
+                    Size: =12
+                    Text: ="Cancel"
+                    Width: =112
+                    X: =296
+                    Y: =343
+                    ZIndex: =7
+
+                Btn_ConfirmAddChangeMgr As button:
+                    DisplayMode: =If(IsBlank(ComboBox_AddChangeManager_PeoplePicker.Selected) Or IsBlank(Dropdown_AddChangeManager_RegionSelect.SelectedText) Or IsBlank(TextInput_AddChangeManager_Scope.Text), DisplayMode.Disabled, DisplayMode.Edit)
+                    Fill: =RGBA(221, 79, 14, 1)
+                    Height: =28
+                    OnSelect: |-
+                        =//Patch new record to Config_ChangeManager List
+                        Patch(ConfigChangeManagers, Defaults(ConfigChangeManagers),
+                        {
+                          ChangeManager: With({_eml: ComboBox_AddChangeManager_PeoplePicker.Selected.Mail},
+                          { 
+                             Claims:"i:0#.f|membership|" & Lower(_eml), 
+                             Department:"", 
+                             DisplayName: _eml, 
+                             Email: _eml, 
+                             JobTitle: "", 
+                             Picture: ""
+                          }),
+                          ActiveFlag: If(Checkbox_AddChangeManager_Active.Value,"Y","N"),
+                          Region:
+                                If(Dropdown_AddChangeManager_RegionSelect.SelectedText.Value="Global",{Value: "Global"},
+                                    If(Dropdown_AddChangeManager_RegionSelect.SelectedText.Value="Asia",{Value: "Asia"},
+                                        If(Dropdown_AddChangeManager_RegionSelect.SelectedText.Value="Europe",{Value: "Europe"},
+                                            If(Dropdown_AddChangeManager_RegionSelect.SelectedText.Value="Americas",{Value: "Americas"},
+                                                If(Dropdown_AddChangeManager_RegionSelect.SelectedText.Value="OBS",{Value: "OBS"}))))),
+                            Scope: TextInput_AddChangeManager_Scope.Text,
+                            Description: TextInput_AddChangeManager_Description.Text
+                        });
+                        
+                        //Close pop-up container
+                        Set(AddChangeManagerContainer,false);
+                        
+                        //Reset controls
+                        Reset(ComboBox_AddChangeManager_PeoplePicker);
+                        Reset(Dropdown_AddChangeManager_RegionSelect);
+                        Reset(TextInput_AddChangeManager_Scope);
+                        Reset(TextInput_AddChangeManager_Description);
+                        Reset(Checkbox_AddChangeManager_Active);
+                    Size: =12
+                    Text: ="Save"
+                    Width: =112
+                    X: =162
+                    Y: =343
+                    ZIndex: =8
+
+                ComboBox_AddChangeManager_PeoplePicker As combobox:
+                    BorderColor: =RGBA(102, 102, 102, 1)
+                    ChevronBackground: =RGBA(250, 155, 112, 1)
+                    DisplayFields: =["DisplayName","UserPrincipalName"]
+                    InputTextPlaceholder: ="Search by name"
+                    Items: |-
+                        =Office365Users.SearchUser({searchTerm:ComboBox_AddChangeManager_PeoplePicker.SearchText,top:5})
+                    SearchFields: =["DisplayName"]
+                    SearchItems: |-
+                        =Search(Office365Users.SearchUser({searchTerm:ComboBox_AddChangeManager_PeoplePicker.SearchText,top:5}),ComboBox_AddChangeManager_PeoplePicker.SearchText,DisplayName)
+                    SelectionFill: =RGBA(251, 188, 159, 1)
+                    SelectMultiple: =false
+                    Size: =12
+                    Template: =ListItemTemplate.Person
+                    Width: =350
+                    X: =135
+                    Y: =69
+                    ZIndex: =9
+
+                Dropdown_AddChangeManager_RegionSelect As dropdown:
+                    BorderColor: =RGBA(102, 102, 102, 1)
+                    ChevronBackground: =RGBA(250, 155, 112, 1)
+                    Default: =Blank()
+                    Height: =35
+                    Items: =ColRegions.Region
+                    SelectionFill: =RGBA(251, 188, 159, 1)
+                    Width: =183
+                    X: =135
+                    Y: =123
+                    ZIndex: =10
+
+                TextInput_AddChangeManager_Scope As text:
+                    BorderColor: =RGBA(77, 77, 77, 1)
+                    Default: =
+                    Width: =350
+                    X: =135
+                    Y: =170
+                    ZIndex: =11
+
+                TextInput_AddChangeManager_Description As text:
+                    BorderColor: =RGBA(77, 77, 77, 1)
+                    Default: =
+                    Height: =90
+                    Mode: =TextMode.MultiLine
+                    Width: =350
+                    X: =135
+                    Y: =225
+                    ZIndex: =12
+
+                Checkbox_AddChangeManager_Active As checkbox:
+                    CheckboxBorderColor: =RGBA(102, 102, 102, 1)
+                    Default: =true
+                    Height: =35
+                    Text: ="Set as Active"
+                    Width: =149
+                    X: =337
+                    Y: =124
+                    ZIndex: =13
+
+        Container_Box_EditChangeManager As groupContainer.manualLayoutContainer:
+            Fill: =RGBA(219, 219, 219, 0.75)
+            Height: =768
+            Visible: =EditChangeManagerContainer
+            Width: =1366
+            ZIndex: =10
+
+            Container_EditChangeManager As groupContainer.manualLayoutContainer:
+                BorderThickness: =2
+                Fill: =RGBA(253, 222, 207, 1)
+                Height: =398
+                Visible: =EditChangeManagerContainer
+                Width: =529
+                X: =411
+                Y: =183
+                ZIndex: =8
+
+                Label4_4 As label:
+                    Align: =Align.Right
+                    Height: =37
+                    Text: ="Staff  *"
+                    Width: =117
+                    X: =5
+                    Y: =69
+                    ZIndex: =1
+
+                Label4_5 As label:
+                    Align: =Align.Right
+                    Height: =37
+                    Text: ="Region  *"
+                    Width: =117
+                    X: =5
+                    Y: =123
+                    ZIndex: =2
+
+                Label4_6 As label:
+                    Align: =Align.Right
+                    Height: =37
+                    Text: ="Scope  *"
+                    Width: =117
+                    X: =5
+                    Y: =170
+                    ZIndex: =3
+
+                Label4_7 As label:
+                    Align: =Align.Right
+                    Height: =37
+                    Text: ="Description"
+                    Width: =117
+                    X: =5
+                    Y: =220
+                    ZIndex: =4
+
+                Rect_Lbl_EditChangeMgr_Header As rectangle:
+                    Fill: =RGBA(250, 155, 112, 1)
+                    Height: =49
+                    Width: =529
+                    ZIndex: =5
+
+                Lbl_EditChangeMgr_Header As label:
+                    Align: =Align.Center
+                    FontWeight: =FontWeight.Bold
+                    Height: =35
+                    Size: =14
+                    Text: ="Edit Change Manager"
+                    Width: =228
+                    X: =158
+                    Y: =7
+                    ZIndex: =6
+
+                Btn_CancelEditChangeMgr As button:
+                    Fill: =RGBA(149, 149, 149, 1)
+                    Height: =28
+                    OnSelect: |-
+                        =//Close pop-up container
+                        Set(EditChangeManagerContainer,false);
+                        Set(SelectedChangeManagerAccount,Blank());
+                        
+                        //Reset controls
+                        Reset(ComboBox_EditChangeManager_PeoplePicker);
+                        Reset(Dropdown_EditChangeManager_RegionSelect);
+                        Reset(TextInput_EditChangeManager_Scope);
+                        Reset(TextInput_EditChangeManager_Description);
+                        Reset(Checkbox_EditChangeManager_Active);
+                    Size: =12
+                    Text: ="Cancel"
+                    Width: =112
+                    X: =296
+                    Y: =343
+                    ZIndex: =7
+
+                Btn_ConfirmEditChangeMgr As button:
+                    DisplayMode: =If(IsBlank(ComboBox_EditChangeManager_PeoplePicker.Selected) Or IsBlank(Dropdown_EditChangeManager_RegionSelect.SelectedText) Or IsBlank(TextInput_EditChangeManager_Scope.Text), DisplayMode.Disabled, DisplayMode.Edit)
+                    Fill: =RGBA(221, 79, 14, 1)
+                    Height: =28
+                    OnSelect: |-
+                        =//Patch existing record to Config_ChangeManager List
+                        Patch(ConfigChangeManagers, LookUp(ConfigChangeManagers, ID=SelectedChangeManagerAccount.ID),
+                        {
+                          ActiveFlag: If(Checkbox_EditChangeManager_Active.Value,"Y","N"),
+                          Region:
+                                If(Dropdown_EditChangeManager_RegionSelect.SelectedText.Value="Global",{Value: "Global"},
+                                    If(Dropdown_EditChangeManager_RegionSelect.SelectedText.Value="Asia",{Value: "Asia"},
+                                        If(Dropdown_EditChangeManager_RegionSelect.SelectedText.Value="Europe",{Value: "Europe"},
+                                            If(Dropdown_EditChangeManager_RegionSelect.SelectedText.Value="Americas",{Value: "Americas"},
+                                                If(Dropdown_EditChangeManager_RegionSelect.SelectedText.Value="OBS",{Value: "OBS"}))))),
+                            Scope: TextInput_EditChangeManager_Scope.Text,
+                            Description: TextInput_EditChangeManager_Description.Text
+                        });
+                        
+                        //Close pop-up container
+                        Set(EditChangeManagerContainer,false);
+                        Set(SelectedChangeManagerAccount,Blank());
+                        
+                        //Reset controls
+                        Reset(ComboBox_EditChangeManager_PeoplePicker);
+                        Reset(Dropdown_EditChangeManager_RegionSelect);
+                        Reset(TextInput_EditChangeManager_Scope);
+                        Reset(TextInput_EditChangeManager_Description);
+                        Reset(Checkbox_EditChangeManager_Active);
+                    Size: =12
+                    Text: ="Save"
+                    Width: =112
+                    X: =162
+                    Y: =343
+                    ZIndex: =8
+
+                ComboBox_EditChangeManager_PeoplePicker As combobox:
+                    BorderColor: =RGBA(102, 102, 102, 1)
+                    ChevronBackground: =RGBA(250, 155, 112, 1)
+                    DefaultSelectedItems: =SelectedChangeManagerAccount.ChangeManager
+                    DisplayFields: =["DisplayName","UserPrincipalName"]
+                    DisplayMode: =DisplayMode.View
+                    InputTextPlaceholder: ="Search by name"
+                    Items: |-
+                        =Office365Users.SearchUser({searchTerm:ComboBox_EditChangeManager_PeoplePicker.SearchText,top:5})
+                    SearchFields: =["DisplayName"]
+                    SearchItems: |-
+                        =Search(Office365Users.SearchUser({searchTerm:ComboBox_EditChangeManager_PeoplePicker.SearchText,top:5}),ComboBox_EditChangeManager_PeoplePicker.SearchText,DisplayName)
+                    SelectionFill: =RGBA(251, 188, 159, 1)
+                    SelectMultiple: =false
+                    Size: =12
+                    Template: =ListItemTemplate.Person
+                    Width: =350
+                    X: =135
+                    Y: =69
+                    ZIndex: =9
+
+                Dropdown_EditChangeManager_RegionSelect As dropdown:
+                    BorderColor: =RGBA(102, 102, 102, 1)
+                    ChevronBackground: =RGBA(250, 155, 112, 1)
+                    Default: =SelectedChangeManagerAccount.Region.Value
+                    Height: =35
+                    Items: =ColRegions.Region
+                    SelectionFill: =RGBA(251, 188, 159, 1)
+                    Width: =183
+                    X: =135
+                    Y: =123
+                    ZIndex: =10
+
+                TextInput_EditChangeManager_Scope As text:
+                    BorderColor: =RGBA(77, 77, 77, 1)
+                    Default: =SelectedChangeManagerAccount.Scope
+                    Width: =350
+                    X: =135
+                    Y: =170
+                    ZIndex: =11
+
+                TextInput_EditChangeManager_Description As text:
+                    BorderColor: =RGBA(77, 77, 77, 1)
+                    Default: =SelectedChangeManagerAccount.Description
+                    Height: =90
+                    Mode: =TextMode.MultiLine
+                    Width: =350
+                    X: =135
+                    Y: =225
+                    ZIndex: =12
+
+                Checkbox_EditChangeManager_Active As checkbox:
+                    CheckboxBorderColor: =RGBA(102, 102, 102, 1)
+                    Default: =If(SelectedChangeManagerAccount.ActiveFlag="Y",true,false)
+                    Height: =35
+                    Text: ="Set as Active"
+                    Width: =149
+                    X: =337
+                    Y: =124
+                    ZIndex: =13
+
+                Icon1 As icon.Trash:
+                    Color: =RGBA(168, 0, 0, 1)
+                    Height: =38
+                    Icon: =Icon.Trash
+                    OnSelect: |-
+                        =//Delete record from SP list
+                        RemoveIf(ConfigChangeManagers, ID = SelectedChangeManagerAccount.ID);
+                        
+                        //Close pop-up container
+                        Set(EditChangeManagerContainer,false);
+                        Set(SelectedChangeManagerAccount,Blank());
+                        
+                        //Reset controls
+                        Reset(ComboBox_EditChangeManager_PeoplePicker);
+                        Reset(Dropdown_EditChangeManager_RegionSelect);
+                        Reset(TextInput_EditChangeManager_Scope);
+                        Reset(TextInput_EditChangeManager_Description);
+                        Reset(Checkbox_EditChangeManager_Active);
+                    Tooltip: ="Remove Change Manager from system!"
+                    Width: =45
+                    X: =32
+                    Y: =338
+                    ZIndex: =14
+
+    Grp_Config_InfoSecTeam As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =19
+
+        Container_InfoSec_Gal As groupContainer.manualLayoutContainer:
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =540
+            Visible: =If(SystemAdminGalFilterBtn="InfoSecurity", true, false)
+            Width: =1297
+            X: =38
+            Y: =184
+            ZIndex: =11
+
+            Lbl_Gal_InfoSec_Hdr_Person As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Information Security Reviewer"
+                Width: =249
+                X: =66
+                Y: =5
+                ZIndex: =2
+
+            Lbl_Gal_InfoSec_Hdr_Created As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Created"
+                Width: =138
+                X: =661
+                Y: =5
+                ZIndex: =5
+
+            Lbl_Gal_InfoSec_Hdr_LastMod As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: |-
+                    ="Last Modified
+                    "
+                Width: =115
+                X: =819
+                Y: =5
+                ZIndex: =6
+
+            Lbl_Gal_InfoSec_Hdr_JobTitle As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Job Title"
+                Width: =148
+                X: =323
+                Y: =5
+                ZIndex: =7
+
+            Lbl_Gal_InfoSec_Hdr_Default As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Mark as Default"
+                Width: =123
+                X: =491
+                Y: =5
+                ZIndex: =8
+
+            "Gallery_InfoSec_Config As gallery.'BrowseLayout_Vertical_TwoTextVariant_ver5.0'":
+                '#CopilotOverlayLabel': ="Filtered"
+                BorderColor: =RGBA(102, 102, 102, 1)
+                BorderStyle: =BorderStyle.None
+                BorderThickness: =1
+                DelayItemLoading: =true
+                Height: =474
+                Items: |
+                    =//Connect to SharePoint List
+                    ConfigInfoSecTeam
+                Layout: =Layout.Vertical
+                LoadingSpinner: =LoadingSpinner.Data
+                NavigationStep: =2
+                OnSelect: =
+                TemplatePadding: =0
+                TemplateSize: =59
+                Width: =1297
+                Y: =45
+                ZIndex: =9
+
+                Lbl_Gal_InfoSecPerson_Name As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =24
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.InfoSecPerson.DisplayName
+                    Width: =160
+                    X: =119
+                    Y: =17
+                    ZIndex: =2
+
+                Gal_Seperator_2 As rectangle:
+                    Height: =8
+                    OnSelect: =Select(Parent)
+                    Width: =Parent.TemplateWidth
+                    Y: =Parent.TemplateHeight - Self.Height
+                    ZIndex: =4
+
+                Gal_RectSelect_2 As rectangle:
+                    Fill: =RGBA(250, 155, 112, 1)
+                    Height: =Parent.TemplateHeight - Gal_Seperator_2.Height
+                    OnSelect: =Select(Parent)
+                    Visible: =ThisItem.IsSelected
+                    Width: =4
+                    ZIndex: =5
+
+                Lbl_Gal_InfoSecPerson_LastMod As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =22
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.Modified
+                    Width: =137
+                    X: =825
+                    Y: =20
+                    ZIndex: =12
+
+                Lbl_Gal_InfoSecPerson_JobTitle As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =43
+                    OnSelect: =Select(Parent)
+                    Size: =9
+                    Text: =ThisItem.InfoSecJobTitle
+                    Width: =159
+                    X: =318
+                    Y: =8
+                    ZIndex: =13
+
+                Lbl_Gal_InfoSecPerson_Created As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =22
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.Created
+                    Width: =137
+                    X: =655
+                    Y: =21
+                    ZIndex: =16
+
+                Lbl_Gal_InfoSecPerson_Photo As image:
+                    Height: =33
+                    Image: =ThisItem.InfoSecPerson.Picture
+                    RadiusBottomLeft: =50
+                    RadiusBottomRight: =50
+                    RadiusTopLeft: =50
+                    RadiusTopRight: =50
+                    Tooltip: =ThisItem.InfoSecPerson.Email
+                    Width: =33
+                    X: =72
+                    Y: =12
+                    ZIndex: =18
+
+                Checkbox_Gal_InfoSecPerson_SetDefault As checkbox:
+                    CheckboxBorderColor: =RGBA(128, 128, 128, 1)
+                    CheckboxSize: =30
+                    Default: =If(ThisItem.Default="Y", true, false)
+                    DisplayMode: =If(Checkbox_Gal_InfoSecPerson_SetDefault.Value,DisplayMode.View,DisplayMode.Edit)
+                    Height: =45
+                    OnCheck: |-
+                        =UpdateIf(ConfigInfoSecTeam,Default="Y",
+                        {Default: ""}
+                        );
+                        
+                        Patch(ConfigInfoSecTeam, LookUp(ConfigInfoSecTeam, ID=ThisItem.ID),
+                        {Default: "Y"}
+                        );
+                    OnSelect: =
+                    OnUncheck: |-
+                        =UpdateIf(ConfigInfoSecTeam,Default="Y",
+                        {Default: ""}
+                        );
+                        
+                        Patch(ConfigInfoSecTeam, LookUp(ConfigInfoSecTeam, ID=ThisItem.ID),
+                        {Default: "Y"}
+                        );
+                    Text: =
+                    Width: =45
+                    X: =532
+                    Y: =3
+                    ZIndex: =20
+
+        Btn_AddInfoSec As icon.Add:
+            Color: =RGBA(255, 125, 35, 1)
+            DisabledColor: =RGBA(219, 219, 219, 1)
+            Height: =25
+            Icon: =Icon.Add
+            OnSelect: =Set(AddInfoSecContainer,true);
+            Tooltip: ="Add Info Security Reviewer"
+            Visible: =If(SystemAdminGalFilterBtn="InfoSecurity", true, false)
+            Width: =30
+            X: =54
+            Y: =193
+            ZIndex: =12
+
+        Container_Box_AddInfoSec As groupContainer.manualLayoutContainer:
+            Fill: =RGBA(219, 219, 219, 0.75)
+            Height: =768
+            Visible: =AddInfoSecContainer
+            Width: =1366
+            ZIndex: =13
+
+            Container_AddInfoSec_1 As groupContainer.manualLayoutContainer:
+                BorderThickness: =2
+                Fill: =RGBA(253, 222, 207, 1)
+                Height: =202
+                Width: =529
+                X: =411
+                Y: =183
+                ZIndex: =8
+
+                Label4_8 As label:
+                    Align: =Align.Right
+                    Height: =37
+                    Text: ="Staff  *"
+                    Width: =117
+                    X: =5
+                    Y: =69
+                    ZIndex: =1
+
+                Rect_Lbl_AddInfoSec_Header As rectangle:
+                    Fill: =RGBA(250, 155, 112, 1)
+                    Height: =49
+                    Width: =529
+                    ZIndex: =5
+
+                Lbl_AddInfoSec_Header As label:
+                    Align: =Align.Center
+                    FontWeight: =FontWeight.Bold
+                    Height: =42
+                    Size: =14
+                    Text: ="Add Information Security Reviewer"
+                    Width: =352
+                    X: =88
+                    Y: =3
+                    ZIndex: =6
+
+                Btn_CancelAddInfoSec As button:
+                    Fill: =RGBA(149, 149, 149, 1)
+                    Height: =28
+                    OnSelect: |-
+                        =//Close pop-up container
+                        Set(AddInfoSecContainer,false);
+                        
+                        //Reset controls
+                        Reset(ComboBox_AddInfoSec_PeoplePicker);
+                    Size: =12
+                    Text: ="Cancel"
+                    Width: =112
+                    X: =300
+                    Y: =147
+                    ZIndex: =7
+
+                Btn_ConfirmAddInfoSec As button:
+                    DisplayMode: =If(IsBlank(ComboBox_AddInfoSec_PeoplePicker.Selected), DisplayMode.Disabled, DisplayMode.Edit)
+                    Fill: =RGBA(221, 79, 14, 1)
+                    Height: =28
+                    OnSelect: |-
+                        =//Patch new record to Config_InfoSecTeam
+                        Patch(ConfigInfoSecTeam, Defaults(ConfigInfoSecTeam),
+                        {
+                          InfoSecPerson: With({_eml: ComboBox_AddInfoSec_PeoplePicker.Selected.Mail},
+                          { 
+                             Claims:"i:0#.f|membership|" & Lower(_eml), 
+                             Department:"", 
+                             DisplayName: _eml, 
+                             Email: _eml, 
+                             JobTitle: "", 
+                             Picture: ""
+                          }),
+                          InfoSecName: ComboBox_AddInfoSec_PeoplePicker.Selected.DisplayName,
+                          InfoSecEmail: Lower(ComboBox_AddInfoSec_PeoplePicker.Selected.UserPrincipalName),
+                          InfoSecJobTitle: ComboBox_AddInfoSec_PeoplePicker.Selected.JobTitle
+                        });
+                        
+                        //Close pop-up container
+                        Set(AddInfoSecContainer,false);
+                        
+                        //Reset controls
+                        Reset(ComboBox_AddInfoSec_PeoplePicker);
+                    Size: =12
+                    Text: ="Save"
+                    Width: =112
+                    X: =153
+                    Y: =147
+                    ZIndex: =8
+
+                ComboBox_AddInfoSec_PeoplePicker As combobox:
+                    BorderColor: =RGBA(102, 102, 102, 1)
+                    ChevronBackground: =RGBA(250, 155, 112, 1)
+                    DisplayFields: =["DisplayName","UserPrincipalName"]
+                    InputTextPlaceholder: ="Search by name"
+                    Items: |-
+                        =//Office365Users.SearchUser({searchTerm:ComboBox_AddInfoSec_PeoplePicker.SearchText,top:5})
+                        Filter(Office365Users.SearchUserV2({searchTerm:Self.SearchText,top:5}).value,"@johnsonelectric.com" in ThisRecord.UserPrincipalName)
+                    SearchFields: =["DisplayName"]
+                    SearchItems: |-
+                        =Search(//Office365Users.SearchUser({searchTerm:ComboBox_AddInfoSec_PeoplePicker.SearchText,top:5})
+                        Filter(Office365Users.SearchUserV2({searchTerm:Self.SearchText,top:5}).value,"@johnsonelectric.com" in ThisRecord.UserPrincipalName),ComboBox_AddInfoSec_PeoplePicker.SearchText,DisplayName)
+                    SelectionFill: =RGBA(251, 188, 159, 1)
+                    SelectMultiple: =false
+                    Size: =12
+                    Template: =ListItemTemplate.Person
+                    Width: =350
+                    X: =135
+                    Y: =69
+                    ZIndex: =9
+
+    Grp_Config_CAB As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =26
+
+        Container_CAB_Gal As groupContainer.manualLayoutContainer:
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =540
+            Visible: =If(SystemAdminGalFilterBtn="CAB", true, false)
+            Width: =1297
+            X: =38
+            Y: =184
+            ZIndex: =14
+
+            Lbl_Gal_CAB_Hdr_GroupName As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="CAB Group"
+                Width: =179
+                X: =41
+                Y: =5
+                ZIndex: =1
+
+            Lbl_Gal_CAB_Hdr_CountMembers As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Semibold
+                Height: =31
+                Size: =10
+                Text: ="No. of Active Members"
+                X: =318
+                Y: =7
+                ZIndex: =2
+
+            Lbl_Gal_CAB_Hdr_Created As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Created"
+                Width: =138
+                X: =599
+                Y: =5
+                ZIndex: =3
+
+            Lbl_Gal_CAB_Hdr_LastMod As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: |-
+                    ="Last Modified
+                    "
+                Width: =115
+                X: =758
+                Y: =5
+                ZIndex: =4
+
+            Lbl_Gal_CAB_Hdr_Region As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Region"
+                Width: =148
+                X: =220
+                Y: =5
+                ZIndex: =5
+
+            Lbl_Gal_CAB_Hdr_Active As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =27
+                Size: =10
+                Text: ="Active"
+                Width: =87
+                X: =474
+                Y: =7
+                ZIndex: =6
+
+            "Gallery_CABConfig As gallery.'BrowseLayout_Vertical_TwoTextVariant_ver5.0'":
+                '#CopilotOverlayLabel': ="Filtered"
+                BorderColor: =RGBA(102, 102, 102, 1)
+                BorderStyle: =BorderStyle.None
+                BorderThickness: =1
+                DelayItemLoading: =true
+                Height: =474
+                Items: |-
+                    =//Connect to SharePoint List
+                    Filter(ConfigGroupsList,CABFlag="Y")
+                Layout: =Layout.Vertical
+                LoadingSpinner: =LoadingSpinner.Data
+                NavigationStep: =2
+                OnSelect: =Set(SelectedCABGroup, Gallery_CABConfig.Selected);
+                TemplatePadding: =0
+                TemplateSize: =59
+                Width: =1297
+                Y: =45
+                ZIndex: =7
+
+                Gal_CAB_GroupName As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =24
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.GroupName
+                    Width: =160
+                    X: =49
+                    Y: =17
+                    ZIndex: =2
+
+                Gal_Seperator_3 As rectangle:
+                    Height: =8
+                    OnSelect: =Select(Parent)
+                    Width: =Parent.TemplateWidth
+                    Y: =Parent.TemplateHeight - Self.Height
+                    ZIndex: =4
+
+                Gal_RectSelect_3 As rectangle:
+                    Fill: =RGBA(250, 155, 112, 1)
+                    Height: =Parent.TemplateHeight - Gal_Seperator_3.Height
+                    OnSelect: =Select(Parent)
+                    Visible: =ThisItem.IsSelected
+                    Width: =4
+                    ZIndex: =5
+
+                Lbl_Gal_CAB_LastMod As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =22
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.Modified
+                    Width: =137
+                    X: =767
+                    Y: =14
+                    ZIndex: =12
+
+                Lbl_Gal_CAB_ActiveFlag As label:
+                    Align: =Align.Center
+                    Height: =41
+                    OnSelect: =Select(Parent)
+                    Size: =9
+                    Text: =ThisItem.ActiveFlag
+                    Width: =75
+                    X: =459
+                    Y: =5
+                    ZIndex: =13
+
+                Lbl_Gal_CAB_Region As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =22
+                    OnSelect: =Select(Parent)
+                    Size: =9
+                    Text: =ThisItem.Region
+                    Width: =69
+                    X: =222
+                    Y: =18
+                    ZIndex: =14
+
+                Lbl_Gal_CAB_Created As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =22
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.Created
+                    Width: =137
+                    X: =603
+                    Y: =14
+                    ZIndex: =16
+
+                Lbl_Gal_CAB_ActiveFlag_1 As label:
+                    Align: =Align.Center
+                    Height: =41
+                    OnSelect: =Select(Parent)
+                    Size: =9
+                    Text: =CountRows(Filter(ITAccountsList, GroupAssignment.Value=ThisItem.GroupName && ActiveFlag="Y"))
+                    Width: =75
+                    X: =348
+                    Y: =8
+                    ZIndex: =17
+
+        Btn_AddCAB As icon.Add:
+            Color: =RGBA(255, 125, 35, 1)
+            DisabledColor: =RGBA(219, 219, 219, 1)
+            Height: =25
+            Icon: =Icon.Add
+            OnSelect: |-
+                =Set(EditCABContainer,false);
+                Set(AddCABContainer,true);
+                
+                Set(NewCABCreated,Blank());
+            Tooltip: ="Add New Change Manager"
+            Visible: =If(SystemAdminGalFilterBtn="CAB", true, false)
+            Width: =30
+            X: =1158
+            Y: =148
+            ZIndex: =15
+
+        Btn_EditCAB As icon.Add:
+            Color: =RGBA(255, 125, 35, 1)
+            DisabledBorderColor: =RGBA(102, 102, 102, 1)
+            DisabledColor: =RGBA(219, 219, 219, 1)
+            DisplayMode: =If(IsBlank(SelectedCABGroup), DisplayMode.Disabled, DisplayMode.Edit)
+            Height: =25
+            Icon: =Icon.Edit
+            OnSelect: |-
+                =Set(AddCABContainer,false);
+                Set(EditCABContainer,true);
+            Tooltip: ="Edit Change Manager"
+            Visible: =If(SystemAdminGalFilterBtn="CAB", true, false)
+            Width: =30
+            X: =1205
+            Y: =148
+            ZIndex: =16
+
+        Btn_DisableCAB As icon.Add:
+            Color: =RGBA(255, 125, 35, 1)
+            DisabledBorderColor: =RGBA(128, 128, 128, 1)
+            DisabledColor: =RGBA(219, 219, 219, 1)
+            DisplayMode: =If(IsBlank(SelectedCABGroup) Or SelectedCABGroup.ActiveFlag<>"Y", DisplayMode.Disabled, DisplayMode.Edit)
+            Height: =25
+            Icon: =Icon.Blocked
+            OnSelect: |-
+                =//Set CAB Group to Inactive
+                Patch(
+                    ConfigGroupsList,
+                    LookUp(
+                        ConfigGroupsList,
+                        ID = SelectedCABGroup.ID
+                    ),
+                    {ActiveFlag: "N"}
+                );
+                
+                Set(SelectedCABGroup,Blank());
+            Tooltip: ="Set Change Manager to Inactive"
+            Visible: =If(SystemAdminGalFilterBtn="CAB", true, false)
+            Width: =30
+            X: =1251
+            Y: =148
+            ZIndex: =17
+
+        Container_Box_EditCAB As groupContainer.manualLayoutContainer:
+            Fill: =RGBA(219, 219, 219, 0.75)
+            Height: =768
+            Visible: =EditCABContainer
+            Width: =1366
+            ZIndex: =18
+
+            Container_EditCAB_1 As groupContainer.manualLayoutContainer:
+                BorderThickness: =2
+                Fill: =RGBA(253, 222, 207, 1)
+                Height: =627
+                Visible: =EditCABContainer
+                Width: =529
+                X: =411
+                Y: =78
+                ZIndex: =8
+
+                Lbl_EditCAB_GrpName As label:
+                    Align: =Align.Right
+                    Height: =37
+                    Text: ="Name  *"
+                    Width: =117
+                    X: =12
+                    Y: =62
+                    ZIndex: =1
+
+                Lbl_EditCAB_Region As label:
+                    Align: =Align.Right
+                    Height: =37
+                    Text: ="Region  *"
+                    Width: =117
+                    X: =12
+                    Y: =112
+                    ZIndex: =2
+
+                Rect_Lbl_EditCAB_Header As rectangle:
+                    Fill: =RGBA(250, 155, 112, 1)
+                    Height: =49
+                    Width: =529
+                    ZIndex: =5
+
+                Lbl_EditCAB_Header As label:
+                    Align: =Align.Center
+                    FontWeight: =FontWeight.Bold
+                    Height: =49
+                    Size: =14
+                    Text: ="Edit Change Advisory Board"
+                    Width: =312
+                    X: =108
+                    ZIndex: =6
+
+                Btn_ConfirmEditCAB As button:
+                    DisplayMode: =If(IsBlank(TextInput_EditCAB_GrpName.Text) Or IsBlank(Dropdown_EditCAB_RegionSelect.SelectedText), DisplayMode.Disabled, DisplayMode.Edit)
+                    Fill: =RGBA(221, 79, 14, 1)
+                    Height: =28
+                    OnSelect: |-
+                        =//Patch existing CAB record to ConfigGroupsList
+                        Patch(ConfigGroupsList, LookUp(ConfigGroupsList, ID=SelectedCABGroup.ID),
+                        {
+                          ActiveFlag: If(Checkbox_EditCAB_Active.Value,"Y","N"),
+                          Region: Dropdown_EditCAB_RegionSelect.Selected.Region,
+                          GroupName: TextInput_EditCAB_GrpName.Text,
+                          CABFlag: "Y"
+                        });
+                        
+                        //Close pop-up container
+                        Set(EditCABContainer,false);
+                        Set(SelectedCABAccount,Blank());
+                        
+                        //Reset controls
+                        Reset(Checkbox_EditCAB_Active);
+                        Reset(Dropdown_EditCAB_RegionSelect);
+                        Reset(TextInput_EditCAB_GrpName);
+                        Reset(Gal_EditCAB_Members);
+                        Reset(ComboBox_EditCAB_AddMember_PeoplePicker);
+                    Size: =12
+                    Text: ="Save"
+                    Width: =112
+                    X: =229
+                    Y: =175
+                    ZIndex: =8
+
+                Dropdown_EditCAB_RegionSelect As dropdown:
+                    BorderColor: =RGBA(102, 102, 102, 1)
+                    ChevronBackground: =RGBA(250, 155, 112, 1)
+                    Default: =SelectedCABGroup.Region
+                    Height: =35
+                    Items: =ColRegions.Region
+                    SelectionFill: =RGBA(251, 188, 159, 1)
+                    Width: =183
+                    X: =135
+                    Y: =114
+                    ZIndex: =10
+
+                Checkbox_EditCAB_Active As checkbox:
+                    CheckboxBorderColor: =RGBA(102, 102, 102, 1)
+                    Default: =If(SelectedCABGroup.ActiveFlag="Y",true,false)
+                    Height: =35
+                    Text: ="Set as Active"
+                    Width: =149
+                    X: =343
+                    Y: =112
+                    ZIndex: =13
+
+                TextInput_EditCAB_GrpName As text:
+                    BorderColor: =RGBA(77, 77, 77, 1)
+                    Default: =SelectedCABGroup.GroupName
+                    Height: =37
+                    Width: =357
+                    X: =135
+                    Y: =62
+                    ZIndex: =14
+
+                "Gal_EditCAB_Members As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0'":
+                    '#CopilotOverlayLabel': ="Filtered"
+                    BorderColor: =RGBA(77, 77, 77, 1)
+                    BorderThickness: =1
+                    DelayItemLoading: =true
+                    Height: =255
+                    Items: =Filter(ITAccountsList, GroupAssignment.Value=SelectedCABGroup.GroupName)
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    TemplatePadding: =0
+                    TemplateSize: =61
+                    Width: =442
+                    X: =57
+                    Y: =330
+                    ZIndex: =15
+
+                    Lbl_Gal_EditCABMembers_Name As label:
+                        FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                        Height: =19
+                        OnSelect: =Select(Parent)
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =10
+                        Text: =ThisItem.ITAcctName
+                        VerticalAlign: =VerticalAlign.Top
+                        Width: =242
+                        X: =26
+                        Y: =12
+                        ZIndex: =2
+
+                    Icn_Delete_Gal_EditCABMembers As icon.ChevronRight:
+                        AccessibleLabel: =Self.Tooltip
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(184, 0, 0, 1)
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        DisabledColor: =RGBA(119, 119, 119, 1)
+                        Height: =31
+                        Icon: =Icon.Trash
+                        OnSelect: |-
+                            =//Delete member from associated CAB
+                            RemoveIf(ITAccountsList, ID=ThisItem.ID);
+                        PaddingBottom: =5
+                        PaddingLeft: =5
+                        PaddingRight: =5
+                        PaddingTop: =5
+                        Tooltip: ="Remove from CAB"
+                        Visible: =If(Gal_EditCAB_Members.AllItemsCount>1,true,false)
+                        Width: =31
+                        X: =375
+                        Y: =12
+                        ZIndex: =4
+
+                    Separator1 As rectangle:
+                        Height: =5
+                        OnSelect: =Select(Parent)
+                        Width: =Parent.TemplateWidth
+                        Y: =Parent.TemplateHeight - Self.Height
+                        ZIndex: =5
+
+                    Rectangle1 As rectangle:
+                        Fill: =RGBA(250, 155, 112, 1)
+                        Height: =Parent.TemplateHeight - Separator1.Height
+                        OnSelect: =Select(Parent)
+                        Visible: =ThisItem.IsSelected
+                        Width: =4
+                        ZIndex: =6
+
+                    Lbl_Gal_EditCABMembers_Email As label:
+                        FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                        Height: =Self.Size * 1.8
+                        OnSelect: =Select(Parent)
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =8
+                        Text: =ThisItem.ITAcctEmail
+                        VerticalAlign: =VerticalAlign.Top
+                        Width: =Parent.TemplateWidth - 173
+                        X: =27
+                        Y: =35
+                        ZIndex: =7
+
+                    Checkbox_Gal_EditCABMembers As checkbox:
+                        CheckboxSize: =25
+                        Default: =If(ThisItem.ActiveFlag="Y",true,false)
+                        OnCheck: |-
+                            =Patch(ITAccountsList,LookUp(ITAccountsList,ID=ThisItem.ID),
+                            {
+                                ActiveFlag: "Y"
+                            });
+                        OnSelect: =Select(Parent)
+                        OnUncheck: |-
+                            =Patch(ITAccountsList,LookUp(ITAccountsList,ID=ThisItem.ID),
+                            {
+                                ActiveFlag: "N"
+                            });
+                        Size: =11
+                        Text: =""
+                        Width: =26
+                        X: =322
+                        Y: =2
+                        ZIndex: =8
+
+                Lbl_EditCAB_ListMembers As label:
+                    FontWeight: =FontWeight.Semibold
+                    Height: =32
+                    Text: ="List of CAB Members"
+                    Width: =209
+                    X: =57
+                    Y: =299
+                    ZIndex: =16
+
+                Lbl_EditCAB_ListMembers_Active As label:
+                    Align: =Align.Center
+                    FontWeight: =FontWeight.Semibold
+                    Height: =32
+                    Size: =10
+                    Text: ="Active"
+                    Width: =61
+                    X: =359
+                    Y: =299
+                    ZIndex: =17
+
+                Btn_Close_EditCABContainer As icon.Cancel:
+                    Color: =RGBA(51, 51, 51, 1)
+                    Height: =31
+                    Icon: =Icon.Cancel
+                    OnSelect: |-
+                        =//Close pop-up container
+                        Set(EditCABContainer,false);
+                        Set(SelectedCABAccount,Blank());
+                        
+                        //Reset controls
+                        Reset(Checkbox_EditCAB_Active);
+                        Reset(Dropdown_EditCAB_RegionSelect);
+                        Reset(TextInput_EditCAB_GrpName);
+                        Reset(Gal_EditCAB_Members);
+                        Reset(ComboBox_EditCAB_AddMember_PeoplePicker);
+                    Width: =31
+                    X: =482
+                    Y: =9
+                    ZIndex: =20
+
+                Btn_EditCAB_ConfirmAddMember As button:
+                    DisplayMode: =If(IsBlank(ComboBox_EditCAB_AddMember_PeoplePicker.Selected), DisplayMode.Disabled, DisplayMode.Edit)
+                    Fill: =RGBA(221, 79, 14, 1)
+                    Height: =33
+                    OnSelect: |-
+                        =//Patch new record to ITAccountsList
+                        Patch(ITAccountsList, Defaults(ITAccountsList),
+                        {
+                            GroupAssignment: {Id: SelectedCABGroup.ID,
+                                              Value: SelectedCABGroup.GroupName},
+                            ITAcctName: ComboBox_EditCAB_AddMember_PeoplePicker.Selected.DisplayName,
+                            ITAcctEmail: Lower(ComboBox_EditCAB_AddMember_PeoplePicker.Selected.UserPrincipalName),
+                            ActiveFlag: "Y"
+                        });
+                        
+                        //Reset controls
+                        Reset(ComboBox_EditCAB_AddMember_PeoplePicker);
+                        Reset(Gal_EditCAB_Members);
+                    Size: =12
+                    Text: ="Add"
+                    Width: =72
+                    X: =420
+                    Y: =247
+                    ZIndex: =22
+
+                ComboBox_EditCAB_AddMember_PeoplePicker As combobox:
+                    BorderColor: =RGBA(102, 102, 102, 1)
+                    ChevronBackground: =RGBA(250, 155, 112, 1)
+                    DisplayFields: =["DisplayName","UserPrincipalName"]
+                    Height: =33
+                    InputTextPlaceholder: ="Search by name"
+                    Items: |-
+                        =//Office365Users.SearchUser({searchTerm:ComboBox_EditCAB_AddMember_PeoplePicker.SearchText,top:5})
+                        Filter(Office365Users.SearchUserV2({searchTerm:Self.SearchText,top:5}).value,"@johnsonelectric.com" in ThisRecord.UserPrincipalName)
+                    SearchFields: =["DisplayName"]
+                    SearchItems: |-
+                        =Search(//Office365Users.SearchUser({searchTerm:ComboBox_EditCAB_AddMember_PeoplePicker.SearchText,top:5})
+                        Filter(Office365Users.SearchUserV2({searchTerm:Self.SearchText,top:5}).value,"@johnsonelectric.com" in ThisRecord.UserPrincipalName),ComboBox_EditCAB_AddMember_PeoplePicker.SearchText,DisplayName)
+                    SelectionFill: =RGBA(251, 188, 159, 1)
+                    SelectMultiple: =false
+                    Size: =12
+                    Template: =ListItemTemplate.Person
+                    Width: =350
+                    X: =59
+                    Y: =247
+                    ZIndex: =23
+
+        Container_Box_AddCAB As groupContainer.manualLayoutContainer:
+            Fill: =RGBA(219, 219, 219, 0.75)
+            Height: =768
+            Visible: =AddCABContainer
+            Width: =1366
+            ZIndex: =19
+
+            Container_AddCAB_1 As groupContainer.manualLayoutContainer:
+                BorderThickness: =2
+                Fill: =RGBA(253, 222, 207, 1)
+                Height: =627
+                Visible: =AddCABContainer
+                Width: =529
+                X: =411
+                Y: =78
+                ZIndex: =8
+
+                Lbl_AddCAB_GrpName As label:
+                    Align: =Align.Right
+                    Height: =37
+                    Text: ="Name  *"
+                    Width: =117
+                    X: =12
+                    Y: =62
+                    ZIndex: =1
+
+                Lbl_AddCAB_Region As label:
+                    Align: =Align.Right
+                    Height: =37
+                    Text: ="Region  *"
+                    Width: =117
+                    X: =12
+                    Y: =112
+                    ZIndex: =2
+
+                Rect_Lbl_AddCAB_Header As rectangle:
+                    Fill: =RGBA(250, 155, 112, 1)
+                    Height: =49
+                    Width: =529
+                    ZIndex: =5
+
+                Lbl_AddCAB_Header As label:
+                    Align: =Align.Center
+                    FontWeight: =FontWeight.Bold
+                    Height: =49
+                    Size: =14
+                    Text: ="Add Change Advisory Board"
+                    Width: =312
+                    X: =108
+                    ZIndex: =6
+
+                Btn_ConfirmAddCAB As button:
+                    DisplayMode: =If(IsBlank(TextInput_AddCAB_GrpName.Text) Or IsBlank(Dropdown_AddCAB_RegionSelect.SelectedText) Or !IsBlank(NewCABCreated), DisplayMode.Disabled, DisplayMode.Edit)
+                    Fill: =RGBA(221, 79, 14, 1)
+                    OnSelect: |-
+                        =//Patch new CAB Group record to ConfigGroupsList
+                        Set(NewCABCreated,Patch(ConfigGroupsList, Defaults(ConfigGroupsList),
+                        {
+                          ActiveFlag: If(Checkbox_AddCAB_Active.Value,"Y","N"),
+                          Region: Dropdown_AddCAB_RegionSelect.Selected.Region,
+                          GroupName: TextInput_AddCAB_GrpName.Text,
+                          CABFlag: "Y"
+                        }));
+                        
+                        /*
+                        //Close pop-up container
+                        Set(EditCABContainer,false);
+                        Set(SelectedCABAccount,Blank());
+                        */
+                        
+                        //Reset controls
+                        /*
+                        Reset(Checkbox_AddCAB_Active);
+                        Reset(Dropdown_AddCAB_RegionSelect);
+                        Reset(TextInput_AddCAB_GrpName);
+                        */
+                        Reset(Gal_AddCAB_Members);
+                    Size: =12
+                    Text: ="Create CAB"
+                    Width: =112
+                    X: =231
+                    Y: =172
+                    ZIndex: =8
+
+                Dropdown_AddCAB_RegionSelect As dropdown:
+                    BorderColor: =RGBA(102, 102, 102, 1)
+                    ChevronBackground: =RGBA(250, 155, 112, 1)
+                    Default: =""
+                    Height: =35
+                    Items: =ColRegions.Region
+                    SelectionFill: =RGBA(251, 188, 159, 1)
+                    Width: =183
+                    X: =135
+                    Y: =114
+                    ZIndex: =10
+
+                Checkbox_AddCAB_Active As checkbox:
+                    CheckboxBorderColor: =RGBA(102, 102, 102, 1)
+                    Height: =35
+                    Text: ="Set as Active"
+                    Width: =149
+                    X: =343
+                    Y: =112
+                    ZIndex: =13
+
+                TextInput_AddCAB_GrpName As text:
+                    BorderColor: =RGBA(77, 77, 77, 1)
+                    Default: =
+                    Height: =37
+                    Width: =357
+                    X: =135
+                    Y: =62
+                    ZIndex: =14
+
+                Btn_Close_AddCABContainer As icon.Cancel:
+                    Color: =RGBA(51, 51, 51, 1)
+                    Height: =31
+                    Icon: =Icon.Cancel
+                    OnSelect: |-
+                        =//Close pop-up container
+                        Set(AddCABContainer,false);
+                        Set(NewCABCreated,Blank());
+                        
+                        //Reset controls
+                        Reset(Checkbox_AddCAB_Active);
+                        Reset(Dropdown_AddCAB_RegionSelect);
+                        Reset(TextInput_AddCAB_GrpName);
+                        Reset(ComboBox_AddCAB_AddMember_PeoplePicker);
+                        Reset(Gal_AddCAB_Members);
+                    Width: =31
+                    X: =482
+                    Y: =9
+                    ZIndex: =20
+
+                Grp_AddCAB_AddMembers As group:
+                    Height: =5
+                    Width: =5
+                    X: =40
+                    Y: =40
+                    ZIndex: =24
+
+                    "Gal_AddCAB_Members As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0'":
+                        '#CopilotOverlayLabel': ="Filtered"
+                        BorderColor: =RGBA(77, 77, 77, 1)
+                        BorderThickness: =1
+                        DelayItemLoading: =true
+                        Height: =255
+                        Items: |-
+                            =If(IsBlank(NewCABCreated),Blank(),
+                            Filter(ITAccountsList, GroupAssignment.Value=NewCABCreated.GroupName))
+                        Layout: =Layout.Vertical
+                        LoadingSpinner: =LoadingSpinner.Data
+                        TemplatePadding: =0
+                        TemplateSize: =61
+                        Visible: =If(!IsBlank(NewCABCreated),true,false)
+                        Width: =442
+                        X: =57
+                        Y: =344
+                        ZIndex: =15
+
+                        Title1_2 As label:
+                            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Height: =19
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =10
+                            Text: =ThisItem.ITAcctName
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =242
+                            X: =26
+                            Y: =12
+                            ZIndex: =2
+
+                        NextArrow1_1 As icon.ChevronRight:
+                            AccessibleLabel: =Self.Tooltip
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(184, 0, 0, 1)
+                            DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                            DisabledColor: =RGBA(119, 119, 119, 1)
+                            Height: =31
+                            Icon: =Icon.Trash
+                            OnSelect: |-
+                                =//Delete member from associated CAB
+                                RemoveIf(ITAccountsList, ID=ThisItem.ID);
+                            PaddingBottom: =5
+                            PaddingLeft: =5
+                            PaddingRight: =5
+                            PaddingTop: =5
+                            Tooltip: ="Remove from CAB"
+                            Visible: =If(Gal_AddCAB_Members.AllItemsCount>1,true,false)
+                            Width: =31
+                            X: =375
+                            Y: =12
+                            ZIndex: =4
+
+                        Separator1_1 As rectangle:
+                            Height: =5
+                            OnSelect: =Select(Parent)
+                            Width: =Parent.TemplateWidth
+                            Y: =Parent.TemplateHeight - Self.Height
+                            ZIndex: =5
+
+                        Rectangle1_1 As rectangle:
+                            Fill: =RGBA(250, 155, 112, 1)
+                            Height: =Parent.TemplateHeight - Separator1_1.Height
+                            OnSelect: =Select(Parent)
+                            Visible: =ThisItem.IsSelected
+                            Width: =4
+                            ZIndex: =6
+
+                        Title1_3 As label:
+                            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Height: =Self.Size * 1.8
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =8
+                            Text: =ThisItem.ITAcctEmail
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =Parent.TemplateWidth - 173
+                            X: =27
+                            Y: =35
+                            ZIndex: =7
+
+                        Checkbox3_1 As checkbox:
+                            CheckboxSize: =25
+                            Default: =If(ThisItem.ActiveFlag="Y",true,false)
+                            OnCheck: |-
+                                =Patch(ITAccountsList,LookUp(ITAccountsList,ID=ThisItem.ID),
+                                {
+                                    ActiveFlag: "Y"
+                                });
+                            OnSelect: =Select(Parent)
+                            OnUncheck: |-
+                                =Patch(ITAccountsList,LookUp(ITAccountsList,ID=ThisItem.ID),
+                                {
+                                    ActiveFlag: "N"
+                                });
+                            Size: =11
+                            Text: =""
+                            Width: =26
+                            X: =322
+                            Y: =2
+                            ZIndex: =8
+
+                    Lbl_AddCAB_ListMembers As label:
+                        FontWeight: =FontWeight.Semibold
+                        Height: =32
+                        Text: ="Add CAB Members"
+                        Visible: =If(!IsBlank(NewCABCreated),true,false)
+                        Width: =209
+                        X: =59
+                        Y: =230
+                        ZIndex: =16
+
+                    Lbl_AddCAB_ListMembers_Active As label:
+                        Align: =Align.Center
+                        FontWeight: =FontWeight.Semibold
+                        Height: =32
+                        Size: =10
+                        Text: ="Active"
+                        Visible: =If(!IsBlank(NewCABCreated),true,false)
+                        Width: =61
+                        X: =359
+                        Y: =312
+                        ZIndex: =17
+
+                    Btn_AddCAB_ConfirmAddMember As button:
+                        DisplayMode: =If(IsBlank(ComboBox_AddCAB_AddMember_PeoplePicker.Selected), DisplayMode.Disabled, DisplayMode.Edit)
+                        Fill: =RGBA(221, 79, 14, 1)
+                        Height: =33
+                        OnSelect: |-
+                            =//Patch new record to ITAccountsList
+                            Patch(ITAccountsList, Defaults(ITAccountsList),
+                            {
+                                GroupAssignment: {Id: NewCABCreated.ID,
+                                                  Value: NewCABCreated.GroupName},
+                                ITAcctName: ComboBox_AddCAB_AddMember_PeoplePicker.Selected.DisplayName,
+                                ITAcctEmail: Lower(ComboBox_AddCAB_AddMember_PeoplePicker.Selected.UserPrincipalName),
+                                ActiveFlag: "Y"
+                            });
+                            
+                            //Reset controls
+                            Reset(ComboBox_AddCAB_AddMember_PeoplePicker);
+                            Reset(Gal_AddCAB_Members);
+                        Size: =12
+                        Text: ="Add"
+                        Visible: =If(!IsBlank(NewCABCreated),true,false)
+                        Width: =72
+                        X: =420
+                        Y: =268
+                        ZIndex: =22
+
+                    ComboBox_AddCAB_AddMember_PeoplePicker As combobox:
+                        BorderColor: =RGBA(102, 102, 102, 1)
+                        ChevronBackground: =RGBA(250, 155, 112, 1)
+                        DisplayFields: =["DisplayName","UserPrincipalName"]
+                        Height: =33
+                        InputTextPlaceholder: ="Search by name"
+                        Items: |-
+                            =//Office365Users.SearchUser({searchTerm:ComboBox_AddCAB_AddMember_PeoplePicker.SearchText,top:5})
+                            Filter(Office365Users.SearchUserV2({searchTerm:Self.SearchText,top:5}).value,"@johnsonelectric.com" in ThisRecord.UserPrincipalName)
+                        SearchFields: =["DisplayName"]
+                        SearchItems: |-
+                            =Search(//Office365Users.SearchUser({searchTerm:ComboBox_AddCAB_AddMember_PeoplePicker.SearchText,top:5})
+                            Filter(Office365Users.SearchUserV2({searchTerm:Self.SearchText,top:5}).value,"@johnsonelectric.com" in ThisRecord.UserPrincipalName),ComboBox_AddCAB_AddMember_PeoplePicker.SearchText,DisplayName)
+                        SelectionFill: =RGBA(251, 188, 159, 1)
+                        SelectMultiple: =false
+                        Size: =12
+                        Template: =ListItemTemplate.Person
+                        Visible: =If(!IsBlank(NewCABCreated),true,false)
+                        Width: =350
+                        X: =59
+                        Y: =268
+                        ZIndex: =23
+
+    Grp_Config_Implementation As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =29
+
+        Container_Implementation_Gal As groupContainer.manualLayoutContainer:
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =540
+            Visible: =If(SystemAdminGalFilterBtn="ImplementationGroups", true, false)
+            Width: =1297
+            X: =38
+            Y: =184
+            ZIndex: =20
+
+            Lbl_Gal_Implementation_Hdr_CountMembers As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Semibold
+                Height: =37
+                Size: =10
+                Text: ="No. of Active Members"
+                Width: =121
+                X: =557
+                Y: =6
+                ZIndex: =1
+
+            Lbl_Gal_Implementation_Hdr_GroupName As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Implementation Group"
+                Width: =179
+                X: =137
+                Y: =7
+                ZIndex: =2
+
+            Lbl_Gal_Implementation_Hdr_Created As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Created"
+                Width: =138
+                X: =708
+                Y: =5
+                ZIndex: =3
+
+            Lbl_Gal_Implementation_Hdr_LastMod As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: |-
+                    ="Last Modified
+                    "
+                Width: =115
+                X: =873
+                Y: =5
+                ZIndex: =4
+
+            Lbl_Gal_Implementation_Hdr_Region As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =31
+                Size: =10
+                Text: ="Region"
+                Width: =94
+                X: =28
+                Y: =7
+                ZIndex: =5
+
+            Lbl_Gal_Implementation_Hdr_Active As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =27
+                Size: =10
+                Text: ="Active"
+                Width: =87
+                X: =481
+                Y: =7
+                ZIndex: =6
+
+            "Gallery_ImplementationConfig As gallery.'BrowseLayout_Vertical_TwoTextVariant_ver5.0'":
+                '#CopilotOverlayLabel': ="Filtered"
+                BorderColor: =RGBA(102, 102, 102, 1)
+                BorderStyle: =BorderStyle.None
+                BorderThickness: =1
+                DelayItemLoading: =true
+                Height: =474
+                Items: |-
+                    =//Connect to SharePoint List
+                    Switch(Dropdown_Filter_Implementation_Region.Selected.Value,
+                    "Global",Search(Filter(ConfigGroupsList,ImplementationFlag="Y" And Region="Global"),TextInput_SearchImplementationGal.Text,GroupName),
+                    "Asia",Search(Filter(ConfigGroupsList,ImplementationFlag="Y" And Region="Asia"),TextInput_SearchImplementationGal.Text,GroupName),
+                    "Europe",Search(Filter(ConfigGroupsList,ImplementationFlag="Y" And Region="Europe"),TextInput_SearchImplementationGal.Text,GroupName),
+                    "Americas",Search(Filter(ConfigGroupsList,ImplementationFlag="Y" And Region="Americas"),TextInput_SearchImplementationGal.Text,GroupName),
+                    Search(Filter(ConfigGroupsList,ImplementationFlag="Y"),TextInput_SearchImplementationGal.Text,GroupName))
+                Layout: =Layout.Vertical
+                LoadingSpinner: =LoadingSpinner.Data
+                NavigationStep: =2
+                OnSelect: =Set(SelectedImplementationGroup, Gallery_ImplementationConfig.Selected);
+                TemplatePadding: =0
+                TemplateSize: =59
+                Width: =1297
+                Y: =45
+                ZIndex: =7
+
+                Gal_ImplementationGrp_GroupName As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =22
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.GroupName
+                    Width: =319
+                    X: =147
+                    Y: =14
+                    ZIndex: =2
+
+                Gal_Seperator_4 As rectangle:
+                    Height: =8
+                    OnSelect: =Select(Parent)
+                    Width: =Parent.TemplateWidth
+                    Y: =Parent.TemplateHeight - Self.Height
+                    ZIndex: =4
+
+                Gal_RectSelect_4 As rectangle:
+                    Fill: =RGBA(250, 155, 112, 1)
+                    Height: =Parent.TemplateHeight - Gal_Seperator_4.Height
+                    OnSelect: =Select(Parent)
+                    Visible: =ThisItem.IsSelected
+                    Width: =4
+                    ZIndex: =5
+
+                Lbl_Gal_ImplementationGrp_LastMod As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =22
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.Modified
+                    Width: =137
+                    X: =870
+                    Y: =14
+                    ZIndex: =12
+
+                Lbl_Gal_ImplementationGrp_ActiveFlag As label:
+                    Align: =Align.Center
+                    Height: =41
+                    OnSelect: =Select(Parent)
+                    Size: =9
+                    Text: =ThisItem.ActiveFlag
+                    Width: =75
+                    X: =466
+                    Y: =5
+                    ZIndex: =13
+
+                Lbl_Gal_ImplementationGrp_Region As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =22
+                    OnSelect: =Select(Parent)
+                    Size: =9
+                    Text: =ThisItem.Region
+                    Width: =69
+                    X: =31
+                    Y: =14
+                    ZIndex: =14
+
+                Lbl_Gal_ImplementationGrp_Created As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =22
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.Created
+                    Width: =137
+                    X: =706
+                    Y: =14
+                    ZIndex: =16
+
+                Lbl_Gal_ImplementationGrp_Count As label:
+                    Align: =Align.Center
+                    Height: =41
+                    OnSelect: =Select(Parent)
+                    Size: =9
+                    Text: =CountRows(Filter(ITAccountsList, GroupAssignment.Value=ThisItem.GroupName && ActiveFlag="Y"))
+                    Width: =75
+                    X: =580
+                    Y: =5
+                    ZIndex: =17
+
+        Btn_AddImplementationGroup As icon.Add:
+            Color: =RGBA(255, 125, 35, 1)
+            DisabledColor: =RGBA(219, 219, 219, 1)
+            Height: =25
+            Icon: =Icon.Add
+            OnSelect: |-
+                =Set(EditImplementationGrpContainer,false);
+                Set(AddImplementationGrpContainer,true);
+                
+                Set(NewImplementationGroupCreated,Blank());
+            Tooltip: ="Add New Implementation Group"
+            Visible: =If(SystemAdminGalFilterBtn="ImplementationGroups", true, false)
+            Width: =30
+            X: =1158
+            Y: =148
+            ZIndex: =21
+
+        Btn_EditImplementationGroup As icon.Add:
+            Color: =RGBA(255, 125, 35, 1)
+            DisabledBorderColor: =RGBA(102, 102, 102, 1)
+            DisabledColor: =RGBA(219, 219, 219, 1)
+            DisplayMode: =If(IsBlank(SelectedImplementationGroup), DisplayMode.Disabled, DisplayMode.Edit)
+            Height: =25
+            Icon: =Icon.Edit
+            OnSelect: |-
+                =Set(AddImplementationGrpContainer,false);
+                Set(EditImplementationGrpContainer,true);
+            Tooltip: ="Edit Implementation Group"
+            Visible: =If(SystemAdminGalFilterBtn="ImplementationGroups", true, false)
+            Width: =30
+            X: =1205
+            Y: =148
+            ZIndex: =22
+
+        Btn_DisableImplementationGrp As icon.Add:
+            Color: =RGBA(255, 125, 35, 1)
+            DisabledBorderColor: =RGBA(128, 128, 128, 1)
+            DisabledColor: =RGBA(219, 219, 219, 1)
+            DisplayMode: =If(IsBlank(SelectedImplementationGroup) Or SelectedImplementationGroup.ActiveFlag<>"Y", DisplayMode.Disabled, DisplayMode.Edit)
+            Height: =25
+            Icon: =Icon.Blocked
+            OnSelect: |-
+                =//Set Implementation Group to Inactive
+                Patch(
+                    ConfigGroupsList,
+                    LookUp(
+                        ConfigGroupsList,
+                        ID = SelectedImplementationGroup.ID
+                    ),
+                    {ActiveFlag: "N"}
+                );
+                
+                Set(SelectedImplementationGroup,Blank());
+            Tooltip: ="Set Implementation Group to Inactive"
+            Visible: =If(SystemAdminGalFilterBtn="ImplementationGroups", true, false)
+            Width: =30
+            X: =1251
+            Y: =148
+            ZIndex: =23
+
+        Dropdown_Filter_Implementation_Region As dropdown:
+            BorderColor: =RGBA(51, 51, 51, 1)
+            BorderThickness: =1
+            ChevronBackground: =RGBA(250, 155, 112, 1)
+            Default: ="All"
+            Height: =25
+            Items: =["All","Global","Asia","Europe","Americas"]
+            SelectionFill: =RGBA(253, 222, 207, 1)
+            Size: =10
+            Visible: =If(SystemAdminGalFilterBtn="ImplementationGroups", true, false)
+            Width: =120
+            X: =47
+            Y: =148
+            ZIndex: =24
+
+        TextInput_SearchImplementationGal As text:
+            BorderColor: =RGBA(51, 51, 51, 1)
+            BorderThickness: =1
+            Default: =
+            Height: =25
+            HintText: ="Search by group name"
+            PaddingLeft: =30
+            RadiusBottomLeft: =10
+            RadiusBottomRight: =10
+            RadiusTopLeft: =10
+            RadiusTopRight: =10
+            Size: =9
+            Visible: =If(SystemAdminGalFilterBtn="ImplementationGroups", true, false)
+            Width: =307
+            X: =184
+            Y: =148
+            ZIndex: =25
+
+        Icn_SearchImplementationGal As icon.Search:
+            Color: =RGBA(0, 0, 0, 1)
+            Height: =16
+            Icon: =Icon.Search
+            Visible: =If(SystemAdminGalFilterBtn="ImplementationGroups", true, false)
+            Width: =14
+            X: =193
+            Y: =152
+            ZIndex: =26
+
+        Container_Box_AddImplementationGrp As groupContainer.manualLayoutContainer:
+            Fill: =RGBA(219, 219, 219, 0.75)
+            Height: =768
+            Visible: =AddImplementationGrpContainer
+            Width: =1366
+            ZIndex: =27
+
+            Container_AddImplementationGrp_2 As groupContainer.manualLayoutContainer:
+                BorderThickness: =2
+                Fill: =RGBA(253, 222, 207, 1)
+                Height: =627
+                Visible: =AddImplementationGrpContainer
+                Width: =529
+                X: =411
+                Y: =78
+                ZIndex: =8
+
+                Lbl_AddImplementation_GrpName As label:
+                    Align: =Align.Right
+                    Height: =37
+                    Text: ="Name  *"
+                    Width: =117
+                    X: =12
+                    Y: =62
+                    ZIndex: =1
+
+                Lbl_AddImplementation_Region As label:
+                    Align: =Align.Right
+                    Height: =37
+                    Text: ="Region  *"
+                    Width: =117
+                    X: =12
+                    Y: =112
+                    ZIndex: =2
+
+                Rect_Lbl_AddImplementation_Header As rectangle:
+                    Fill: =RGBA(250, 155, 112, 1)
+                    Height: =49
+                    Width: =529
+                    ZIndex: =5
+
+                Lbl_AddImplementation_Header As label:
+                    Align: =Align.Center
+                    FontWeight: =FontWeight.Bold
+                    Height: =49
+                    Size: =14
+                    Text: ="Add Implementation Group"
+                    Width: =312
+                    X: =108
+                    ZIndex: =6
+
+                Btn_ConfirmAddImplementation As button:
+                    DisplayMode: =If(IsBlank(TextInput_AddImplementation_GrpName.Text) Or IsBlank(Dropdown_AddImplementation_RegionSelect.SelectedText) Or !IsBlank(NewImplementationGroupCreated), DisplayMode.Disabled, DisplayMode.Edit)
+                    Fill: =RGBA(221, 79, 14, 1)
+                    Height: =38
+                    OnSelect: |-
+                        =//Patch new Implementation Group record to ConfigGroupsList
+                        Set(NewImplementationGroupCreated,Patch(ConfigGroupsList, Defaults(ConfigGroupsList),
+                        {
+                          ActiveFlag: If(Checkbox_AddImplementation_Active.Value,"Y","N"),
+                          Region: Dropdown_AddImplementation_RegionSelect.Selected.Region,
+                          GroupName: TextInput_AddImplementation_GrpName.Text,
+                          ImplementationFlag: "Y"
+                        }));
+                        
+                        /*
+                        //Close pop-up container
+                        Set(EditCABContainer,false);
+                        Set(SelectedCABAccount,Blank());
+                        */
+                        
+                        //Reset controls
+                        /*
+                        Reset(Checkbox_AddCAB_Active);
+                        Reset(Dropdown_AddCAB_RegionSelect);
+                        Reset(TextInput_AddCAB_GrpName);
+                        */
+                        Reset(Gal_AddImplementation_Members);
+                    Size: =12
+                    Text: ="Create Group"
+                    Width: =128
+                    X: =215
+                    Y: =170
+                    ZIndex: =8
+
+                Dropdown_AddImplementation_RegionSelect As dropdown:
+                    BorderColor: =RGBA(102, 102, 102, 1)
+                    ChevronBackground: =RGBA(250, 155, 112, 1)
+                    Default: =""
+                    Height: =35
+                    Items: =ColRegions.Region
+                    SelectionFill: =RGBA(251, 188, 159, 1)
+                    Width: =183
+                    X: =135
+                    Y: =114
+                    ZIndex: =10
+
+                Checkbox_AddImplementation_Active As checkbox:
+                    CheckboxBorderColor: =RGBA(102, 102, 102, 1)
+                    Height: =35
+                    Text: ="Set as Active"
+                    Width: =149
+                    X: =343
+                    Y: =112
+                    ZIndex: =13
+
+                TextInput_AddImplementation_GrpName As text:
+                    BorderColor: =RGBA(77, 77, 77, 1)
+                    Default: =
+                    Height: =37
+                    Width: =357
+                    X: =135
+                    Y: =62
+                    ZIndex: =14
+
+                Btn_Close_AddImplementationContainer As icon.Cancel:
+                    Color: =RGBA(51, 51, 51, 1)
+                    Height: =31
+                    Icon: =Icon.Cancel
+                    OnSelect: |-
+                        =//Close pop-up container
+                        Set(AddImplementationGrpContainer,false);
+                        Set(NewCABCreated,Blank());
+                        
+                        //Reset controls
+                        Reset(Checkbox_AddImplementation_Active);
+                        Reset(Dropdown_AddImplementation_RegionSelect);
+                        Reset(TextInput_AddImplementation_GrpName);
+                        Reset(ComboBox_AddImplementation_AddMember_PeoplePicker);
+                        Reset(Gal_AddImplementation_Members);
+                    Width: =31
+                    X: =482
+                    Y: =9
+                    ZIndex: =20
+
+                Grp_AddImplementation_AddMembers As group:
+                    Height: =5
+                    Width: =5
+                    X: =40
+                    Y: =40
+                    ZIndex: =24
+
+                    "Gal_AddImplementation_Members As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0'":
+                        '#CopilotOverlayLabel': ="Filtered"
+                        BorderColor: =RGBA(77, 77, 77, 1)
+                        BorderThickness: =1
+                        DelayItemLoading: =true
+                        Height: =255
+                        Items: |-
+                            =If(IsBlank(NewImplementationGroupCreated),Blank(),
+                            Filter(ITAccountsList, GroupAssignment.Value=NewImplementationGroupCreated.GroupName))
+                        Layout: =Layout.Vertical
+                        LoadingSpinner: =LoadingSpinner.Data
+                        TemplatePadding: =0
+                        TemplateSize: =61
+                        Visible: =If(!IsBlank(NewImplementationGroupCreated),true,false)
+                        Width: =442
+                        X: =57
+                        Y: =344
+                        ZIndex: =15
+
+                        Title1_4 As label:
+                            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Height: =19
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =10
+                            Text: =ThisItem.ITAcctName
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =242
+                            X: =26
+                            Y: =12
+                            ZIndex: =2
+
+                        NextArrow1_2 As icon.ChevronRight:
+                            AccessibleLabel: =Self.Tooltip
+                            BorderColor: =RGBA(0, 0, 0, 1)
+                            Color: =RGBA(184, 0, 0, 1)
+                            DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                            DisabledColor: =RGBA(119, 119, 119, 1)
+                            Height: =31
+                            Icon: =Icon.Trash
+                            OnSelect: |-
+                                =//Delete member from associated CAB
+                                RemoveIf(ITAccountsList, ID=ThisItem.ID);
+                            PaddingBottom: =5
+                            PaddingLeft: =5
+                            PaddingRight: =5
+                            PaddingTop: =5
+                            Tooltip: ="Remove from Implementation Group"
+                            Visible: =If(Gal_AddImplementation_Members.AllItemsCount>1,true,false)
+                            Width: =31
+                            X: =375
+                            Y: =12
+                            ZIndex: =4
+
+                        Separator1_2 As rectangle:
+                            Height: =5
+                            OnSelect: =Select(Parent)
+                            Width: =Parent.TemplateWidth
+                            Y: =Parent.TemplateHeight - Self.Height
+                            ZIndex: =5
+
+                        Rectangle1_2 As rectangle:
+                            Fill: =RGBA(250, 155, 112, 1)
+                            Height: =Parent.TemplateHeight - Separator1_2.Height
+                            OnSelect: =Select(Parent)
+                            Visible: =ThisItem.IsSelected
+                            Width: =4
+                            ZIndex: =6
+
+                        Title1_5 As label:
+                            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                            Height: =Self.Size * 1.8
+                            OnSelect: =Select(Parent)
+                            PaddingBottom: =0
+                            PaddingLeft: =0
+                            PaddingRight: =0
+                            PaddingTop: =0
+                            Size: =8
+                            Text: =ThisItem.ITAcctEmail
+                            VerticalAlign: =VerticalAlign.Top
+                            Width: =Parent.TemplateWidth - 173
+                            X: =27
+                            Y: =35
+                            ZIndex: =7
+
+                        Checkbox3_2 As checkbox:
+                            CheckboxSize: =25
+                            Default: =If(ThisItem.ActiveFlag="Y",true,false)
+                            OnCheck: |-
+                                =Patch(ITAccountsList,LookUp(ITAccountsList,ID=ThisItem.ID),
+                                {
+                                    ActiveFlag: "Y"
+                                });
+                            OnSelect: =Select(Parent)
+                            OnUncheck: |-
+                                =Patch(ITAccountsList,LookUp(ITAccountsList,ID=ThisItem.ID),
+                                {
+                                    ActiveFlag: "N"
+                                });
+                            Size: =11
+                            Text: =""
+                            Width: =26
+                            X: =322
+                            Y: =2
+                            ZIndex: =8
+
+                    Lbl_AddImplementation_ListMembers As label:
+                        FontWeight: =FontWeight.Semibold
+                        Height: =27
+                        Text: ="Add Staff to Implementation Group"
+                        Visible: =If(!IsBlank(NewImplementationGroupCreated),true,false)
+                        Width: =350
+                        X: =59
+                        Y: =230
+                        ZIndex: =16
+
+                    Lbl_AddImplementation_ListMembers_Active As label:
+                        Align: =Align.Center
+                        FontWeight: =FontWeight.Semibold
+                        Height: =32
+                        Size: =10
+                        Text: ="Active"
+                        Visible: =If(!IsBlank(NewImplementationGroupCreated),true,false)
+                        Width: =61
+                        X: =359
+                        Y: =312
+                        ZIndex: =17
+
+                    Btn_AddImplementation_ConfirmAddMember As button:
+                        DisplayMode: =If(IsBlank(ComboBox_AddImplementation_AddMember_PeoplePicker.Selected), DisplayMode.Disabled, DisplayMode.Edit)
+                        Fill: =RGBA(221, 79, 14, 1)
+                        Height: =33
+                        OnSelect: |-
+                            =//Patch new record to ITAccountsList
+                            Patch(ITAccountsList, Defaults(ITAccountsList),
+                            {
+                                GroupAssignment: {Id: NewImplementationGroupCreated.ID,
+                                                  Value: NewImplementationGroupCreated.GroupName},
+                                ITAcctName: ComboBox_AddImplementation_AddMember_PeoplePicker.Selected.DisplayName,
+                                ITAcctEmail: Lower(ComboBox_AddImplementation_AddMember_PeoplePicker.Selected.UserPrincipalName),
+                                ActiveFlag: "Y"
+                            });
+                            
+                            //Reset controls
+                            Reset(ComboBox_AddImplementation_AddMember_PeoplePicker);
+                            Reset(Gal_AddImplementation_Members);
+                        Size: =12
+                        Text: ="Add"
+                        Visible: =If(!IsBlank(NewImplementationGroupCreated),true,false)
+                        Width: =72
+                        X: =420
+                        Y: =268
+                        ZIndex: =22
+
+                    ComboBox_AddImplementation_AddMember_PeoplePicker As combobox:
+                        BorderColor: =RGBA(102, 102, 102, 1)
+                        ChevronBackground: =RGBA(250, 155, 112, 1)
+                        DisplayFields: =["DisplayName","UserPrincipalName"]
+                        Height: =33
+                        InputTextPlaceholder: ="Search by name"
+                        Items: |-
+                            =//Office365Users.SearchUser({searchTerm:ComboBox_AddImplementation_AddMember_PeoplePicker.SearchText,top:5})
+                            Filter(Office365Users.SearchUserV2({searchTerm:Self.SearchText,top:5}).value,"@johnsonelectric.com" in ThisRecord.UserPrincipalName)
+                        SearchFields: =["DisplayName"]
+                        SearchItems: |-
+                            =Search(//Office365Users.SearchUser({searchTerm:ComboBox_AddImplementation_AddMember_PeoplePicker.SearchText,top:5})
+                            Filter(Office365Users.SearchUserV2({searchTerm:Self.SearchText,top:5}).value,"@johnsonelectric.com" in ThisRecord.UserPrincipalName),ComboBox_AddImplementation_AddMember_PeoplePicker.SearchText,DisplayName)
+                        SelectionFill: =RGBA(251, 188, 159, 1)
+                        SelectMultiple: =false
+                        Size: =12
+                        Template: =ListItemTemplate.Person
+                        Visible: =If(!IsBlank(NewImplementationGroupCreated),true,false)
+                        Width: =350
+                        X: =59
+                        Y: =268
+                        ZIndex: =23
+
+        Container_Box_EditImplementationGrp As groupContainer.manualLayoutContainer:
+            Fill: =RGBA(219, 219, 219, 0.75)
+            Height: =768
+            Visible: =EditImplementationGrpContainer
+            Width: =1366
+            ZIndex: =28
+
+            Container_EditImplementationGrp_2 As groupContainer.manualLayoutContainer:
+                BorderThickness: =2
+                Fill: =RGBA(253, 222, 207, 1)
+                Height: =627
+                Visible: =EditImplementationGrpContainer
+                Width: =529
+                X: =411
+                Y: =78
+                ZIndex: =8
+
+                Lbl_EditImplementation_GrpName As label:
+                    Align: =Align.Right
+                    Height: =37
+                    Text: ="Name  *"
+                    Width: =117
+                    X: =12
+                    Y: =62
+                    ZIndex: =1
+
+                Lbl_EditImplementation_Region As label:
+                    Align: =Align.Right
+                    Height: =37
+                    Text: ="Region  *"
+                    Width: =117
+                    X: =12
+                    Y: =112
+                    ZIndex: =2
+
+                Rect_Lbl_EditImplementation_Header As rectangle:
+                    Fill: =RGBA(250, 155, 112, 1)
+                    Height: =49
+                    Width: =529
+                    ZIndex: =5
+
+                Lbl_EditImplementation_Header As label:
+                    Align: =Align.Center
+                    FontWeight: =FontWeight.Bold
+                    Height: =49
+                    Size: =14
+                    Text: ="Edit Implementation Group"
+                    Width: =312
+                    X: =108
+                    ZIndex: =6
+
+                Btn_ConfirmEditImplementation As button:
+                    DisplayMode: =If(IsBlank(TextInput_EditImplementation_GrpName.Text) Or IsBlank(Dropdown_EditImplementation_RegionSelect.SelectedText), DisplayMode.Disabled, DisplayMode.Edit)
+                    Fill: =RGBA(221, 79, 14, 1)
+                    Height: =28
+                    OnSelect: |-
+                        =//Patch existing Implementation Group record to ConfigGroupsList
+                        Patch(ConfigGroupsList, LookUp(ConfigGroupsList, ID=SelectedImplementationGroup.ID),
+                        {
+                          ActiveFlag: If(Checkbox_EditImplementation_Active.Value,"Y","N"),
+                          Region: Dropdown_EditImplementation_RegionSelect.Selected.Region,
+                          GroupName: TextInput_EditImplementation_GrpName.Text,
+                          ImplementationFlag: "Y"
+                        });
+                        
+                        //Close pop-up container
+                        Set(EditImplementationGrpContainer,false);
+                        Set(SelectedImplementationGroup,Blank());
+                        
+                        //Reset controls
+                        Reset(Checkbox_EditImplementation_Active);
+                        Reset(Dropdown_EditImplementation_RegionSelect);
+                        Reset(TextInput_EditImplementation_GrpName);
+                        Reset(Gal_EditImplementation_Members);
+                        Reset(ComboBox_EditImplementation_AddMember_PeoplePicker);
+                    Size: =12
+                    Text: ="Save"
+                    Width: =112
+                    X: =229
+                    Y: =175
+                    ZIndex: =8
+
+                Dropdown_EditImplementation_RegionSelect As dropdown:
+                    BorderColor: =RGBA(102, 102, 102, 1)
+                    ChevronBackground: =RGBA(250, 155, 112, 1)
+                    Default: =SelectedImplementationGroup.Region
+                    Height: =35
+                    Items: =ColRegions.Region
+                    SelectionFill: =RGBA(251, 188, 159, 1)
+                    Width: =183
+                    X: =135
+                    Y: =114
+                    ZIndex: =10
+
+                Checkbox_EditImplementation_Active As checkbox:
+                    CheckboxBorderColor: =RGBA(102, 102, 102, 1)
+                    Default: =If(SelectedImplementationGroup.ActiveFlag="Y",true,false)
+                    Height: =35
+                    Text: ="Set as Active"
+                    Width: =149
+                    X: =343
+                    Y: =112
+                    ZIndex: =13
+
+                TextInput_EditImplementation_GrpName As text:
+                    BorderColor: =RGBA(77, 77, 77, 1)
+                    Default: =SelectedImplementationGroup.GroupName
+                    Height: =37
+                    Width: =357
+                    X: =135
+                    Y: =62
+                    ZIndex: =14
+
+                "Gal_EditImplementation_Members As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0'":
+                    '#CopilotOverlayLabel': ="Filtered"
+                    BorderColor: =RGBA(77, 77, 77, 1)
+                    BorderThickness: =1
+                    DelayItemLoading: =true
+                    Height: =255
+                    Items: =Filter(ITAccountsList, GroupAssignment.Value=SelectedImplementationGroup.GroupName)
+                    Layout: =Layout.Vertical
+                    LoadingSpinner: =LoadingSpinner.Data
+                    TemplatePadding: =0
+                    TemplateSize: =61
+                    Width: =442
+                    X: =57
+                    Y: =330
+                    ZIndex: =15
+
+                    Lbl_Gal_EditImplementationMembers_Name As label:
+                        FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                        Height: =19
+                        OnSelect: =Select(Parent)
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =10
+                        Text: =ThisItem.ITAcctName
+                        VerticalAlign: =VerticalAlign.Top
+                        Width: =242
+                        X: =26
+                        Y: =12
+                        ZIndex: =2
+
+                    Icn_Delete_Gal_EditImplementationMembers As icon.ChevronRight:
+                        AccessibleLabel: =Self.Tooltip
+                        BorderColor: =RGBA(0, 0, 0, 1)
+                        Color: =RGBA(184, 0, 0, 1)
+                        DisabledBorderColor: =RGBA(56, 56, 56, 1)
+                        DisabledColor: =RGBA(119, 119, 119, 1)
+                        Height: =31
+                        Icon: =Icon.Trash
+                        OnSelect: |-
+                            =//Delete member from associated CAB
+                            RemoveIf(ITAccountsList, ID=ThisItem.ID);
+                        PaddingBottom: =5
+                        PaddingLeft: =5
+                        PaddingRight: =5
+                        PaddingTop: =5
+                        Tooltip: ="Remove from CAB"
+                        Visible: =If(Gal_EditImplementation_Members.AllItemsCount>1,true,false)
+                        Width: =31
+                        X: =375
+                        Y: =12
+                        ZIndex: =4
+
+                    Separator1_3 As rectangle:
+                        Height: =5
+                        OnSelect: =Select(Parent)
+                        Width: =Parent.TemplateWidth
+                        Y: =Parent.TemplateHeight - Self.Height
+                        ZIndex: =5
+
+                    Rectangle1_3 As rectangle:
+                        Fill: =RGBA(250, 155, 112, 1)
+                        Height: =Parent.TemplateHeight - Separator1_3.Height
+                        OnSelect: =Select(Parent)
+                        Visible: =ThisItem.IsSelected
+                        Width: =4
+                        ZIndex: =6
+
+                    Lbl_Gal_EditImplementationMembers_Email As label:
+                        FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                        Height: =Self.Size * 1.8
+                        OnSelect: =Select(Parent)
+                        PaddingBottom: =0
+                        PaddingLeft: =0
+                        PaddingRight: =0
+                        PaddingTop: =0
+                        Size: =8
+                        Text: =ThisItem.ITAcctEmail
+                        VerticalAlign: =VerticalAlign.Top
+                        Width: =Parent.TemplateWidth - 173
+                        X: =27
+                        Y: =35
+                        ZIndex: =7
+
+                    Checkbox_Gal_EditImplementationMembers As checkbox:
+                        CheckboxSize: =25
+                        Default: =If(ThisItem.ActiveFlag="Y",true,false)
+                        OnCheck: |-
+                            =Patch(ITAccountsList,LookUp(ITAccountsList,ID=ThisItem.ID),
+                            {
+                                ActiveFlag: "Y"
+                            });
+                        OnSelect: =Select(Parent)
+                        OnUncheck: |-
+                            =Patch(ITAccountsList,LookUp(ITAccountsList,ID=ThisItem.ID),
+                            {
+                                ActiveFlag: "N"
+                            });
+                        Size: =11
+                        Text: =""
+                        Width: =26
+                        X: =322
+                        Y: =2
+                        ZIndex: =8
+
+                Lbl_EditImplementation_ListMembers As label:
+                    FontWeight: =FontWeight.Semibold
+                    Height: =32
+                    Text: ="List of CAB Members"
+                    Width: =209
+                    X: =57
+                    Y: =299
+                    ZIndex: =16
+
+                Lbl_EditImplementation_ListMembers_Active As label:
+                    Align: =Align.Center
+                    FontWeight: =FontWeight.Semibold
+                    Height: =32
+                    Size: =10
+                    Text: ="Active"
+                    Width: =61
+                    X: =359
+                    Y: =299
+                    ZIndex: =17
+
+                Btn_Close_EditImplementationContainer As icon.Cancel:
+                    Color: =RGBA(51, 51, 51, 1)
+                    Height: =31
+                    Icon: =Icon.Cancel
+                    OnSelect: |-
+                        =//Close pop-up container
+                        Set(EditImplementationGrpContainer,false);
+                        Set(SelectedImplementationGroup,Blank());
+                        
+                        //Reset controls
+                        Reset(Checkbox_EditImplementation_Active);
+                        Reset(Dropdown_EditImplementation_RegionSelect);
+                        Reset(TextInput_EditImplementation_GrpName);
+                        Reset(Gal_EditImplementation_Members);
+                        Reset(ComboBox_EditImplementation_AddMember_PeoplePicker);
+                    Width: =31
+                    X: =482
+                    Y: =9
+                    ZIndex: =20
+
+                Btn_EditImplementation_ConfirmAddMember As button:
+                    DisplayMode: =If(IsBlank(ComboBox_EditImplementation_AddMember_PeoplePicker.Selected), DisplayMode.Disabled, DisplayMode.Edit)
+                    Fill: =RGBA(221, 79, 14, 1)
+                    Height: =33
+                    OnSelect: |-
+                        =//Patch new record to ITAccountsList
+                        Patch(ITAccountsList, Defaults(ITAccountsList),
+                        {
+                            GroupAssignment: {Id: SelectedImplementationGroup.ID,
+                                              Value: SelectedImplementationGroup.GroupName},
+                            ITAcctName: ComboBox_EditImplementation_AddMember_PeoplePicker.Selected.DisplayName,
+                            ITAcctEmail: Lower(ComboBox_EditImplementation_AddMember_PeoplePicker.Selected.UserPrincipalName),
+                            ActiveFlag: "Y"
+                        });
+                        
+                        //Reset controls
+                        Reset(ComboBox_EditImplementation_AddMember_PeoplePicker);
+                        Reset(Gal_EditImplementation_Members);
+                    Size: =12
+                    Text: ="Add"
+                    Width: =72
+                    X: =420
+                    Y: =247
+                    ZIndex: =22
+
+                ComboBox_EditImplementation_AddMember_PeoplePicker As combobox:
+                    BorderColor: =RGBA(102, 102, 102, 1)
+                    ChevronBackground: =RGBA(250, 155, 112, 1)
+                    DisplayFields: =["DisplayName","UserPrincipalName"]
+                    Height: =33
+                    InputTextPlaceholder: ="Search by name"
+                    IsSearchable: =false
+                    Items: |-
+                        =//Office365Users.SearchUser({searchTerm:ComboBox_EditImplementation_AddMember_PeoplePicker.SearchText,top:5})
+                        Filter(Office365Users.SearchUserV2({searchTerm:Self.SearchText,top:5}).value,"@johnsonelectric.com" in ThisRecord.UserPrincipalName)
+                    SearchFields: =["DisplayName"]
+                    SearchItems: =[]
+                    SelectionFill: =RGBA(251, 188, 159, 1)
+                    SelectMultiple: =false
+                    Size: =12
+                    Template: =ListItemTemplate.Person
+                    Width: =350
+                    X: =59
+                    Y: =247
+                    ZIndex: =23
+
+    Grp_Config_Templates As group:
+        Height: =5
+        Width: =5
+        X: =60
+        Y: =60
+        ZIndex: =32
+
+        Container_Templates_Gal As groupContainer.manualLayoutContainer:
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =540
+            Visible: =If(SystemAdminGalFilterBtn="Templates", true, false)
+            Width: =1297
+            X: =38
+            Y: =184
+            ZIndex: =29
+
+            Lbl_Gal_Summary_Hdr_Summary As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Change Request Summary"
+                Width: =180
+                X: =90
+                Y: =5
+                ZIndex: =1
+
+            Lbl_Gal_Templates_Hdr_Created As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Created"
+                Width: =138
+                X: =873
+                Y: =5
+                ZIndex: =2
+
+            Lbl_Gal_Templates_Hdr_LastMod As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: |-
+                    ="Last Modified
+                    "
+                Width: =115
+                X: =1055
+                Y: =5
+                ZIndex: =3
+
+            Lbl_Gal_Templates_Hdr_Description As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Description"
+                Width: =148
+                X: =305
+                Y: =5
+                ZIndex: =4
+
+            Lbl_Gal_Templates_Hdr_ActiveFlag As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Active"
+                Width: =70
+                X: =12
+                Y: =5
+                ZIndex: =5
+
+            Lbl_Gal_Templates_Hdr_Category As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Category"
+                Width: =94
+                X: =536
+                Y: =5
+                ZIndex: =6
+
+            Lbl_Gal_Templates_Hdr_SysApp As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: |-
+                    ="System / Application
+                    Modification Type"
+                Width: =163
+                X: =645
+                Y: =5
+                ZIndex: =7
+
+            "Gallery_Templates_Config As gallery.'BrowseLayout_Vertical_TwoTextVariant_ver5.0'":
+                '#CopilotOverlayLabel': ="Filtered"
+                BorderColor: =RGBA(102, 102, 102, 1)
+                BorderStyle: =BorderStyle.None
+                BorderThickness: =1
+                DelayItemLoading: =true
+                Height: =474
+                Items: |
+                    =//Connect to SharePoint List
+                    SortByColumns(ConfigCRTemplates,"Summary",SortOrder.Ascending)
+                Layout: =Layout.Vertical
+                LoadingSpinner: =LoadingSpinner.Data
+                NavigationStep: =2
+                OnSelect: =
+                TemplatePadding: =0
+                TemplateSize: =99
+                Width: =1297
+                Y: =45
+                ZIndex: =8
+
+                Lbl_Gal_Template_Summary As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =53
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.Summary
+                    Width: =185
+                    X: =93
+                    Y: =24
+                    ZIndex: =2
+
+                Gal_Seperator_5 As rectangle:
+                    Height: =8
+                    OnSelect: =Select(Parent)
+                    Width: =Parent.TemplateWidth
+                    Y: =Parent.TemplateHeight - Self.Height
+                    ZIndex: =4
+
+                Gal_RectSelect_5 As rectangle:
+                    Fill: =RGBA(250, 155, 112, 1)
+                    Height: =Parent.TemplateHeight - Gal_Seperator_5.Height
+                    OnSelect: =Select(Parent)
+                    Visible: =ThisItem.IsSelected
+                    Width: =4
+                    ZIndex: =5
+
+                Lbl_Gal_Templates_LastMod As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =22
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.Modified
+                    Width: =137
+                    X: =1056
+                    Y: =39
+                    ZIndex: =12
+
+                Lbl_Gal_Template_Description As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =67
+                    OnSelect: =Select(Parent)
+                    Overflow: =Overflow.Scroll
+                    Size: =9
+                    Text: =ThisItem.Description
+                    Width: =212
+                    X: =307
+                    Y: =17
+                    ZIndex: =13
+
+                Lbl_Gal_Template_Created As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =22
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.Created
+                    Width: =132
+                    X: =880
+                    Y: =39
+                    ZIndex: =16
+
+                Checkbox_Gal_Template_SetActive As checkbox:
+                    CheckboxBorderColor: =RGBA(128, 128, 128, 1)
+                    CheckboxSize: =30
+                    Default: =If(ThisItem.Active="Y", true, false)
+                    Height: =45
+                    OnCheck: |-
+                        =Patch(ConfigCRTemplates, LookUp(ConfigCRTemplates, ID=ThisItem.ID),
+                        {Active: "Y"}
+                        );
+                    OnSelect: =
+                    OnUncheck: |-
+                        =Patch(ConfigCRTemplates, LookUp(ConfigCRTemplates, ID=ThisItem.ID),
+                        {Active: ""}
+                        );
+                    Text: =
+                    Width: =45
+                    X: =30
+                    Y: =25
+                    ZIndex: =20
+
+                Lbl_Gal_Template_CreatedName As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =22
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.'Created By'.DisplayName
+                    Width: =160
+                    X: =880
+                    Y: =17
+                    ZIndex: =21
+
+                Lbl_Gal_Template_LastModName As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =22
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.'Modified By'.DisplayName
+                    Width: =160
+                    X: =1056
+                    Y: =17
+                    ZIndex: =22
+
+                Btn_Gal_Template_Edit As icon.ChevronRight:
+                    AccessibleLabel: =Self.Tooltip
+                    BorderColor: =RGBA(0, 0, 0, 0)
+                    BorderStyle: =BorderStyle.None
+                    Color: =RGBA(246, 88, 16, 1)
+                    Height: =48
+                    Icon: =Icon.Edit
+                    OnSelect: |-
+                        =Set(SelectedConfigTemplate, ThisItem);
+                        Navigate(Scn_TemplateForm);
+                    PaddingBottom: =13
+                    PaddingLeft: =13
+                    PaddingRight: =13
+                    PaddingTop: =13
+                    Tooltip: ="Go to CR details"
+                    Width: =47
+                    X: =1214
+                    Y: =10
+                    ZIndex: =23
+
+                Lbl_Gal_Template_Category As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =21
+                    OnSelect: =Select(Parent)
+                    Size: =9
+                    Text: =ThisItem.Category
+                    Width: =89
+                    X: =540
+                    Y: =36
+                    ZIndex: =24
+
+                Lbl_Gal_Template_SysApp As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =21
+                    OnSelect: =Select(Parent)
+                    Size: =9
+                    Text: =ThisItem.SystemApplication
+                    Width: =130
+                    X: =675
+                    Y: =21
+                    ZIndex: =25
+
+                Lbl_Gal_Template_ModType As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =27
+                    OnSelect: =Select(Parent)
+                    Size: =9
+                    Text: =ThisItem.ModificationType
+                    VerticalAlign: =VerticalAlign.Top
+                    Width: =142
+                    X: =675
+                    Y: =43
+                    ZIndex: =26
+
+        Btn_AddTemplate As icon.Add:
+            Color: =RGBA(255, 125, 35, 1)
+            DisabledColor: =RGBA(219, 219, 219, 1)
+            Height: =25
+            Icon: =Icon.Add
+            OnSelect: |-
+                =Set(SelectedConfigTemplate, Blank());
+                Navigate(Scn_TemplateForm);
+            Tooltip: ="Add Info Security Reviewer"
+            Visible: =If(SystemAdminGalFilterBtn="Templates", true, false)
+            Width: =30
+            X: =44
+            Y: =153
+            ZIndex: =30
+
+        Lbl_AddTemplate As label:
+            Color: =RGBA(255, 125, 35, 1)
+            FontWeight: =FontWeight.Semibold
+            OnSelect: =
+            Size: =12
+            Text: ="New Template"
+            Visible: =If(SystemAdminGalFilterBtn="Templates", true, false)
+            X: =74
+            Y: =145
+            ZIndex: =31
+

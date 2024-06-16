@@ -1,0 +1,1596 @@
+"Scn_TemplateForm As screen.'tabletAutoLayout_HeaderMainFooter_ver1.0'":
+    Fill: |
+        =RGBA(237, 237, 237, 1)
+    OnVisible: |-
+        =Set(RequestNavBarTemplate, "ContainerRequestDetailsTemplate");
+        
+        //Refresh CAB collection
+        If(!IsBlank(ComboBox_CABGroup_Select_Template.SelectedItems) And Dropdown_Category_Template.Selected.CategoryName<>"Emergency" And Dropdown_Category_Template.Selected.CategoryName<>"Major",
+                ClearCollect(ColTempCABMembers, Filter(ITAccountsList, GroupAssignment.Value=ComboBox_CABGroup_Select_Template.Selected.GroupName));
+                ClearCollect(ColTempCABMembersUnique, Distinct(ColTempCABMembers,ITAcctEmail)));
+
+    Lbl_AppVersion_Request_Template As label:
+        Height: =23
+        PaddingLeft: =15
+        Size: =7
+        Text: =""&LookUp(ConfigGenParam,Title="AppVersion",ParamValue)
+        Width: =90
+        Y: =745
+        ZIndex: =1
+
+    Container_CAB_Template As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =221
+        Visible: =If(Rect_CABApprovals_Template.Visible,true,false)
+        Width: =1297
+        X: =38
+        Y: =456
+        ZIndex: =3
+
+        Lbl_CABGrp_Hdr_Template As label:
+            FontWeight: =FontWeight.Semibold
+            Height: =29
+            Size: =10
+            Text: ="Select Change Advisory Board"
+            Width: =213
+            X: =34
+            Y: =11
+            ZIndex: =9
+
+        ComboBox_CABGroup_Select_Template As combobox:
+            BorderColor: =RGBA(255, 125, 35, 1)
+            ChevronBackground: =RGBA(246, 88, 16, 1)
+            ChevronHoverBackground: =ColorFade(RGBA(246, 88, 16, 1), -20%)
+            Default: |-
+                =If(Dropdown_Category_Template.Selected.CategoryName="Major" Or Dropdown_Category_Template.Selected.CategoryName="Emergency", Blank(),
+                    If(IsBlank(SelectedConfigTemplate.CABGroupAssigned),Blank(),
+                        LookUp(ColGroups,GroupName=SelectedConfigTemplate.CABGroupAssigned)))
+            DefaultSelectedItems: |-
+                =If(IsBlank(SelectedConfigTemplate.CABGroupAssigned) Or Dropdown_Category_Template.Selected.CategoryName="Major" Or Dropdown_Category_Template.Selected.CategoryName="Emergency",Blank(),
+                    If(SelectedConfigTemplate.CABGroupAssigned="E-CAB",Blank(),
+                                LookUp(ColGroups,GroupName=SelectedConfigTemplate.CABGroupAssigned)))
+            DisplayFields: =["GroupName","Mail"]
+            Height: =28
+            HoverFill: =RGBA(253, 222, 207, 1)
+            InputTextPlaceholder: ="Find group"
+            IsSearchable: =false
+            Items: =Filter(ColGroups, CABFlag="Y").GroupName
+            OnChange: =
+            OnSelect: |-
+                =ClearCollect(ColTempCABMembers, Filter(ITAccountsList, GroupAssignment.Value=ComboBox_CABGroup_Select_Template.Selected.GroupName));
+                ClearCollect(ColTempCABMembersUnique, Distinct(ColTempCABMembers,ITAcctEmail));
+            PaddingBottom: =3
+            PaddingLeft: =3
+            PaddingRight: =3
+            PaddingTop: =3
+            PressedFill: =RGBA(253, 222, 207, 1)
+            SearchFields: =["GroupName"]
+            SearchItems: =[]
+            SelectionFill: =RGBA(250, 155, 112, 1)
+            SelectMultiple: =false
+            Size: =9
+            Width: =210
+            X: =37
+            Y: =42
+            ZIndex: =12
+
+        Gal_DisplayCABSelection_Template As gallery.galleryVertical:
+            '#CopilotOverlayLabel': ="Filtered"
+            BorderColor: =RGBA(246, 88, 16, 1)
+            BorderThickness: =1
+            DelayItemLoading: =true
+            DisplayMode: |-
+                =DisplayMode.Edit
+                //If(Value(SelectedCR.StageCode)=4, DisplayMode.Edit, DisplayMode.Edit)
+            Height: =169
+            Items: =If(Dropdown_Category_Template.Selected.CategoryName="Major" Or Dropdown_Category_Template.Selected.CategoryName="Emergency" Or IsBlank(ComboBox_CABGroup_Select_Template.Selected.GroupName), Blank(), ColTempCABMembersUnique)
+            Layout: =Layout.Vertical
+            LoadingSpinner: =LoadingSpinner.Data
+            TemplateSize: =35
+            Visible: |-
+                =If( Dropdown_Category_Template.Selected.CategoryName<>"Emergency" And ((SelectedCR.CABGroup=ComboBox_CABGroup_Select_Template.Selected.GroupName) Or (CountRows(ColTempCABMembersUnique)>0)),true,
+                     Dropdown_Category_Template.Selected.CategoryName="Emergency" And (CountRows(ColTempECAB)>0),true,false)
+            Width: =439
+            X: =286
+            Y: =38
+            ZIndex: =18
+
+            Lbl_CABSelectEmail_Template As label:
+                Height: =14
+                Italic: =true
+                OnSelect: =Select(Parent)
+                Size: =7
+                Text: =ThisItem.Value
+                Width: =220
+                X: =37
+                Y: =18
+                ZIndex: =2
+
+            Lbl_CABSelectName_Template As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =15
+                OnSelect: =Select(Parent)
+                Size: =8
+                Text: =If(!IsBlank(ThisItem.Value), Office365Users.UserProfileV2(ThisItem.Value).displayName)
+                Width: =172
+                X: =39
+                Y: =4
+                ZIndex: =3
+
+        Lbl_CABGrp_Gal_Hdr_Template As label:
+            FontWeight: =FontWeight.Semibold
+            Height: =29
+            Size: =10
+            Text: ="CAB Members"
+            Width: =282
+            X: =286
+            Y: =9
+            ZIndex: =19
+
+    Container_RequestDetails_Template As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =221
+        Visible: =If(Rect_RequestDetails_Template.Visible, true, false)
+        Width: =1297
+        X: =38
+        Y: =456
+        ZIndex: =5
+
+        Lbl_ChangeReason_Template As label:
+            FontWeight: =FontWeight.Semibold
+            Height: =29
+            Size: =10
+            Text: ="Reason for Change / Details"
+            Width: =282
+            X: =25
+            Y: =11
+            ZIndex: =1
+
+        TextInput_ChangeReason_Template As text:
+            BorderColor: =RGBA(255, 125, 35, 1)
+            Clear: =true
+            Default: =SelectedConfigTemplate.ReasonforChange
+            EnableSpellCheck: =true
+            Height: =160
+            HintText: |-
+                ="Explain the reason for this change request or provide more details.
+                Attach supporting documents (if any)."
+            HoverBorderColor: =RGBA(246, 88, 16, 1)
+            MaxLength: =500
+            Mode: =TextMode.MultiLine
+            PaddingLeft: =10
+            PaddingTop: =7
+            Size: =9
+            Tooltip: |-
+                ="Maximum of 500
+                 characters"
+            Width: =480
+            X: =25
+            Y: =40
+            ZIndex: =4
+
+        Lbl_ImpactRiskHdr_Template As label:
+            FontWeight: =FontWeight.Semibold
+            Height: =29
+            Size: =10
+            Text: |-
+                =//"Potential Impact *"
+                If(Value(SelectedCR.StageCode)=2, "Potential Impact *", "Potential Impact")
+            Width: =154
+            X: =540
+            Y: =11
+            ZIndex: =5
+
+        Dropdown_ImpactOption_Template As dropdown:
+            AllowEmptySelection: =true
+            BorderColor: =RGBA(246, 88, 16, 1)
+            ChevronBackground: =RGBA(246, 88, 16, 1)
+            ChevronHoverBackground: =ColorFade(RGBA(246, 88, 16, 1), -20%)
+            Default: =If(IsBlank(SelectedConfigTemplate.Impact),Blank(),SelectedConfigTemplate.Impact)
+            DisplayMode: |-
+                =If(Value(SelectedCR.StageCode)<=4 And UpdateFormMode="Edit" Or VarUserSysAdmin, DisplayMode.Edit, DisplayMode.Disabled)
+                //DisplayMode.View
+            Height: =28
+            Items: =ColImpact.Impact
+            SelectionFill: =RGBA(251, 188, 159, 1)
+            Size: =9
+            Width: =160
+            X: =542
+            Y: =40
+            ZIndex: =6
+
+    Container_TemplateNavBar As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =42
+        Width: =1297
+        X: =38
+        Y: =402
+        ZIndex: =6
+
+        Grp_Btn_RequestDetails_Template As group:
+            Height: =5
+            Width: =5
+            X: =-50
+            Y: =-57
+            ZIndex: =6
+
+            Button_RequestDetails_Template As button:
+                BorderStyle: =BorderStyle.None
+                Color: =RGBA(77, 77, 77, 1)
+                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                DisabledColor: =RGBA(0, 0, 0, 0)
+                DisabledFill: =RGBA(0, 0, 0, 0)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =33
+                HoverColor: =RGBA(251, 188, 159, 1)
+                HoverFill: =RGBA(0, 0, 0, 0)
+                OnSelect: =Set(RequestNavBarTemplate, "ContainerRequestDetailsTemplate")
+                PressedColor: =RGBA(246, 88, 16, 1)
+                PressedFill: =RGBA(0, 0, 0, 0)
+                Size: =10
+                Text: ="Change Details"
+                Width: =190
+                Y: =8
+                ZIndex: =4
+
+            Rect_RequestDetails_Template As rectangle:
+                Fill: =RGBA(250, 155, 112, 1)
+                Height: =8
+                Visible: =If(RequestNavBarTemplate="ContainerRequestDetailsTemplate", true, false)
+                Width: =190
+                ZIndex: =5
+
+        Grp_Btn_CABApprovals_Template As group:
+            Height: =5
+            Width: =5
+            X: =-150
+            Y: =1
+            ZIndex: =11
+
+            Button_CABApprovals_Template As button:
+                BorderStyle: =BorderStyle.None
+                Color: =RGBA(77, 77, 77, 1)
+                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                DisabledColor: =RGBA(219, 219, 219, 1)
+                DisabledFill: =RGBA(0, 0, 0, 0)
+                DisplayMode: =If(Dropdown_Category_Template.Selected.CategoryName="Major" Or Dropdown_Category_Template.Selected.CategoryName="Emergency" , DisplayMode.Disabled, DisplayMode.Edit)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =33
+                HoverColor: =RGBA(251, 188, 159, 1)
+                HoverFill: =RGBA(0, 0, 0, 0)
+                OnSelect: |-
+                    =Set(RequestNavBarTemplate, "ContainerCABApprovals-Template");
+                    If(!IsBlank(ComboBox_CABGroup_Select_Template.SelectedItems),
+                            ClearCollect(ColTempCABMembers, Filter(ITAccountsList, GroupAssignment.Value=ComboBox_CABGroup_Select_Template.Selected.GroupName));
+                            ClearCollect(ColTempCABMembersUnique, Distinct(ColTempCABMembers,ITAcctEmail)));
+                PressedColor: =RGBA(246, 88, 16, 1)
+                PressedFill: =RGBA(0, 0, 0, 0)
+                Size: =10
+                Text: |-
+                    =If((Value(SelectedCR.StageCode)=2 Or Value(SelectedCR.StageCode)=4) And Dropdown_Category_Template.Selected.CategoryName<>"Major" , 
+                    "Change Advisory Board  *", 
+                    "Change Advisory Board")
+                Width: =190
+                X: =194
+                Y: =9
+                ZIndex: =9
+
+            Rect_CABApprovals_Template As rectangle:
+                Fill: =RGBA(250, 155, 112, 1)
+                Height: =8
+                Visible: =If(RequestNavBarTemplate="ContainerCABApprovals-Template", true, false)
+                Width: =190
+                X: =188
+                ZIndex: =10
+
+        Grp_Btn_ImplementationPlan_Template As group:
+            Height: =5
+            Width: =5
+            X: =-150
+            Y: =1
+            ZIndex: =13
+
+            Button_ImplementationPlan_Template As button:
+                BorderStyle: =BorderStyle.None
+                Color: =RGBA(77, 77, 77, 1)
+                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                DisabledColor: =RGBA(219, 219, 219, 1)
+                DisabledFill: =RGBA(0, 0, 0, 0)
+                DisplayMode: =If(Dropdown_Category_Template.Selected.CategoryName="Major", DisplayMode.Disabled, DisplayMode.Edit)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =33
+                HoverColor: =RGBA(251, 188, 159, 1)
+                HoverFill: =RGBA(0, 0, 0, 0)
+                OnSelect: =Set(RequestNavBarTemplate, "ContainerImplementationPlanTemplate")
+                PressedColor: =RGBA(246, 88, 16, 1)
+                PressedFill: =RGBA(0, 0, 0, 0)
+                Size: =10
+                Text: |-
+                    =If((Value(SelectedCR.StageCode)=2 Or Value(SelectedCR.StageCode)>=6 And Value(SelectedCR.StageCode)<9 And Dropdown_Category_Template.Selected.CategoryName<>"Major"),
+                    "Implementation  *",
+                    "Implementation")
+                Width: =190
+                X: =408
+                Y: =8
+                ZIndex: =11
+
+            Rect_ImplementationPlan_Template As rectangle:
+                Fill: =RGBA(250, 155, 112, 1)
+                Height: =8
+                Visible: =If(RequestNavBarTemplate="ContainerImplementationPlanTemplate", true, false)
+                Width: =190
+                X: =402
+                ZIndex: =12
+
+    Container_TemplateHeader As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =214
+        Width: =1297
+        X: =38
+        Y: =174
+        ZIndex: =7
+
+        Lbl_Requestor_Template As label:
+            FontWeight: =FontWeight.Semibold
+            Height: =31
+            Size: =10
+            Text: ="Initiator"
+            Width: =214
+            X: =535
+            Y: =6
+            ZIndex: =1
+
+        Lbl_SysAppOption_Template As label:
+            FontWeight: =FontWeight.Semibold
+            Height: =29
+            Size: =10
+            Text: ="System / Application  *"
+            Width: =220
+            X: =792
+            Y: =6
+            ZIndex: =2
+
+        Dropdown_SysAppOption_Template As dropdown:
+            AllowEmptySelection: =true
+            BorderColor: =RGBA(246, 88, 16, 1)
+            ChevronBackground: =RGBA(246, 88, 16, 1)
+            ChevronHoverBackground: =ColorFade(RGBA(246, 88, 16, 1), -20%)
+            Default: =SelectedConfigTemplate.SystemApplication
+            Height: =28
+            Items: =ColSystems.SystemName
+            SelectionFill: =RGBA(251, 188, 159, 1)
+            Size: =9
+            Width: =216
+            X: =796
+            Y: =35
+            ZIndex: =3
+
+        Lbl_ModType_Template As label:
+            FontWeight: =FontWeight.Semibold
+            Height: =31
+            Size: =10
+            Text: ="Modification Type"
+            Width: =213
+            X: =793
+            Y: =74
+            ZIndex: =4
+
+        Dropdown_ModType_Template As dropdown:
+            AllowEmptySelection: =true
+            BorderColor: =RGBA(246, 88, 16, 1)
+            ChevronBackground: =RGBA(246, 88, 16, 1)
+            ChevronHoverBackground: =ColorFade(RGBA(246, 88, 16, 1), -20%)
+            Default: =SelectedConfigTemplate.ModificationType
+            Height: =28
+            Items: =ColModType.ModificationType
+            SelectionFill: =RGBA(251, 188, 159, 1)
+            Size: =9
+            Width: =216
+            X: =796
+            Y: =103
+            ZIndex: =5
+
+        Lbl_BSR_Template As label:
+            FontWeight: =FontWeight.Semibold
+            Height: =31
+            Size: =10
+            Text: ="BSR Ref"
+            Width: =79
+            X: =1165
+            Y: =11
+            ZIndex: =6
+
+        Lbl_ITPM_Template As label:
+            FontWeight: =FontWeight.Semibold
+            Height: =31
+            Size: =10
+            Text: ="ITPM Ref"
+            Width: =82
+            X: =1046
+            Y: =11
+            ZIndex: =7
+
+        TextInput_BSR_Template As text:
+            BorderColor: =RGBA(255, 125, 35, 1)
+            Default: =SelectedConfigTemplate.BSR
+            EnableSpellCheck: =true
+            Height: =28
+            HoverBorderColor: =RGBA(246, 88, 16, 1)
+            MaxLength: =7
+            PaddingLeft: =10
+            RadiusBottomLeft: =1
+            RadiusBottomRight: =1
+            RadiusTopLeft: =1
+            RadiusTopRight: =1
+            Size: =9
+            Tooltip: ="Maximum of 7 characters"
+            Width: =94
+            X: =1165
+            Y: =37
+            ZIndex: =8
+
+        TextInput_ITPM_Template As text:
+            BorderColor: =RGBA(255, 125, 35, 1)
+            Default: =SelectedConfigTemplate.ITPM
+            EnableSpellCheck: =true
+            Height: =27
+            HoverBorderColor: =RGBA(246, 88, 16, 1)
+            MaxLength: =6
+            PaddingLeft: =5
+            RadiusBottomLeft: =1
+            RadiusBottomRight: =1
+            RadiusTopLeft: =1
+            RadiusTopRight: =1
+            Size: =9
+            Tooltip: ="Maximum of 6 characters"
+            Width: =60
+            X: =1087
+            Y: =38
+            ZIndex: =9
+
+        "'Lbl_ITPM-Prefix_Template' As label":
+            Height: =23
+            Size: =9
+            Text: ="ITPM - "
+            Width: =50
+            X: =1040
+            Y: =40
+            ZIndex: =10
+
+        Lbl_ChangeManager_1 As label:
+            FontWeight: =FontWeight.Semibold
+            Height: =30
+            Size: =10
+            Text: ="Change Manager"
+            Width: =136
+            X: =545
+            Y: =76
+            ZIndex: =11
+
+        Icn_Search_ChangeManager_Template As icon.Search:
+            AutoDisableOnSelect: =false
+            Height: =20
+            Icon: =Icon.Search
+            OnSelect: =Set(VarContainerChangeManagerTemplate, true)
+            Width: =20
+            X: =524
+            Y: =82
+            ZIndex: =12
+
+        ComboBox_Requestor_Template As combobox:
+            BorderColor: =RGBA(255, 125, 35, 1)
+            ChevronBackground: =RGBA(246, 88, 16, 1)
+            ChevronHoverBackground: =ColorFade(RGBA(246, 88, 16, 1), -20%)
+            DefaultSelectedItems: =If(IsBlank(SelectedConfigTemplate.RequesterEmail),Blank(), Office365Users.UserProfile(Lower(SelectedConfigTemplate.RequesterEmail)))
+            DisplayFields: =["DisplayName","Mail"]
+            Height: =28
+            HoverFill: =RGBA(253, 222, 207, 1)
+            InputTextPlaceholder: ="Search name"
+            Items: |-
+                =//Office365Users.SearchUser({searchTerm:ComboBox_Requestor_Template.SearchText,top:10})
+                Filter(Office365Users.SearchUserV2({searchTerm:Self.SearchText,top:10}).value,"@johnsonelectric.com" in ThisRecord.UserPrincipalName)
+            PressedFill: =RGBA(253, 222, 207, 1)
+            SearchFields: =["DisplayName"]
+            SearchItems: |-
+                =Search(//Office365Users.SearchUser({searchTerm:ComboBox_Requestor_Template.SearchText,top:10})
+                Filter(Office365Users.SearchUserV2({searchTerm:Self.SearchText,top:10}).value,"@johnsonelectric.com" in ThisRecord.UserPrincipalName),ComboBox_Requestor_Template.SearchText,DisplayName)
+            SelectionFill: =RGBA(250, 155, 112, 1)
+            SelectMultiple: =false
+            Size: =9
+            Template: =ListItemTemplate.Double
+            Width: =209
+            X: =543
+            Y: =37
+            ZIndex: =13
+
+        Lbl_Description_Template As label:
+            FontWeight: =FontWeight.Semibold
+            Height: =29
+            Size: =10
+            Text: ="Description"
+            Width: =282
+            X: =25
+            Y: =74
+            ZIndex: =14
+
+        TextInput_Description_Template As text:
+            BorderColor: =RGBA(255, 125, 35, 1)
+            Clear: =true
+            Default: =SelectedConfigTemplate.Description
+            EnableSpellCheck: =true
+            Height: =92
+            HintText: ="Enter details of this change request and attach supporting documents below (if any)."
+            HoverBorderColor: =RGBA(246, 88, 16, 1)
+            MaxLength: =500
+            Mode: =TextMode.MultiLine
+            PaddingLeft: =10
+            PaddingTop: =7
+            Size: =9
+            Tooltip: ="Maximum of 500 characters"
+            Width: =480
+            X: =25
+            Y: =105
+            ZIndex: =15
+
+        Lbl_Summary_Template As label:
+            FontWeight: =FontWeight.Semibold
+            Height: =28
+            Size: =10
+            Text: ="Change Request Summary  *"
+            Width: =282
+            X: =25
+            Y: =8
+            ZIndex: =16
+
+        TextInput_Summary_Template As text:
+            BorderColor: =RGBA(255, 125, 35, 1)
+            Clear: =true
+            Default: =SelectedConfigTemplate.Summary
+            EnableSpellCheck: =true
+            Height: =28
+            HintText: ="Provide a summary for this change request (max. 100 characters)"
+            HoverBorderColor: =RGBA(246, 88, 16, 1)
+            MaxLength: =100
+            PaddingLeft: =10
+            Size: =9
+            Tooltip: ="Maximum of 100 characters"
+            Width: =480
+            X: =25
+            Y: =39
+            ZIndex: =17
+
+        Dropdown_Category_Template As dropdown:
+            AllowEmptySelection: =true
+            BorderColor: =RGBA(246, 88, 16, 1)
+            ChevronBackground: =RGBA(246, 88, 16, 1)
+            ChevronHoverBackground: =ColorFade(RGBA(246, 88, 16, 1), -20%)
+            Default: =SelectedConfigTemplate.Category
+            Height: =28
+            Items: =ColCategory.CategoryName
+            OnChange: |-
+                =//Remember to enable this
+                Switch(Dropdown_Category_Template.Selected.CategoryName,
+                "Major",
+                    Set(RequestNavBarTemplate, "ContainerRequestDetailsTemplate");
+                    Reset(ComboBox_CABGroup_Select_Template),
+                "Emergency",
+                    Set(RequestNavBarTemplate, "ContainerRequestDetailsTemplate");
+                    Reset(ComboBox_CABGroup_Select_Template);
+                    If(!IsBlank(ComboBox_CABGroup_Select_Template.SelectedItems),
+                        ClearCollect(ColTempCABMembers, Filter(ITAccountsList, GroupAssignment.Value=ComboBox_CABGroup_Select_Template.Selected.GroupName));
+                        ClearCollect(ColTempCABMembersUnique, Distinct(ColTempCABMembers,ITAcctEmail)))
+                ,""
+                );
+            OnSelect: |-
+                =//Remember to enable this
+                Switch(Dropdown_Category_Template.Selected.CategoryName,
+                "Major",
+                    Set(RequestNavBar, "ContainerRequestDetails");
+                    Reset(ComboBox_CABGroup_Select_Template),
+                "Emergency",
+                    If(IsBlank(SelectedCR.ECABMembers),
+                    Clear(ColTempECAB),
+                        If(Dropdown_Category_Template.Selected.CategoryName="Emergency" And !IsBlank(SelectedCR.ECABMembers),
+                            Clear(ColTempECAB);
+                            ForAll(
+                                Split(
+                                    SelectedCR.ECABMembers,"; "),
+                                Collect(ColTempECAB, TrimEnds(ThisRecord.Value))
+                            ))),
+                If(!IsBlank(ComboBox_CABGroup_Select_Template.SelectedItems),
+                        ClearCollect(ColTempCABMembers, Filter(ITAccountsList, GroupAssignment.Value=ComboBox_CABGroup_Select_Template.Selected.GroupName));
+                        ClearCollect(ColTempCABMembersUnique, Distinct(ColTempCABMembers,ITAcctEmail))))
+            SelectionFill: =RGBA(251, 188, 159, 1)
+            Size: =9
+            Tooltip: =SelectedConfigTemplate.SystemApplication
+            Width: =216
+            X: =796
+            Y: =169
+            ZIndex: =18
+
+        Lbl_Category_Template As label:
+            FontWeight: =FontWeight.Semibold
+            Height: =28
+            Size: =10
+            Text: =If(Value(SelectedCR.StageCode)<2, "Category", "Category  *")
+            Width: =125
+            X: =797
+            Y: =141
+            ZIndex: =19
+
+        Lbl_ChangeMgrGrp_Template As label:
+            Height: =23
+            Italic: =true
+            Size: =9
+            Text: |-
+                =//First(Split(SelectedCMGroup, "-")).Value
+                //SelectedCMGroup
+                If(IsBlank(SelectedCMGroupTemplate), SelectedConfigTemplate.ChangeManagerGroup, SelectedCMGroupTemplate)
+            Width: =225
+            X: =544
+            Y: =131
+            ZIndex: =22
+
+        Lbl_ChangeMgrName_Template As label:
+            FontWeight: =FontWeight.Semibold
+            Height: =28
+            Size: =10
+            Text: =If(IsBlank(SelectedCMNameTemplate), SelectedConfigTemplate.ChangeManagerName, SelectedCMNameTemplate)
+            Tooltip: =If(IsBlank(SelectedCMEmailTemplate), SelectedConfigTemplate.ChangeManagerEmail, SelectedCMEmailTemplate)
+            Width: =215
+            X: =542
+            Y: =105
+            ZIndex: =23
+
+    Container_Template_Bar As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =70
+        Width: =1297
+        X: =38
+        Y: =88
+        ZIndex: =8
+
+        Lbl_Template_Hdr As label:
+            FontWeight: =FontWeight.Semibold
+            Height: =37
+            PaddingLeft: =20
+            Text: ="Change Request Template"
+            Width: =393
+            Y: =16
+            ZIndex: =1
+
+        Grp_Btn_Template_Save As group:
+            Height: =5
+            Width: =5
+            X: =-43
+            Y: =-60
+            ZIndex: =6
+
+            Btn_Save_Template As button:
+                Fill: =RGBA(50, 86, 160, 1)
+                Height: =28
+                HoverFill: =ColorFade(Self.Fill, -20%)
+                OnSelect: |-
+                    =//Create New or Edit existing record to Templates List
+                    If(IsBlank(SelectedConfigTemplate),
+                    Patch(ConfigCRTemplates, Defaults(ConfigCRTemplates),
+                    {
+                       Summary: TextInput_Summary_Template.Text,
+                       Description: TextInput_Description_Template.Text,
+                       RequesterName: ComboBox_Requestor_Template.Selected.DisplayName,
+                       RequesterEmail: Lower(ComboBox_Requestor_Template.Selected.Mail),
+                       Category: Dropdown_Category_Template.Selected.CategoryName,
+                       Impact: Dropdown_ImpactOption_Template.Selected.Impact,
+                       SystemApplication: Dropdown_SysAppOption_Template.Selected.SystemName,
+                       ModificationType: Dropdown_ModType_Template.Selected.ModificationType,
+                       BSR: TextInput_BSR_Template.Text,
+                       ITPM: TextInput_ITPM_Template.Text,
+                       ReasonforChange: TextInput_ChangeReason_Template.Text,
+                       ChangeManagerGroup: Lbl_ChangeMgrGrp_Template.Text,
+                       ChangeManagerName: Lbl_ChangeMgrName_Template.Text,
+                       ChangeManagerEmail:Lower(Lbl_ChangeMgrName_Template.Tooltip),
+                       CABGroupAssigned:ComboBox_CABGroup_Select_Template.Selected.GroupName,
+                       AssignmentGroupManagerName: ComboBox_AssignGrpManager_Template.Selected.DisplayName,
+                       AssignmentGroupManagerEmail: Lower(ComboBox_AssignGrpManager_Template.Selected.Mail),
+                       ChangeImplementationGroup: Lbl_ChangeImplementorGroup_Template.Text,
+                       ChangeImplementationName: Lbl_ChangeImplementorName_Template.Text,
+                       ChangeImplementationEmail: Lower(Lbl_ChangeImplementorName_Template.Tooltip),
+                       ImplementationDetails: TextInput_ImplementationPlan_Template.Text,
+                       BackOutPlan: TextInput_BackoutPlan_Template.Text,
+                       Active: "Y"
+                    }),
+                    Patch(ConfigCRTemplates, LookUp(ConfigCRTemplates, ID = SelectedConfigTemplate.ID),
+                    {
+                       Summary: TextInput_Summary_Template.Text,
+                       Description: TextInput_Description_Template.Text,
+                       RequesterName: ComboBox_Requestor_Template.Selected.DisplayName,
+                       RequesterEmail: Lower(ComboBox_Requestor_Template.Selected.Mail),
+                       Category: Dropdown_Category_Template.Selected.CategoryName,
+                       Impact: Dropdown_ImpactOption_Template.Selected.Impact,
+                       SystemApplication: Dropdown_SysAppOption_Template.Selected.SystemName,
+                       ModificationType: Dropdown_ModType_Template.Selected.ModificationType,
+                       BSR: TextInput_BSR_Template.Text,
+                       ITPM: TextInput_ITPM_Template.Text,
+                       ReasonforChange: TextInput_ChangeReason_Template.Text,
+                       ChangeManagerGroup: Lbl_ChangeMgrGrp_Template.Text,
+                       ChangeManagerName: Lbl_ChangeMgrName_Template.Text,
+                       ChangeManagerEmail:Lower(Lbl_ChangeMgrName_Template.Tooltip),
+                       CABGroupAssigned:ComboBox_CABGroup_Select_Template.Selected.GroupName,
+                       AssignmentGroupManagerName: ComboBox_AssignGrpManager_Template.Selected.DisplayName,
+                       AssignmentGroupManagerEmail: Lower(ComboBox_AssignGrpManager_Template.Selected.Mail),
+                       ChangeImplementationGroup: Lbl_ChangeImplementorGroup_Template.Text,
+                       ChangeImplementationName: Lbl_ChangeImplementorName_Template.Text,
+                       ChangeImplementationEmail: Lower(Lbl_ChangeImplementorName_Template.Tooltip),
+                       ImplementationDetails: TextInput_ImplementationPlan_Template.Text,
+                       BackOutPlan: TextInput_BackoutPlan_Template.Text
+                    }));
+                    
+                    //RESET VARIABLES
+                    Set(RequestNavBarTemplate, Blank());
+                    
+                    Set(SelectedCMGroupTemplate,Blank());
+                    Set(SelectedCMNameTemplate,Blank());
+                    Set(SelectedCMEmailTemplate,Blank());
+                    Set(SelectedCABGroup, Blank());
+                    Set(SelectedImplementationGroup, Blank());
+                    Set(SelectedCIGroupTemplate, Blank());
+                    Set(SelectedCINameTemplate, Blank());
+                    Set(SelectedCIEmailTemplate, Blank());
+                    Set(SelectedConfigTemplate,Blank());
+                    
+                    //CLEAR COLLECTIONS
+                    Clear(ColTempCABMembers);
+                    Clear(ColTempCABMembersUnique);
+                    
+                    //Return back to Sys Admin screen
+                    Back();
+                    Set(UpdateFormMode,Blank());
+                    
+                    //RESET FORM CONTROLS
+                    //Header fields
+                    Reset(TextInput_Summary_Template);
+                    Reset(TextInput_Description_Template);
+                    Reset(ComboBox_Requestor_Template);
+                    Reset(Dropdown_Category_Template);
+                    Reset(Dropdown_SysAppOption_Template);
+                    Reset(Dropdown_ModType_Template);
+                    Reset(TextInput_BSR_Template);
+                    Reset(TextInput_ITPM_Template);
+                    //Change Details fields
+                    Reset(TextInput_ChangeReason_Template);
+                    Reset(Dropdown_ImpactOption_Template);
+                    //CAB Fields
+                    Reset(ComboBox_CABGroup_Select_Template);
+                    Reset(Gal_DisplayCABSelection_Template);
+                    //Implementation Fields
+                    Reset(ComboBox_AssignGrpManager_Template);
+                    Reset(TextInput_ImplementationPlan_Template);
+                    Reset(TextInput_BackoutPlan_Template);
+                PaddingRight: =10
+                RadiusBottomLeft: =20
+                RadiusBottomRight: =20
+                RadiusTopLeft: =20
+                RadiusTopRight: =20
+                Size: =11
+                Text: ="Save"
+                Visible: =If(IsBlank(TextInput_Summary_Template.Text) Or IsBlank(Dropdown_SysAppOption_Template.Selected.SystemName), false, true)
+                Width: =126
+                X: =1016
+                Y: =19
+                ZIndex: =4
+
+            Icn_Save_Template As icon.Save:
+                Color: =RGBA(255, 255, 255, 1)
+                Height: =18
+                Icon: =Icon.Save
+                Visible: =If(IsBlank(TextInput_Summary_Template.Text) Or IsBlank(Dropdown_SysAppOption_Template.Selected.SystemName), false, true)
+                Width: =18
+                X: =1106
+                Y: =24
+                ZIndex: =6
+
+        Grp_Btn_Template_Cancel As group:
+            Height: =5
+            Width: =5
+            X: =-43
+            Y: =-60
+            ZIndex: =7
+
+            Btn_Template_Cancel As button:
+                Fill: =RGBA(149, 149, 149, 1)
+                Height: =28
+                HoverFill: =ColorFade(Self.Fill, -20%)
+                OnSelect: |-
+                    =//RESET VARIABLES
+                    Set(RequestNavBarTemplate, Blank());
+                    
+                    Set(SelectedCMGroupTemplate,Blank());
+                    Set(SelectedCMNameTemplate,Blank());
+                    Set(SelectedCMEmailTemplate,Blank());
+                    Set(SelectedCABGroup, Blank());
+                    Set(SelectedImplementationGroup, Blank());
+                    Set(SelectedCIGroupTemplate, Blank());
+                    Set(SelectedCINameTemplate, Blank());
+                    Set(SelectedCIEmailTemplate, Blank());
+                    Set(SelectedConfigTemplate,Blank());
+                    
+                    //CLEAR COLLECTIONS
+                    Clear(ColTempCABMembers);
+                    Clear(ColTempCABMembersUnique);
+                    
+                    //Return back to Sys Admin screen
+                    Back();
+                    Set(UpdateFormMode,Blank());
+                    
+                    
+                    //RESET FORM CONTROLS
+                    //Header fields
+                    Reset(TextInput_Summary_Template);
+                    Reset(TextInput_Description_Template);
+                    Reset(ComboBox_Requestor_Template);
+                    Reset(Dropdown_Category_Template);
+                    Reset(Dropdown_SysAppOption_Template);
+                    Reset(Dropdown_ModType_Template);
+                    Reset(TextInput_BSR_Template);
+                    Reset(TextInput_ITPM_Template);
+                    //Change Details fields
+                    Reset(TextInput_ChangeReason_Template);
+                    Reset(Dropdown_ImpactOption_Template);
+                    //CAB Fields
+                    Reset(ComboBox_CABGroup_Select_Template);
+                    Reset(Gal_DisplayCABSelection_Template);
+                    //Implementation Fields
+                    Reset(ComboBox_AssignGrpManager_Template);
+                    Reset(TextInput_ImplementationPlan_Template);
+                    Reset(TextInput_BackoutPlan_Template);
+                PaddingRight: =10
+                RadiusBottomLeft: =20
+                RadiusBottomRight: =20
+                RadiusTopLeft: =20
+                RadiusTopRight: =20
+                Size: =11
+                Text: ="Cancel"
+                Width: =126
+                X: =1154
+                Y: =20
+                ZIndex: =5
+
+            Icn_Template_Cancel As icon.Cancel:
+                Color: =RGBA(255, 255, 255, 1)
+                Height: =18
+                Icon: =Icon.Cancel
+                OnSelect: =
+                Width: =18
+                X: =1248
+                Y: =26
+                ZIndex: =7
+
+    Container_Template_Header As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(253, 222, 207, 1)
+        Height: =77
+        Width: =1366
+        ZIndex: =9
+
+        Template_AppHeader As label:
+            Align: =Align.Center
+            FontWeight: =FontWeight.Bold
+            Height: =76
+            Size: =20
+            Text: ="Configure Change Request Template"
+            Width: =550
+            X: =431
+            ZIndex: =1
+
+        Template_JE_Logo As image:
+            Height: =63
+            Image: =JE_Logo
+            X: =35
+            Y: =6
+            ZIndex: =2
+
+        Template_UserImage As image:
+            Height: =53
+            Image: =VarUserImage
+            RadiusBottomLeft: =50
+            RadiusBottomRight: =50
+            RadiusTopLeft: =50
+            RadiusTopRight: =50
+            Tooltip: |-
+                =Proper(VarUserFullName)&"
+                "&VarUserEmail
+            Width: =53
+            X: =1277
+            Y: =11
+            ZIndex: =3
+
+    Container_ImplementationPlan_Template As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =221
+        Visible: =If(Rect_ImplementationPlan_Template.Visible, true, false)
+        Width: =1297
+        X: =38
+        Y: =458
+        ZIndex: =10
+
+        TextInput_ImplementationPlan_Template As text:
+            BorderColor: =RGBA(255, 125, 35, 1)
+            Clear: =true
+            Default: =If(IsBlank(SelectedCR.ImplementationDetails), Blank(), SelectedCR.ImplementationDetails)
+            EnableSpellCheck: =true
+            Height: =78
+            HintText: ="Provide details for change implementation"
+            HoverBorderColor: =RGBA(246, 88, 16, 1)
+            MaxLength: =500
+            Mode: =TextMode.MultiLine
+            PaddingLeft: =10
+            PaddingTop: =7
+            Size: =9
+            Tooltip: ="Maximum of 500 characters"
+            Width: =386
+            X: =351
+            Y: =37
+            ZIndex: =2
+
+        Lbl_ImplementationPlan_Template As label:
+            FontWeight: =FontWeight.Semibold
+            Height: =29
+            Size: =10
+            Text: =If(Value(SelectedCR.StageCode)>=7 And Value(SelectedCR.StageCode)<=8, "Implementation Plan  *", "Implementation Plan")
+            Width: =282
+            X: =348
+            Y: =6
+            ZIndex: =3
+
+        Lbl_BackoutPlan_Template As label:
+            FontWeight: =FontWeight.Semibold
+            Height: =29
+            Size: =10
+            Text: ="Backout Plan"
+            Width: =282
+            X: =346
+            Y: =116
+            ZIndex: =6
+
+        TextInput_BackoutPlan_Template As text:
+            BorderColor: =RGBA(255, 125, 35, 1)
+            Clear: =true
+            Default: =If(IsBlank(SelectedCR.BackOutPlan), Blank(), SelectedCR.BackOutPlan)
+            EnableSpellCheck: =true
+            Height: =60
+            HintText: ="Provide details of backout plan or rollback actions"
+            HoverBorderColor: =RGBA(246, 88, 16, 1)
+            MaxLength: =500
+            Mode: =TextMode.MultiLine
+            PaddingLeft: =10
+            PaddingTop: =7
+            Size: =9
+            Tooltip: ="Maximum of 500 characters"
+            Width: =385
+            X: =352
+            Y: =148
+            ZIndex: =7
+
+        Lbl_ChangeImplementer_Template As label:
+            FontWeight: =FontWeight.Semibold
+            Height: =31
+            Size: =10
+            Text: =If(Value(SelectedCR.StageCode)>=6 And Value(SelectedCR.StageCode)<=8, "Change Implementer  *", "Change Implementer")
+            Width: =162
+            X: =46
+            Y: =71
+            ZIndex: =8
+
+        Lbl_MakerCheckerName_Template As label:
+            FontWeight: =FontWeight.Semibold
+            Height: =27
+            Size: =9
+            Text: =If(IsBlank(SelectedCheckerName), SelectedCR.MakerCheckerName, SelectedCheckerName)
+            Tooltip: =If(IsBlank(SelectedCheckerEmail), SelectedCR.MakerCheckerEmail, SelectedCheckerEmail)
+            Width: =220
+            X: =35
+            Y: =175
+            ZIndex: =15
+
+        Lbl_ChangeImplementorGroup_Template As label:
+            Height: =21
+            Italic: =true
+            Size: =9
+            Text: |-
+                =//First(Split(SelectedCMGroup, "-")).Value
+                //SelectedCMGroup
+                If(Dropdown_Category_Template.Selected.CategoryName="Major", Blank(),
+                If(IsBlank(SelectedCIGroupTemplate), SelectedConfigTemplate.ChangeImplementationGroup, SelectedCIGroupTemplate))
+            Width: =220
+            X: =53
+            Y: =126
+            ZIndex: =17
+
+        Lbl_ChangeImplementorName_Template As label:
+            FontWeight: =FontWeight.Semibold
+            Height: =28
+            Size: =10
+            Text: |-
+                =If(Dropdown_Category_Template.Selected.CategoryName="Major", Blank(),
+                If(IsBlank(SelectedCINameTemplate), SelectedConfigTemplate.ChangeImplementationName, SelectedCINameTemplate))
+            Tooltip: =If(IsBlank(SelectedCIEmailTemplate), SelectedConfigTemplate.ChangeImplementationEmail, SelectedCIEmailTemplate)
+            Width: =220
+            X: =50
+            Y: =97
+            ZIndex: =18
+
+        ComboBox_AssignGrpManager_Template As combobox:
+            BorderColor: =RGBA(255, 125, 35, 1)
+            ChevronBackground: =RGBA(246, 88, 16, 1)
+            ChevronHoverBackground: =ColorFade(RGBA(246, 88, 16, 1), -20%)
+            DefaultSelectedItems: |-
+                =If(Dropdown_Category_Template.Selected.CategoryName="Major", Blank(),
+                    If(IsBlank(SelectedConfigTemplate.AssignmentGroupManagerEmail),Blank(), Office365Users.UserProfile(Lower(SelectedConfigTemplate.AssignmentGroupManagerEmail))))
+            DisplayFields: =["DisplayName","Mail"]
+            DisplayMode: =If(Value(SelectedCR.StageCode)<=6 And Value(SelectedCR.StageCode)>=2 And UpdateFormMode="Edit" Or VarUserSysAdmin, DisplayMode.Edit, DisplayMode.Disabled)
+            Height: =30
+            HoverFill: =RGBA(253, 222, 207, 1)
+            InputTextPlaceholder: ="Find name"
+            Items: |-
+                =//Office365Users.SearchUser({searchTerm:ComboBox_AssignGrpManager.SearchText,top:10})
+                //Office365Users.SearchUserV2({searchTerm:Self.SearchText}).value
+                Filter(Office365Users.SearchUserV2({searchTerm:Self.SearchText,top:5}).value,"@johnsonelectric.com" in ThisRecord.UserPrincipalName)
+            OnChange: =
+            PressedFill: =RGBA(253, 222, 207, 1)
+            SearchFields: =["DisplayName"]
+            SearchItems: |-
+                =Search(//Office365Users.SearchUser({searchTerm:ComboBox_AssignGrpManager.SearchText,top:10})
+                //Office365Users.SearchUserV2({searchTerm:Self.SearchText}).value
+                Filter(Office365Users.SearchUserV2({searchTerm:Self.SearchText,top:5}).value,"@johnsonelectric.com" in ThisRecord.UserPrincipalName),ComboBox_AssignGrpManager_Template.SearchText,DisplayName)
+            SelectionFill: =RGBA(250, 155, 112, 1)
+            SelectMultiple: =false
+            Size: =9
+            Template: =ListItemTemplate.Double
+            Width: =220
+            X: =43
+            Y: =35
+            ZIndex: =19
+
+        Lbl_AssignGroupMgr_Template As label:
+            FontWeight: =FontWeight.Semibold
+            Height: =22
+            Size: =10
+            Text: ="Assignment Group Manager"
+            Width: =219
+            X: =35
+            Y: =10
+            ZIndex: =20
+
+        Icn_Search_ChangeImplementer_Template As icon.Search:
+            AutoDisableOnSelect: =false
+            Height: =20
+            Icon: =Icon.Search
+            OnSelect: =Set(VarContainerChangeImplementerTemplate, true)
+            Visible: |-
+                =//Select Change Implementer only if Stage 6 only
+                If(Value(SelectedCR.StageCode)=6 And UpdateFormMode="Edit" Or VarUserSysAdmin, true, false)
+            Width: =20
+            X: =23
+            Y: =77
+            ZIndex: =25
+
+    Container_Box_ChangeMgr_Template As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(149, 149, 149, 0.75)
+        Height: =768
+        Visible: =VarContainerChangeManagerTemplate
+        Width: =1366
+        ZIndex: =12
+
+        Container_Box_SelectChangeMgr_Template As groupContainer.manualLayoutContainer:
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =487
+            Visible: =VarContainerChangeManagerTemplate
+            X: =426
+            Y: =150
+            ZIndex: =2
+
+            Rect_Lbl_SelectChangeMgr_Header_Template As rectangle:
+                Fill: =RGBA(253, 222, 207, 1)
+                Height: =37
+                Width: =500
+                ZIndex: =1
+
+            "Gal_SelectChangeMgr_Template As gallery.'BrowseLayout_Vertical_TwoTextVariant_ver5.0'":
+                '#CopilotOverlayLabel': ="Filtered"
+                BorderColor: =RGBA(250, 155, 112, 1)
+                BorderThickness: =1
+                DelayItemLoading: =true
+                Height: =253
+                Items: |-
+                    =Filter(ConfigChangeManagers,Region.Value=ComboBox_ChangeMgrGrp_Template.Selected.Region && ActiveFlag="Y")
+                    //If(IsBlank(ComboBox_ChangeMgrGrp.Selected),Blank(),
+                    //    Filter(ITAccountsList, GroupAssignment.Value=ComboBox_ChangeMgrGrp.Selected.GroupName))
+                Layout: =Layout.Vertical
+                LoadingSpinner: =LoadingSpinner.Data
+                TemplatePadding: =0
+                TemplateSize: =60
+                Width: =399
+                X: =47
+                Y: =147
+                ZIndex: =1
+
+                Lbl_SelectChangeMgrNameTemplate_2 As label:
+                    FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                    Height: =18
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.ChangeManager.DisplayName
+                    VerticalAlign: =VerticalAlign.Top
+                    Width: =171
+                    X: =36
+                    Y: =13
+                    ZIndex: =1
+
+                Lbl_SelectChangeMgrEmailTemplate_1 As label:
+                    FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                    Height: =20
+                    Italic: =true
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =8
+                    Text: =ThisItem.Title
+                    Width: =252
+                    X: =21
+                    Y: =26
+                    ZIndex: =2
+
+                Separator_SelectChangeMgr_Template As rectangle:
+                    Fill: =RGBA(149, 149, 149, 1)
+                    Height: =2
+                    OnSelect: =Select(Parent)
+                    Width: =Parent.TemplateWidth
+                    Y: =Parent.TemplateHeight - Self.Height
+                    ZIndex: =4
+
+                Rect_Lbl_SelectChangeMgrName_Template As rectangle:
+                    Fill: =RGBA(246, 88, 16, 1)
+                    Height: =Parent.TemplateHeight - Separator_SelectChangeMgr_Template.Height
+                    OnSelect: =Select(Parent)
+                    Visible: =ThisItem.IsSelected
+                    Width: =4
+                    ZIndex: =5
+
+                Lbl_SelectChangeMgrLocation_Template As label:
+                    Align: =Align.Right
+                    FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                    Height: =13
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =7
+                    Text: |-
+                        =ThisItem.Region.Value&" - "&If(IsBlank(ThisItem.ChangeManager.Email),Blank(),
+                        Office365Users.UserProfileV2(Lower(ThisItem.ChangeManager.Email)).officeLocation)
+                    Tooltip: ="Based on O365 profile"
+                    Width: =172
+                    X: =198
+                    Y: =15
+                    ZIndex: =6
+
+                Lbl_SelectChangeMgrEmailTemplate_3 As label:
+                    FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                    Height: =15
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =7
+                    Text: =Lower(ThisItem.ChangeManager.Email)
+                    Tooltip: |-
+                        =If(IsMatch(ThisItem.ChangeManager.Email,"@stackpole.com",MatchOptions.Contains),
+                            Lower(Office365Users.UserProfileV2(ThisItem.ChangeManager.Email).userPrincipalName),
+                            Lower(ThisItem.ChangeManager.Email))
+                    Width: =206
+                    X: =36
+                    Y: =31
+                    ZIndex: =7
+
+                Lbl_SelectChangeMgrNameTemplate_3 As label:
+                    Align: =Align.Right
+                    FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                    Height: =15
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =8
+                    Text: =ThisItem.Scope
+                    VerticalAlign: =VerticalAlign.Top
+                    Width: =133
+                    X: =237
+                    Y: =31
+                    ZIndex: =8
+
+                Icon5_1 As icon.Information:
+                    Color: =RGBA(51, 51, 51, 1)
+                    DisplayMode: =DisplayMode.View
+                    Height: =14
+                    Icon: =Icon.Information
+                    OnSelect: =Select(Parent)
+                    Tooltip: =ThisItem.Description
+                    Width: =14
+                    X: =12
+                    Y: =22
+                    ZIndex: =9
+
+            Lbl_SelectChangeMgr_Header_Template As label:
+                FontWeight: =FontWeight.Bold
+                Height: =21
+                Text: ="Select Change Manager"
+                Width: =214
+                X: =143
+                Y: =8
+                ZIndex: =2
+
+            ComboBox_ChangeMgrGrp_Template As combobox:
+                BorderColor: =RGBA(255, 125, 35, 1)
+                ChevronBackground: =RGBA(246, 88, 16, 1)
+                ChevronHoverBackground: =ColorFade(RGBA(246, 88, 16, 1), -20%)
+                DefaultSelectedItems: |-
+                    =//{Value: First(Split(SelectedCMGroup," - ")).Value}
+                DisplayFields: =["Region","Mail"]
+                Height: =28
+                HoverFill: =RGBA(253, 222, 207, 1)
+                InputTextPlaceholder: ="Find group"
+                IsSearchable: =false
+                Items: =ColRegions.Region
+                PaddingBottom: =3
+                PaddingLeft: =3
+                PaddingRight: =3
+                PaddingTop: =3
+                PressedFill: =RGBA(253, 222, 207, 1)
+                SearchFields: =["Region"]
+                SearchItems: =[]
+                SelectionFill: =RGBA(250, 155, 112, 1)
+                SelectMultiple: =false
+                Size: =9
+                Width: =196
+                X: =47
+                Y: =76
+                ZIndex: =3
+
+            Lbl_SelectChangeMgrGroup_Template As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =27
+                Size: =10
+                Text: ="Select Region  *"
+                Width: =196
+                X: =47
+                Y: =47
+                ZIndex: =4
+
+            Btn_SelectChangeMgr_Template As button:
+                DisplayMode: |-
+                    =If(IsBlank(ComboBox_ChangeMgrGrp_Template.Selected) 
+                        Or IsBlank(Gal_SelectChangeMgr_Template.Selected)
+                        Or Lower(ComboBox_Requestor_Template.Selected.Mail)=Lower(Gal_SelectChangeMgr_Template.Selected.ChangeManager.Email)
+                        , DisplayMode.Disabled, DisplayMode.Edit)
+                    
+                    //Validation rule - Requestor cannot be the same as Change Manager
+                Fill: =RGBA(221, 79, 14, 1)
+                Height: =28
+                OnSelect: |-
+                    =//Store selection in variables
+                    Set(SelectedCMGroupTemplate, ComboBox_ChangeMgrGrp_Template.Selected.Region&" - "&Gal_SelectChangeMgr_Template.Selected.Scope);
+                    Set(SelectedCMNameTemplate, Gal_SelectChangeMgr_Template.Selected.ChangeManager.DisplayName);
+                    If(IsMatch(Gal_SelectChangeMgr_Template.Selected.ChangeManager.Email,"@stackpole.com",MatchOptions.Contains),
+                        Set(SelectedCMEmailTemplate, Lower(Office365Users.UserProfileV2(Gal_SelectChangeMgr_Template.Selected.ChangeManager.Email).userPrincipalName)),
+                        Set(SelectedCMEmailTemplate, Lower(Gal_SelectChangeMgr_Template.Selected.ChangeManager.Email)));
+                    
+                    //Close pop-up container
+                    Set(VarContainerChangeManagerTemplate,false);
+                    
+                    //Reset controls
+                    Reset(ComboBox_ChangeMgrGrp_Template);
+                    Reset(Gal_SelectChangeMgr_Template);
+                Size: =12
+                Text: ="Select"
+                Width: =112
+                X: =131
+                Y: =438
+                ZIndex: =7
+
+            Btn_CancelChangeMgr_Template As button:
+                Fill: =RGBA(149, 149, 149, 1)
+                Height: =28
+                OnSelect: |
+                    =//Close pop-up container
+                    Set(VarContainerChangeManagerTemplate,false);
+                    
+                    //Reset controls
+                    Reset(ComboBox_ChangeMgrGrp_Template);
+                    Reset(Gal_SelectChangeMgr_Template);
+                Size: =12
+                Text: ="Cancel"
+                Width: =112
+                X: =285
+                Y: =438
+                ZIndex: =8
+
+            Lbl_SelectChangeMgrGroup_3_Template As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Change Manager (Select One)  *"
+                Width: =280
+                X: =45
+                Y: =114
+                ZIndex: =9
+
+            Lbl_SelectChangeImplementer_ValidationMsg_Template As label:
+                Color: =RGBA(221, 79, 14, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =28
+                Italic: =true
+                Size: =8
+                Text: ="Change Manager cannot be the same person as Initiator."
+                Visible: |-
+                    =If(Lower(ComboBox_Requestor_Template.Selected.Mail)=Lower(Gal_SelectChangeMgr_Template.Selected.ChangeManager.Email), true, false)
+                    //Validation message appear if RequestorEmail is the same as selected Change Manager email
+                Width: =399
+                X: =47
+                Y: =399
+                ZIndex: =10
+
+    Container_Box_ChangeImplementer_Template As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(149, 149, 149, 0.75)
+        Height: =768
+        Visible: =VarContainerChangeImplementerTemplate
+        Width: =1366
+        ZIndex: =13
+
+        Container_Box_SelectChangeImplementer_Template As groupContainer.manualLayoutContainer:
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =487
+            Visible: =VarContainerChangeImplementerTemplate
+            X: =426
+            Y: =150
+            ZIndex: =2
+
+            Rect_Lbl_SelectChangeImplementer_Hdr_1 As rectangle:
+                Fill: =RGBA(253, 222, 207, 1)
+                Height: =37
+                Width: =500
+                ZIndex: =1
+
+            "Gal_SelectChangeImplementer_Template As gallery.'BrowseLayout_Vertical_TwoTextVariant_ver5.0'":
+                '#CopilotOverlayLabel': ="Filtered"
+                BorderColor: =RGBA(250, 155, 112, 1)
+                BorderThickness: =1
+                DelayItemLoading: =true
+                Height: =218
+                Items: |-
+                    =Filter(ITAccountsList,GroupAssignment.Value=ComboBox_SelectImplementerGrp_Template.Selected.GroupName && ActiveFlag="Y")
+                    //    Filter(ITAccountsList, GroupAssignment.Value=ComboBox_ChangeMgrGrp.Selected.GroupName))
+                Layout: =Layout.Vertical
+                LoadingSpinner: =LoadingSpinner.Data
+                TemplatePadding: =0
+                TemplateSize: =60
+                Width: =399
+                X: =51
+                Y: =176
+                ZIndex: =1
+
+                Lbl_SelectChangeImplementerName_2 As label:
+                    FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                    Height: =20
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =8
+                    Text: =ThisItem.ITAcctName
+                    Width: =200
+                    X: =60
+                    Y: =8
+                    ZIndex: =2
+
+                Separator_SelectChangeImplementer_2 As rectangle:
+                    Fill: =RGBA(149, 149, 149, 1)
+                    Height: =2
+                    OnSelect: =Select(Parent)
+                    Width: =Parent.TemplateWidth
+                    Y: =58
+                    ZIndex: =4
+
+                Rect_Lbl_SelectChangeImplementer_2 As rectangle:
+                    Fill: =RGBA(246, 88, 16, 1)
+                    Height: =Parent.TemplateHeight - Separator_SelectChangeImplementer_2.Height
+                    OnSelect: =Select(Parent)
+                    Visible: =ThisItem.IsSelected
+                    Width: =4
+                    ZIndex: =5
+
+                Lbl_SelectChangeImplementerLocation_2 As label:
+                    Align: =Align.Right
+                    FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                    Height: =13
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =7
+                    Text: |-
+                        =If(IsBlank(Lower(ThisItem.ITAcctEmail)),Blank(),
+                        Office365Users.UserProfileV2(Lower(ThisItem.ITAcctEmail)).officeLocation)
+                    Tooltip: ="Based on O365 profile"
+                    X: =230
+                    Y: =15
+                    ZIndex: =6
+
+                Lbl_SelectChangeImplementerEmail_2 As label:
+                    FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+                    Height: =15
+                    Italic: =true
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =7
+                    Text: =Lower(ThisItem.ITAcctEmail)
+                    Tooltip: ="Based on O365 profile"
+                    Width: =230
+                    X: =60
+                    Y: =28
+                    ZIndex: =7
+
+                Img_SelectChangeImplementer_2 As image:
+                    Height: =35
+                    Image: |-
+                        =If(IsBlank(Lower(ThisItem.ITAcctEmail)),Blank(),
+                        Office365Users.UserPhotoV2(Lower(ThisItem.ITAcctEmail)))
+                    RadiusBottomLeft: =50
+                    RadiusBottomRight: =50
+                    RadiusTopLeft: =50
+                    RadiusTopRight: =50
+                    Tooltip: |-
+                        =Proper(VarUserFullName)&"
+                        "&VarUserEmail
+                    Width: =35
+                    X: =14
+                    Y: =11
+                    ZIndex: =8
+
+            Lbl_ChangeImplementer_Container_Hdr_1 As label:
+                FontWeight: =FontWeight.Bold
+                Height: =21
+                Text: ="Select Change Implementer"
+                Width: =250
+                X: =125
+                Y: =8
+                ZIndex: =2
+
+            Lbl_SelectImplementerGrp_1 As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =29
+                Size: =10
+                Text: |-
+                    ="Select Implementation Group
+                    "
+                Width: =265
+                X: =51
+                Y: =47
+                ZIndex: =4
+
+            Btn_SelectChangeImplementer_1 As button:
+                DisplayMode: |-
+                    =If(IsBlank(ComboBox_SelectImplementerGrp_Template.Selected) 
+                       Or IsBlank(Gal_SelectChangeImplementer_Template.Selected)
+                       Or Lower(Lbl_MakerCheckerName_Template.Tooltip)=Lower(Gal_SelectChangeImplementer_Template.Selected.ITAcctEmail)
+                       , DisplayMode.Disabled, DisplayMode.Edit)
+                    
+                    //Validation Rule - Change Implementer cannot be the same as Maker-Checker
+                Fill: =RGBA(221, 79, 14, 1)
+                Height: =28
+                OnSelect: |-
+                    =//Store selection in variables
+                    Set(SelectedCIGroupTemplate, ComboBox_SelectImplementerGrp_Template.Selected.GroupName);
+                    Set(SelectedCINameTemplate, Gal_SelectChangeImplementer_Template.Selected.ITAcctName);
+                    Set(SelectedCIEmailTemplate, Lower(Gal_SelectChangeImplementer_Template.Selected.ITAcctEmail));
+                    
+                    //Close pop-up container
+                    Set(VarContainerChangeImplementerTemplate,false);
+                    
+                    //Reset controls
+                    Reset(ComboBox_SelectImplementerGrp_Template);
+                    Reset(Gal_SelectChangeImplementer_Template);
+                Size: =12
+                Text: ="Select"
+                Width: =112
+                X: =135
+                Y: =430
+                ZIndex: =7
+
+            Btn_CancelChangeImplementer_Template As button:
+                Fill: =RGBA(149, 149, 149, 1)
+                Height: =28
+                OnSelect: |
+                    =//Set variables to blank
+                    //Set(SelectedCMGroup, Blank());
+                    //Set(SelectedCMName, Blank());
+                    //Set(SelectedCMEmail, Blank());
+                    
+                    //Close pop-up container
+                    Set(VarContainerChangeImplementerTemplate,false);
+                    
+                    //Reset controls
+                    Reset(ComboBox_SelectImplementerGrp_Template);
+                    Reset(Gal_SelectChangeImplementer_Template);
+                Size: =12
+                Text: ="Cancel"
+                Width: =112
+                X: =285
+                Y: =430
+                ZIndex: =8
+
+            Lbl_SelectChangeImplementer_Template As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Change Implementer (Select One)  *"
+                Width: =280
+                X: =51
+                Y: =141
+                ZIndex: =9
+
+            ComboBox_SelectImplementerGrp_Template As combobox:
+                BorderColor: =RGBA(246, 88, 16, 1)
+                ChevronBackground: =RGBA(246, 88, 16, 1)
+                DefaultSelectedItems: =Blank()
+                DisplayFields: =["GroupName"]
+                InputTextPlaceholder: ="Search by group name"
+                Items: =ColGroups.GroupName
+                SearchFields: =["GroupName"]
+                SearchItems: =Search(ColGroups.GroupName,ComboBox_SelectImplementerGrp_Template.SearchText,GroupName)
+                SelectionFill: =RGBA(246, 88, 16, 1)
+                SelectMultiple: =false
+                Size: =10
+                Width: =399
+                X: =51
+                Y: =80
+                ZIndex: =10
+
+            Lbl_SelectChangeImplementer_ValidationMsg_3 As label:
+                Color: =RGBA(221, 79, 14, 1)
+                FontWeight: =FontWeight.Semibold
+                Height: =28
+                Italic: =true
+                Size: =8
+                Text: ="Change Implementer cannot be the same person as Maker-Checker."
+                Visible: |-
+                    =false
+                    //If(Lower(Lbl_MakerCheckerName_Template.Tooltip)=Lower(Gal_SelectChangeImplementer_1.Selected.ITAcctEmail), true, false)
+                Width: =399
+                X: =51
+                Y: =394
+                ZIndex: =11
+
+    LBL_DEBUG_Template As label:
+        Height: =50
+        PaddingLeft: =15
+        Size: =9
+        Text: =If(IsBlank(SelectedConfigTemplate),"New", "Existing")
+        Visible: =false
+        Width: =249
+        X: =178
+        Y: =13
+        ZIndex: =15
+

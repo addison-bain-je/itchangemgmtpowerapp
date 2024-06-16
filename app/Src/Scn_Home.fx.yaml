@@ -1,0 +1,1396 @@
+"Scn_Home As screen.'tabletAutoLayout_HeaderMainFooter_ver1.0'":
+    Fill: =RGBA(237, 237, 237, 1)
+
+    Lbl_AppVersion_Home As label:
+        Height: =23
+        PaddingLeft: =15
+        Size: =7
+        Text: |-
+            =""&LookUp(ConfigGenParam,Title="AppVersion",ParamValue)
+            //CountRows(Filter(ChangeRequestList,(RequesterEmail=VarUserEmail Or CreatorEmail=VarUserEmail Or ChangeManagerEmail=VarUserEmail) And Value(StageCode)<9))
+        Width: =120
+        Y: =745
+        ZIndex: =1
+
+    "Gallery_Home_RequestList As gallery.'BrowseLayout_Vertical_TwoTextVariant_ver5.0'":
+        '#CopilotOverlayLabel': ="Filtered"
+        BorderColor: =RGBA(102, 102, 102, 1)
+        BorderThickness: =1
+        DelayItemLoading: =true
+        Height: =482
+        Items: |-
+            =Switch(
+                HomeGalFilterBtn,
+                "MyRequests",
+                SortByColumns(
+                    Search(
+                        Filter(
+                            ChangeRequestList,
+                            (RequesterEmail = VarUserEmail Or CreatorEmail = VarUserEmail Or ChangeManagerEmail = VarUserEmail) And Value(StageCode) < 9
+                        ),
+                        TextInput_SearchGal.Text,
+                        Title,
+                        Summary,
+                        SystemApplication,
+                        RequesterName
+                    ),
+                    "Status",
+                    If(
+                        SortStatusDescending,
+                        SortOrder.Descending,
+                        SortOrder.Ascending
+                    ),
+                    "Category",
+                    If(
+                        SortCategoryDescending,
+                        SortOrder.Descending,
+                        SortOrder.Ascending,
+                        "Title",
+                        If(
+                            SortIDDescending,
+                            SortOrder.Descending,
+                            SortOrder.Ascending
+                        )
+                    )
+                ),
+                "AssignedToMe",
+                SortByColumns(
+                    Search(
+                        Filter(
+                            ChangeRequestList,
+                            (Value(StageCode) > 1 Or Value(StatusCode) = 102) And Value(StageCode) < 9 And (IsMatch(
+                                CurrentHandlerEmail,
+                                Lower(User().Email),
+                                MatchOptions.Contains
+                            )) Or IsMatch(
+                                NeedImplementationInput,
+                                Lower(User().Email),
+                                MatchOptions.IgnoreCase
+                            )
+                        ),
+                        TextInput_SearchGal.Text,
+                        Title,
+                        Summary,
+                        SystemApplication,
+                        RequesterName
+                    ),
+                    "Status",
+                    If(
+                        SortStatusDescending,
+                        SortOrder.Descending,
+                        SortOrder.Ascending
+                    ),
+                    "Category",
+                    If(
+                        SortCategoryDescending,
+                        SortOrder.Descending,
+                        SortOrder.Ascending,
+                        "Title",
+                        If(
+                            SortIDDescending,
+                            SortOrder.Descending,
+                            SortOrder.Ascending
+                        )
+                    )
+                ),
+                "Completed",
+                SortByColumns(
+                    Search(
+                        Filter(
+                            ChangeRequestList,
+                            (RequesterEmail = VarUserEmail Or CreatorEmail = VarUserEmail Or ChangeManagerEmail = VarUserEmail) And Value(StageCode) = 9
+                        ),
+                        TextInput_SearchGal.Text,
+                        Title,
+                        Summary,
+                        SystemApplication,
+                        RequesterName
+                    ),
+                    "Status",
+                    If(
+                        SortStatusDescending,
+                        SortOrder.Descending,
+                        SortOrder.Ascending
+                    ),
+                    "Category",
+                    If(
+                        SortCategoryDescending,
+                        SortOrder.Descending,
+                        SortOrder.Ascending,
+                        "Title",
+                        If(
+                            SortIDDescending,
+                            SortOrder.Descending,
+                            SortOrder.Ascending
+                        )
+                    )
+                ),
+                "ViewAll",
+                SortByColumns(
+                    Search(
+                        Filter(
+                            ChangeRequestList,
+                            Value(StatusCode) <> 100
+                        ),
+                        TextInput_SearchGal.Text,
+                        Title,
+                        Summary,
+                        SystemApplication,
+                        RequesterName
+                    ),
+                    "Status",
+                    If(
+                        SortStatusDescending,
+                        SortOrder.Descending,
+                        SortOrder.Ascending
+                    ),
+                    "Category",
+                    If(
+                        SortCategoryDescending,
+                        SortOrder.Descending,
+                        SortOrder.Ascending,
+                        "Title",
+                        If(
+                            SortIDDescending,
+                            SortOrder.Descending,
+                            SortOrder.Ascending
+                        )
+                    )
+                ),
+                ChangeRequestList
+            )
+            //Search(Filter(ChangeRequestList,(Lower(RequesterEmail)=VarUserEmail Or Lower('Created By'.Email)=VarUserEmail) And Value(StageCode)<9), TextInput_SearchGal.Text, "Summary", "Description")
+        Layout: =Layout.Vertical
+        LoadingSpinner: =LoadingSpinner.Data
+        NavigationStep: =2
+        ShowNavigation: =true
+        ShowScrollbar: =false
+        TemplatePadding: =0
+        TemplateSize: =71
+        Width: =1297
+        X: =38
+        Y: =247
+        ZIndex: =2
+
+        Gal_Lbl_Status As label:
+            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+            Height: =51
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =8
+            Text: =ThisItem.Status
+            Width: =116
+            X: =80
+            Y: =6
+            ZIndex: =1
+
+        Gal_Lbl_ID As label:
+            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+            Height: =22
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =8
+            Text: =ThisItem.Title
+            Width: =55
+            X: =15
+            Y: =20
+            ZIndex: =2
+
+        Gal_NextArrow As icon.ChevronRight:
+            AccessibleLabel: =Self.Tooltip
+            BorderColor: =RGBA(0, 0, 0, 0)
+            BorderStyle: =BorderStyle.None
+            Color: =RGBA(246, 88, 16, 1)
+            Height: =48
+            Icon: |-
+                =//Check if current user can edit or view selected record
+                If(IsMatch(ThisItem.CurrentHandlerEmail, Lower(User().Email), MatchOptions.Contains), Icon.Edit,
+                    If((ThisItem.StatusCode="102" Or ThisItem.StatusCode="100") And (ThisItem.RequesterEmail=VarUserEmail Or ThisItem.CreatorEmail=VarUserEmail), Icon.Edit,
+                        Icon.View))
+            OnSelect: |-
+                =//Check if current user can edit or view selected record
+                If(IsMatch(ThisItem.CurrentHandlerEmail, Lower(User().Email), MatchOptions.Contains), Set(UpdateFormMode,"Edit"),
+                    If((ThisItem.StatusCode="102" Or ThisItem.StatusCode="100") And (ThisItem.RequesterEmail=VarUserEmail Or ThisItem.CreatorEmail=VarUserEmail), Set(UpdateFormMode,"Edit"),
+                        Set(UpdateFormMode,"View")));
+                
+                //If user is System Admin, then set to Edit mode
+                If(VarUserSysAdmin,UpdateFormMode="Edit");
+                
+                //Set selected record
+                Set(SelectedCR,Gallery_Home_RequestList.Selected);
+                
+                //Navigate to form screen
+                Navigate(Scn_RequestForm);
+            PaddingBottom: =13
+            PaddingLeft: =13
+            PaddingRight: =13
+            PaddingTop: =13
+            Tooltip: ="Go to CR details"
+            Width: =47
+            X: =1221
+            Y: =9
+            ZIndex: =3
+
+        Gal_Seperator As rectangle:
+            Height: =8
+            OnSelect: =Select(Parent)
+            Width: =Parent.TemplateWidth
+            Y: =Parent.TemplateHeight - Self.Height
+            ZIndex: =4
+
+        Gal_RectSelect As rectangle:
+            Fill: =RGBA(250, 155, 112, 1)
+            Height: =Parent.TemplateHeight - Gal_Seperator.Height
+            OnSelect: =Select(Parent)
+            Visible: =ThisItem.IsSelected
+            Width: =4
+            ZIndex: =5
+
+        Gal_Lbl_StatusCode As label:
+            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+            Height: =22
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =8
+            Text: =ThisItem.StatusCode
+            Visible: =false
+            Width: =30
+            X: =10
+            ZIndex: =6
+
+        Gal_Lbl_ChangeInitiator As label:
+            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+            Height: =20
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =8
+            Text: =ThisItem.RequesterName
+            Width: =130
+            X: =727
+            Y: =22
+            ZIndex: =7
+
+        Gal_Lbl_ChangeSummary As label:
+            Align: =Align.Justify
+            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+            Height: =49
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =8
+            Text: =ThisItem.Summary
+            Width: =226
+            X: =471
+            Y: =7
+            ZIndex: =8
+
+        Gal_Icn_Delete As icon.Trash:
+            Color: =RGBA(184, 0, 0, 1)
+            Height: =18
+            Icon: =Icon.Trash
+            OnSelect: |-
+                =Set(SelectedCR,Gallery_Home_RequestList.Selected);
+                Set(VarDeleteDraft,true)
+                //RemoveIf(ChangeRequestList,Title=ThisItem.Title);
+                //Refresh(ChangeRequestList);
+            Visible: |-
+                =//Can only delete if in 'Draft' status
+                If(ThisItem.StatusCode="100", true, false)
+            Width: =18
+            X: =121
+            Y: =22
+            ZIndex: =9
+
+        Gal_Lbl_ChangeManager As label:
+            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+            Height: =49
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =8
+            Text: |-
+                =If(IsBlank(ThisItem.ChangeManagerName),Blank(),
+                ThisItem.ChangeManagerGroup&" - 
+                "&ThisItem.ChangeManagerName)
+                //ThisItem.ChangeManagerName
+            Width: =200
+            X: =882
+            Y: =9
+            ZIndex: =11
+
+        Gal_Lbl_ModDate As label:
+            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+            Height: =24
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =8
+            Text: =ThisItem.Modified
+            Width: =110
+            X: =1095
+            Y: =22
+            ZIndex: =12
+
+        Gal_Lbl_Category As label:
+            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+            Height: =22
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =8
+            Text: =ThisItem.Category
+            Width: =87
+            X: =227
+            Y: =20
+            ZIndex: =13
+
+        Gal_Icn_Category As icon.Warning:
+            Color: |-
+                =If(ThisItem.Category="Emergency", RGBA(246, 88, 16, 1),
+                    If(ThisItem.Category="Major", RGBA(0, 0, 0, 1),
+                    RGBA(0,0,0,0)))
+            Height: =15
+            Icon: |-
+                =If(ThisItem.Category="Emergency",Icon.Warning,
+                    ThisItem.Category="Major",Icon.Globe,
+                    Blank())
+            OnSelect: =Select(Parent)
+            Width: =15
+            X: =209
+            Y: =23
+            ZIndex: =14
+
+        Gal_Lbl_System As label:
+            Align: =Align.Center
+            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+            Height: =55
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Size: =8
+            Text: =ThisItem.SystemApplication
+            Width: =83
+            X: =345
+            Y: =6
+            ZIndex: =15
+
+    Lbl_Btn_ArchivedList As label:
+        Align: =Align.Center
+        Color: =RGBA(0, 94, 146, 1)
+        FontWeight: =FontWeight.Semibold
+        Height: =28
+        OnSelect: =Launch(LookUp(ConfigGenParam,Title="ArchivalListURL",ParamValue),Blank(),LaunchTarget.New)
+        Size: =12
+        Text: ="View Archived Requests"
+        Tooltip: ="Open archived list to see requests completed more than 30 days"
+        Underline: =true
+        Visible: =If(HomeGalFilterBtn="ViewAll", true, false)
+        Width: =200
+        X: =1139
+        Y: =153
+        ZIndex: =3
+
+    Container_Home_Gal_Header As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =40
+        Width: =1297
+        X: =38
+        Y: =195
+        ZIndex: =4
+
+        Label1 As label:
+            FontWeight: =FontWeight.Semibold
+            Size: =10
+            Text: ="ID"
+            Width: =28
+            X: =14
+            ZIndex: =1
+
+        Label1_1 As label:
+            FontWeight: =FontWeight.Semibold
+            Size: =10
+            Text: ="Status"
+            Width: =51
+            X: =75
+            ZIndex: =2
+
+        Label1_2 As label:
+            FontWeight: =FontWeight.Semibold
+            Size: =10
+            Text: ="Summary"
+            Width: =102
+            X: =464
+            ZIndex: =3
+
+        Label1_3 As label:
+            FontWeight: =FontWeight.Semibold
+            Size: =10
+            Text: ="Change Initiator"
+            Width: =161
+            X: =723
+            ZIndex: =4
+
+        Label1_4 As label:
+            FontWeight: =FontWeight.Semibold
+            Size: =10
+            Text: ="Change Manager"
+            Width: =161
+            X: =879
+            ZIndex: =5
+
+        Label1_5 As label:
+            FontWeight: =FontWeight.Semibold
+            Size: =10
+            Text: ="Last Updated"
+            Width: =109
+            X: =1092
+            ZIndex: =6
+
+        Label1_6 As label:
+            FontWeight: =FontWeight.Semibold
+            Size: =10
+            Text: ="Category"
+            Width: =69
+            X: =224
+            ZIndex: =7
+
+        Label1_7 As label:
+            Align: =Align.Center
+            FontWeight: =FontWeight.Semibold
+            Size: =10
+            Text: ="System / Application"
+            Width: =118
+            X: =334
+            ZIndex: =8
+
+        Grp_Btns_Gal_Sort As group:
+            Height: =5
+            Width: =5
+            X: =-38
+            Y: =-183
+            ZIndex: =12
+
+            Icon_Gal_Sort_ID As icon.ArrowsUpDown:
+                Height: =16
+                Icon: =Icon.Sort
+                OnSelect: |-
+                    =UpdateContext({SortIDDescending: !SortIDDescending})
+                Tooltip: =If(SortIDDescending,"Largest to Smallest","Smallest to Largest")
+                Width: =16
+                X: =40
+                Y: =12
+                ZIndex: =9
+
+            Icon_Gal_Sort_Status As icon.ArrowsUpDown:
+                Height: =16
+                Icon: =Icon.Sort
+                OnSelect: |-
+                    =UpdateContext({SortStatusDescending: !SortStatusDescending})
+                Tooltip: =If(SortStatusDescending,"Z - A","A - Z")
+                Width: =16
+                X: =127
+                Y: =12
+                ZIndex: =10
+
+            Icon_Gal_Sort_Category As icon.ArrowsUpDown:
+                Height: =16
+                Icon: =Icon.Sort
+                OnSelect: |-
+                    =UpdateContext({SortCategoryDescending: !SortCategoryDescending})
+                Tooltip: =If(SortCategoryDescending,"Z - A","A - Z")
+                Width: =16
+                X: =292
+                Y: =12
+                ZIndex: =11
+
+    Container_Home_Nav_Bar As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(255, 255, 255, 1)
+        Height: =50
+        Width: =1297
+        X: =38
+        Y: =88
+        ZIndex: =7
+
+        Grp_Btn_NewRequestCreation As group:
+            Height: =5
+            Width: =5
+            X: =-50
+            Y: =-57
+            ZIndex: =3
+
+            Btn_NewRequest As button:
+                Align: =Align.Right
+                Fill: =RGBA(246, 88, 16, 1)
+                Height: =35
+                HoverFill: =ColorFade(Self.Fill, -20%)
+                OnSelect: |-
+                    =Refresh(ConfigGenParam);
+                    //Set to Edit mode
+                    Set(UpdateFormMode,"Edit");
+                    Set(VarCrNumber, LookUp(ConfigGenParam,Title="CR_Counter",ParamValue));
+                    
+                    //Create new record
+                    Set(SelectedCR,Patch(ChangeRequestList, Defaults(ChangeRequestList),
+                     { Title: VarCrNumber,
+                       StatusCode:"100",
+                       Status: LookUp(ColStatus, StatusCode="100", StatusName),
+                       StageName: LookUp(ColStatus, StatusCode="100", StageName),
+                       StageCode: LookUp(ColStatus, StatusCode="100", StageCode),
+                       CurrentHandlerEmail: VarUserEmail,
+                       CreatorName: VarUserFullName,
+                       CreatorEmail: VarUserEmail,
+                       StartDateTime: Now(),
+                       FullAuditLog: "New request created by "&VarUserFullName&" on "&Text(Now(), "mm/dd/yyyy hh:mm:ss")&Char(13)
+                     }));
+                    
+                    //Update next CR ID counter
+                    Patch(ConfigGenParam,
+                        LookUp(ConfigGenParam,Title="CR_Counter"),
+                        {Title:"CR_Counter",
+                        ParamValue:Text(Value(VarCrNumber+1),"000000")}
+                    );
+                    
+                    //Navigate to request form screen
+                    Navigate(Scn_RequestForm);
+                PaddingRight: =15
+                RadiusBottomLeft: =20
+                RadiusBottomRight: =20
+                RadiusTopLeft: =20
+                RadiusTopRight: =20
+                Size: =10
+                Text: ="Create New Request"
+                Tooltip: ="Create New Change Request from blank"
+                Width: =180
+                X: =1105
+                Y: =8
+                ZIndex: =1
+
+            Icn_NewRequest As icon.Add:
+                Color: =RGBA(255, 255, 255, 1)
+                Height: =20
+                Icon: =Icon.Add
+                OnSelect: |-
+                    =Refresh(ConfigGenParam);
+                    Set(VarNewCrNumber, LookUp(ConfigGenParam,Title="CR_Counter",ParamValue));
+                    Set(VarNewStatusCode, "100");
+                    Set(VarNewStageCode,"1");
+                    Set(VarNewChangeManagerGroup,Blank());
+                    Set(VarNewChangeManagerName,Blank());
+                    
+                    Patch(ConfigGenParam,
+                        LookUp(ConfigGenParam,Title="CR_Counter"),
+                        {Title:"CR_Counter",
+                        ParamValue:Text(Value(VarNewCrNumber+1),"000000")}
+                    );
+                    
+                    Navigate(Scn_RequestForm);
+                Width: =20
+                X: =1114
+                Y: =15
+                ZIndex: =2
+
+        Grp_Btn_ViewMyRequests As group:
+            Height: =5
+            Width: =5
+            X: =-50
+            Y: =-57
+            ZIndex: =6
+
+            Button_MyRequests As button:
+                BorderStyle: =BorderStyle.None
+                Color: =RGBA(77, 77, 77, 1)
+                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                DisabledColor: =RGBA(0, 0, 0, 0)
+                DisabledFill: =RGBA(0, 0, 0, 0)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =33
+                HoverColor: =RGBA(251, 188, 159, 1)
+                HoverFill: =RGBA(0, 0, 0, 0)
+                OnSelect: =Set(HomeGalFilterBtn, "MyRequests")
+                PressedColor: =RGBA(246, 88, 16, 1)
+                PressedFill: =RGBA(0, 0, 0, 0)
+                Size: =11
+                Text: |-
+                    ="My Open Requests"
+                    &" ("&CountRows(Filter(ChangeRequestList,(RequesterEmail=VarUserEmail Or CreatorEmail=VarUserEmail Or ChangeManagerEmail=VarUserEmail) And Value(StageCode)<9))&")"
+                Tooltip: ="Open requests created or requested by me or as Change Manager"
+                Width: =190
+                Y: =8
+                ZIndex: =3
+
+            Rectangle3 As rectangle:
+                Fill: =RGBA(250, 155, 112, 1)
+                Height: =8
+                Visible: =If(HomeGalFilterBtn="MyRequests", true, false)
+                Width: =190
+                ZIndex: =4
+
+        Grp_Btn_AssignedToMe As group:
+            Height: =5
+            Width: =5
+            X: =-50
+            Y: =-57
+            ZIndex: =9
+
+            Button_AssignedToMe As button:
+                BorderStyle: =BorderStyle.None
+                Color: =RGBA(77, 77, 77, 1)
+                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                DisabledColor: =RGBA(0, 0, 0, 0)
+                DisabledFill: =RGBA(0, 0, 0, 0)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =33
+                HoverColor: =RGBA(251, 188, 159, 1)
+                HoverFill: =RGBA(0, 0, 0, 0)
+                OnSelect: =Set(HomeGalFilterBtn, "AssignedToMe");
+                PressedColor: =RGBA(246, 88, 16, 1)
+                PressedFill: =RGBA(0, 0, 0, 0)
+                Size: =11
+                Text: |-
+                    ="Assigned To Me"
+                    &" ("&CountRows(Filter(ChangeRequestList, (Value(StageCode)>1 Or Value(StatusCode)=102) And Value(StageCode)<9 And (IsMatch(CurrentHandlerEmail, Lower(User().Email), MatchOptions.Contains)) Or IsMatch(NeedImplementationInput, Lower(User().Email), MatchOptions.IgnoreCase)))&")"
+                Tooltip: ="Open requests pending my approval or action"
+                Width: =190
+                X: =190
+                Y: =8
+                ZIndex: =5
+
+            Rectangle3_1 As rectangle:
+                Fill: =RGBA(250, 155, 112, 1)
+                Height: =8
+                Visible: =If(HomeGalFilterBtn="AssignedToMe", true, false)
+                Width: =190
+                X: =190
+                ZIndex: =6
+
+        Lbl_Btn_ScheduleCRList As label:
+            Align: =Align.Center
+            Color: =RGBA(0, 94, 146, 1)
+            FontWeight: =FontWeight.Semibold
+            Height: =28
+            OnSelect: =Launch(LookUp(ConfigGenParam,Title="CalendarView",ParamValue),Blank(),LaunchTarget.New)
+            Size: =11
+            Text: ="Calendar View"
+            Underline: =true
+            Visible: =If(HomeGalFilterBtn="ViewAll" And VarUserSysAdmin, true, false)
+            X: =789
+            Y: =11
+            ZIndex: =11
+
+        Grp_Btn_Completed As group:
+            Height: =5
+            Width: =5
+            X: =-150
+            Y: =9
+            ZIndex: =11
+
+            Button_Completed As button:
+                BorderStyle: =BorderStyle.None
+                Color: =RGBA(77, 77, 77, 1)
+                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                DisabledColor: =RGBA(0, 0, 0, 0)
+                DisabledFill: =RGBA(0, 0, 0, 0)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =33
+                HoverColor: =RGBA(251, 188, 159, 1)
+                HoverFill: =RGBA(0, 0, 0, 0)
+                OnSelect: =Set(HomeGalFilterBtn, "Completed");
+                PressedColor: =RGBA(246, 88, 16, 1)
+                PressedFill: =RGBA(0, 0, 0, 0)
+                Size: =11
+                Text: |-
+                    ="My Completed Requests"
+                    &" ("&CountRows((Filter(ChangeRequestList, (RequesterEmail=VarUserEmail Or CreatorEmail=VarUserEmail Or ChangeManagerEmail=VarUserEmail) And Value(StageCode)=9)))&")"
+                Tooltip: |-
+                    ="Completed requests created or requested by me
+                    (in last 30 days)"
+                Width: =215
+                X: =381
+                Y: =8
+                ZIndex: =7
+
+            Rectangle3_2 As rectangle:
+                Fill: =RGBA(250, 155, 112, 1)
+                Height: =8
+                Visible: =If(HomeGalFilterBtn="Completed", true, false)
+                Width: =215
+                X: =381
+                ZIndex: =8
+
+        Grp_Btn_ViewAll As group:
+            Height: =5
+            Width: =5
+            X: =-341
+            Y: =9
+            ZIndex: =13
+
+            Button_ViewAll As button:
+                BorderStyle: =BorderStyle.None
+                Color: =RGBA(77, 77, 77, 1)
+                DisabledBorderColor: =RGBA(0, 0, 0, 0)
+                DisabledColor: =RGBA(0, 0, 0, 0)
+                DisabledFill: =RGBA(0, 0, 0, 0)
+                Fill: =RGBA(0, 0, 0, 0)
+                Height: =33
+                HoverColor: =RGBA(251, 188, 159, 1)
+                HoverFill: =RGBA(0, 0, 0, 0)
+                OnSelect: =Set(HomeGalFilterBtn, "ViewAll");
+                PressedColor: =RGBA(246, 88, 16, 1)
+                PressedFill: =RGBA(0, 0, 0, 0)
+                Size: =11
+                Text: |-
+                    ="View All"
+                    &" ("&CountRows((Filter(ChangeRequestList, Value(StatusCode)<>100)))&")"
+                Tooltip: |-
+                    =//"Only system admin can review all requests"
+                    "All open or completed requests in last 30 days"
+                Width: =180
+                X: =604
+                Y: =8
+                ZIndex: =9
+
+            Rectangle3_7 As rectangle:
+                Fill: =RGBA(250, 155, 112, 1)
+                Height: =8
+                Visible: =If(HomeGalFilterBtn="ViewAll", true, false)
+                Width: =180
+                X: =604
+                ZIndex: =10
+
+        Grp_Btn_NewRequestCreationTemplate As group:
+            Height: =5
+            Width: =5
+            X: =-1041
+            Y: =7
+            ZIndex: =16
+
+            Btn_NewRequest_Template As button:
+                Align: =Align.Right
+                Fill: =RGBA(0, 121, 187, 1)
+                Height: =35
+                HoverFill: =ColorFade(Self.Fill, -20%)
+                OnSelect: |
+                    =Set(VarTemplateSelectContainer,true);
+                PaddingRight: =15
+                RadiusBottomLeft: =20
+                RadiusBottomRight: =20
+                RadiusTopLeft: =20
+                RadiusTopRight: =20
+                Size: =10
+                Text: ="Use Template"
+                Tooltip: ="Create New Change Request from Template"
+                Width: =140
+                X: =950
+                Y: =8
+                ZIndex: =12
+
+            Icn_NewRequest_Template As icon.Add:
+                Color: =RGBA(255, 255, 255, 1)
+                Height: =20
+                Icon: =Icon.DocumentWithContent
+                OnSelect: =Set(VarTemplateSelectContainer,true);
+                Tooltip: ="Create New Change Request from Template"
+                Width: =20
+                X: =961
+                Y: =15
+                ZIndex: =13
+
+    Container_Home_Header As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(253, 222, 207, 1)
+        Height: =77
+        Width: =1366
+        ZIndex: =8
+
+        Home_AppHeader_1 As label:
+            Align: =Align.Center
+            FontWeight: =FontWeight.Bold
+            Height: =76
+            Size: =20
+            Text: ="IT Change Request Management (UAT)"
+            Width: =600
+            X: =375
+            ZIndex: =1
+
+        Home_JE_Logo_1 As image:
+            Height: =63
+            Image: =JE_Logo
+            X: =35
+            Y: =6
+            ZIndex: =2
+
+        Home_UserImage_1 As image:
+            Height: =53
+            Image: =VarUserImage
+            RadiusBottomLeft: =50
+            RadiusBottomRight: =50
+            RadiusTopLeft: =50
+            RadiusTopRight: =50
+            Tooltip: |-
+                =Proper(VarUserFullName)&"
+                "&VarUserEmail
+            Width: =53
+            X: =1277
+            Y: =11
+            ZIndex: =3
+
+        Icn_SysAdminScn_Nav As icon.Settings:
+            Color: =RGBA(0, 0, 0, 1)
+            Height: =37
+            Icon: =Icon.Settings
+            OnSelect: |-
+                =//Reset variables
+                Set(SystemAdminGalFilterBtn, "ChangeManager");
+                Set(SelectedChangeManagerAccount,Blank());
+                Set(EditChangeManagerContainer,false);
+                Set(AddChangeManagerContainer,false);
+                
+                
+                Navigate(Scn_SystemAdmin);
+            Tooltip: ="System Admin Settings"
+            Visible: =VarUserSysAdmin
+            Width: =37
+            X: =1216
+            Y: =19
+            ZIndex: =4
+
+    Container_Template_Selection As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(202, 202, 202, 0.7)
+        Height: =768
+        Visible: |-
+            =VarTemplateSelectContainer
+            //false
+        Width: =1366
+        ZIndex: =9
+
+        Container_Templates_Gal_Selection As groupContainer.manualLayoutContainer:
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =500
+            Visible: =VarTemplateSelectContainer
+            Width: =1303
+            X: =36
+            Y: =203
+            ZIndex: =1
+
+            Lbl_Gal_Summary_Hdr_Summary_1 As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Change Request Summary"
+                Width: =180
+                X: =42
+                Y: =5
+                ZIndex: =1
+
+            Lbl_Gal_Templates_Hdr_Created_1 As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Created"
+                Width: =138
+                X: =880
+                Y: =5
+                ZIndex: =2
+
+            Lbl_Gal_Templates_Hdr_LastMod_1 As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: |-
+                    ="Last Modified
+                    "
+                Width: =115
+                X: =1042
+                Y: =5
+                ZIndex: =3
+
+            Lbl_Gal_Templates_Hdr_Description_1 As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Description"
+                Width: =148
+                X: =264
+                Y: =5
+                ZIndex: =4
+
+            Lbl_Gal_Templates_Hdr_Category_1 As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Category"
+                Width: =94
+                X: =507
+                Y: =5
+                ZIndex: =6
+
+            Lbl_Gal_Templates_Hdr_SysApp_1 As label:
+                Align: =Align.Center
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: |-
+                    ="System / Application
+                    Modification Type"
+                Width: =163
+                X: =639
+                Y: =5
+                ZIndex: =7
+
+            "Gallery_Templates_Select As gallery.'BrowseLayout_Vertical_TwoTextVariant_ver5.0'":
+                '#CopilotOverlayLabel': ="Filtered"
+                BorderColor: =RGBA(102, 102, 102, 1)
+                BorderStyle: =BorderStyle.None
+                BorderThickness: =1
+                DelayItemLoading: =true
+                Height: =463
+                Items: |
+                    =//Connect to SharePoint List, Only Active Templates available for selection
+                    SortByColumns(Filter(ConfigCRTemplates,Active="Y"),"Summary",SortOrder.Ascending)
+                Layout: =Layout.Vertical
+                LoadingSpinner: =LoadingSpinner.Data
+                NavigationStep: =2
+                OnSelect: =
+                TemplatePadding: =0
+                TemplateSize: =92
+                Width: =1297
+                Y: =45
+                ZIndex: =8
+
+                Lbl_Gal_TemplateSelect_Summary As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =59
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.Summary
+                    Width: =185
+                    X: =39
+                    Y: =10
+                    ZIndex: =2
+
+                Gal_Seperator_6 As rectangle:
+                    Fill: =RGBA(253, 222, 207, 1)
+                    Height: =2
+                    OnSelect: =Select(Parent)
+                    Width: =Parent.TemplateWidth
+                    Y: =Parent.TemplateHeight - Self.Height
+                    ZIndex: =4
+
+                Gal_RectSelect_6 As rectangle:
+                    Fill: =RGBA(250, 155, 112, 1)
+                    Height: =Parent.TemplateHeight - Gal_Seperator_6.Height
+                    OnSelect: =Select(Parent)
+                    Visible: =ThisItem.IsSelected
+                    Width: =4
+                    ZIndex: =5
+
+                Lbl_Gal_TemplateSelect_LastMod As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =22
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.Modified
+                    Width: =137
+                    X: =1049
+                    Y: =46
+                    ZIndex: =12
+
+                Lbl_Gal_TemplateSelect_Description As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =66
+                    OnSelect: =Select(Parent)
+                    Overflow: =Overflow.Scroll
+                    Size: =9
+                    Text: =ThisItem.Description
+                    Width: =212
+                    X: =259
+                    Y: =10
+                    ZIndex: =13
+
+                Lbl_Gal_TemplateSelect_Created As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =22
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.Created
+                    Width: =135
+                    X: =880
+                    Y: =46
+                    ZIndex: =16
+
+                Lbl_Gal_TemplateSelect_CreatedName As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =22
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.'Created By'.DisplayName
+                    Width: =160
+                    X: =880
+                    Y: =24
+                    ZIndex: =21
+
+                Lbl_Gal_TemplateSelect_LastModName As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =22
+                    OnSelect: =Select(Parent)
+                    PaddingBottom: =0
+                    PaddingLeft: =0
+                    PaddingRight: =0
+                    PaddingTop: =0
+                    Size: =9
+                    Text: =ThisItem.'Modified By'.DisplayName
+                    Width: =160
+                    X: =1049
+                    Y: =24
+                    ZIndex: =22
+
+                Lbl_Gal_TemplateSelect_Category As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =21
+                    OnSelect: =Select(Parent)
+                    Size: =9
+                    Text: =ThisItem.Category
+                    Width: =89
+                    X: =510
+                    Y: =29
+                    ZIndex: =24
+
+                Lbl_Gal_TemplateSelect_SysApp As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =21
+                    OnSelect: =Select(Parent)
+                    Size: =9
+                    Text: =ThisItem.SystemApplication
+                    Width: =130
+                    X: =656
+                    Y: =21
+                    ZIndex: =25
+
+                Lbl_Gal_TemplateSelect_ModType As label:
+                    FontWeight: =If(ThisItem.IsSelected,FontWeight.Semibold,FontWeight.Normal)
+                    Height: =37
+                    OnSelect: =Select(Parent)
+                    Size: =9
+                    Text: =ThisItem.ModificationType
+                    VerticalAlign: =VerticalAlign.Top
+                    Width: =162
+                    X: =656
+                    Y: =39
+                    ZIndex: =26
+
+                Icon3 As icon.Send:
+                    Color: =RGBA(246, 88, 16, 1)
+                    Height: =27
+                    Icon: =Icon.Send
+                    OnSelect: |-
+                        =//Get selected template
+                        Set(SelectedTemplate, ThisItem);
+                        
+                        Refresh(ConfigGenParam);
+                        //Set to Edit mode
+                        Set(UpdateFormMode,"Edit");
+                        Set(VarCrNumber, LookUp(ConfigGenParam,Title="CR_Counter",ParamValue));
+                        
+                        //Create new record using template information
+                        Set(SelectedCR,Patch(ChangeRequestList, Defaults(ChangeRequestList),
+                         { Title: VarCrNumber,
+                           StatusCode:"100",
+                           Status: LookUp(ColStatus, StatusCode="100", StatusName),
+                           StageName: LookUp(ColStatus, StatusCode="100", StageName),
+                           StageCode: LookUp(ColStatus, StatusCode="100", StageCode),
+                           CurrentHandlerEmail: VarUserEmail,
+                           CreatorName: VarUserFullName,
+                           CreatorEmail: VarUserEmail,
+                           StartDateTime: Now(),
+                           FullAuditLog: "New request created by "&VarUserFullName&" on "&Text(Now(), "mm/dd/yyyy hh:mm:ss")&Char(13),
+                           Summary: ThisItem.Summary,
+                           Description: ThisItem.Description,
+                           RequesterName: ThisItem.RequesterName,
+                           RequesterEmail: Lower(ThisItem.RequesterEmail),
+                           Category: ThisItem.Category,
+                           Impact: ThisItem.Impact,
+                           SystemApplication: ThisItem.SystemApplication,
+                           ModificationType: ThisItem.ModificationType,
+                           BSR: ThisItem.BSR,
+                           ITPM: ThisItem.ITPM,
+                           ReasonforChange: ThisItem.ReasonforChange,
+                           ChangeManagerGroup: ThisItem.ChangeImplementationGroup,
+                           ChangeManagerEmail: ThisItem.ChangeManagerEmail,
+                           ChangeManagerName: ThisItem.ChangeManagerName,
+                           CABGroupAssigned: ThisItem.CABGroupAssigned,
+                           AssignmentGroupManagerName: ThisItem.AssignmentGroupManagerName,
+                           AssignmentGroupManagerEmail: ThisItem.AssignmentGroupManagerEmail,
+                           ChangeImplementationGroup: ThisItem.ChangeImplementationGroup,
+                           ChangeImplementationName: ThisItem.ChangeImplementationName,
+                           ChangeImplementationEmail: ThisItem.ChangeImplementationEmail,
+                           ImplementationDetails: ThisItem.ImplementationDetails,
+                           BackOutPlan: ThisItem.BackOutPlan
+                        }));
+                        
+                        //Update next CR ID counter
+                        Patch(ConfigGenParam,
+                            LookUp(ConfigGenParam,Title="CR_Counter"),
+                            {Title:"CR_Counter",
+                            ParamValue:Text(Value(VarCrNumber+1),"000000")}
+                        );
+                        
+                        //Navigate to request form screen
+                        Navigate(Scn_RequestForm);
+                        
+                        //Reset Variables
+                        Set(SelectedTemplate, Blank());
+                        Set(VarTemplateSelectContainer,false);
+                    Width: =27
+                    X: =1219
+                    Y: =26
+                    ZIndex: =27
+
+        Rect_Lbl_SelectTemplate_Hdr As rectangle:
+            Fill: =RGBA(253, 222, 207, 1)
+            Height: =43
+            Width: =1303
+            X: =36
+            Y: =150
+            ZIndex: =2
+
+        Lbl_SelectTemplate_Hdr As label:
+            Align: =Align.Center
+            FontWeight: =FontWeight.Bold
+            Text: ="Select Change Request Template"
+            Width: =487
+            X: =444
+            Y: =150
+            ZIndex: =3
+
+        Grp_Btn_Cancel_1 As group:
+            Height: =5
+            Width: =5
+            X: =-1114
+            Y: =20
+            ZIndex: =6
+
+            Btn_NewRequest_Cancel_1 As button:
+                Fill: =RGBA(149, 149, 149, 1)
+                Height: =28
+                HoverFill: =ColorFade(Self.Fill, -20%)
+                OnSelect: =Set(VarTemplateSelectContainer,false);
+                PaddingRight: =10
+                RadiusBottomLeft: =20
+                RadiusBottomRight: =20
+                RadiusTopLeft: =20
+                RadiusTopRight: =20
+                Size: =11
+                Text: ="Close"
+                Width: =126
+                X: =1199
+                Y: =158
+                ZIndex: =4
+
+            Icn_Cancel_1 As icon.Cancel:
+                Color: =RGBA(255, 255, 255, 1)
+                Height: =18
+                Icon: =Icon.Cancel
+                OnSelect: =Navigate(Scn_Home);
+                Width: =18
+                X: =1295
+                Y: =164
+                ZIndex: =5
+
+    Container_DeleteDraft As groupContainer.manualLayoutContainer:
+        Fill: =RGBA(202, 202, 202, 0.7)
+        Height: =768
+        Visible: |-
+            =VarDeleteDraft
+            //false
+        Width: =1366
+        ZIndex: =10
+
+        Container_Templates_Gal_Selection_1 As groupContainer.manualLayoutContainer:
+            Fill: =RGBA(255, 255, 255, 1)
+            Height: =500
+            Visible: =VarTemplateSelectContainer
+            Width: =1303
+            X: =36
+            Y: =203
+            ZIndex: =1
+
+            Lbl_Gal_Summary_Hdr_Summary_2 As label:
+                FontWeight: =FontWeight.Semibold
+                Height: =33
+                Size: =10
+                Text: ="Change Request Summary"
+                Width: =180
+                X: =42
+                Y: =5
+                ZIndex: =1
+
+        Rect_Lbl_DeleteDraft_Hdr As rectangle:
+            Fill: =RGBA(253, 222, 207, 1)
+            Height: =43
+            Width: =300
+            X: =540
+            Y: =300
+            ZIndex: =2
+
+        Lbl_DeleteDraft_Box_Hdr As label:
+            Align: =Align.Center
+            FontWeight: =FontWeight.Bold
+            Text: ="Delete Draft"
+            Width: =200
+            X: =594
+            Y: =300
+            ZIndex: =3
+
+        Rect_Lbl_DeleteDraft_Hdr_1 As rectangle:
+            Fill: =RGBA(237, 237, 237, 1)
+            Height: =91
+            Width: =300
+            X: =540
+            Y: =343
+            ZIndex: =4
+
+        Grp_Btn_CancelDelete As group:
+            Height: =5
+            Width: =5
+            X: =-1114
+            Y: =20
+            ZIndex: =6
+
+            Btn_DeleteDraft_Cancel As button:
+                Fill: =RGBA(149, 149, 149, 1)
+                Height: =28
+                HoverFill: =ColorFade(Self.Fill, -20%)
+                OnSelect: |-
+                    =Set(SelectedCR, Blank());
+                    Set(VarDeleteDraft,false);
+                PaddingRight: =10
+                RadiusBottomLeft: =20
+                RadiusBottomRight: =20
+                RadiusTopLeft: =20
+                RadiusTopRight: =20
+                Size: =11
+                Text: ="Cancel"
+                Width: =126
+                X: =698
+                Y: =374
+                ZIndex: =5
+
+            Icn_CancelDelete As icon.Cancel:
+                Color: =RGBA(255, 255, 255, 1)
+                Height: =18
+                Icon: =Icon.Cancel
+                OnSelect: =Navigate(Scn_Home);
+                Width: =18
+                X: =794
+                Y: =380
+                ZIndex: =6
+
+        Grp_Btn_ConfirmDelete As group:
+            Height: =5
+            Width: =5
+            X: =-652
+            Y: =-184
+            ZIndex: =9
+
+            Btn_DeleteDraft_Confirm As button:
+                Fill: =RGBA(184, 0, 0, 1)
+                Height: =28
+                HoverFill: =ColorFade(Self.Fill, -20%)
+                OnSelect: |-
+                    =RemoveIf(ChangeRequestList,Title=SelectedCR.Title);
+                    Refresh(ChangeRequestList);
+                    
+                    Set(SelectedCR, Blank());
+                    Set(VarDeleteDraft,false);
+                PaddingRight: =10
+                RadiusBottomLeft: =20
+                RadiusBottomRight: =20
+                RadiusTopLeft: =20
+                RadiusTopRight: =20
+                Size: =11
+                Text: ="Confirm"
+                Width: =126
+                X: =555
+                Y: =375
+                ZIndex: =7
+
+            Icn_ConfirmDelete As icon.Cancel:
+                Color: =RGBA(255, 255, 255, 1)
+                Height: =18
+                Icon: =Icon.Trash
+                OnSelect: =Navigate(Scn_Home);
+                Width: =18
+                X: =651
+                Y: =381
+                ZIndex: =8
+
+    Grp_Home_Gal As group:
+        Height: =5
+        Width: =5
+        X: =40
+        Y: =40
+        ZIndex: =10
+
+        TextInput_SearchGal As text:
+            BorderColor: =RGBA(51, 51, 51, 1)
+            BorderThickness: =1
+            Default: =
+            Height: =30
+            HintText: ="Search by ID, Summary, System/Application or Initiator"
+            PaddingLeft: =30
+            RadiusBottomLeft: =10
+            RadiusBottomRight: =10
+            RadiusTopLeft: =10
+            RadiusTopRight: =10
+            Size: =9
+            Width: =435
+            X: =41
+            Y: =151
+            ZIndex: =5
+
+        Icn_SearchGal As icon.Search:
+            Color: =RGBA(0, 0, 0, 1)
+            Height: =16
+            Icon: =Icon.Search
+            Width: =14
+            X: =49
+            Y: =158
+            ZIndex: =6
+

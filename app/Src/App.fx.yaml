@@ -1,0 +1,104 @@
+App As appinfo:
+    BackEnabled: =false
+    OnError: =If(Not("UserProfile" in FirstError.Message), Notify(FirstError.Message))
+    OnStart: |-
+        =//Set default Home screen settings
+        Set(HomeGalFilterBtn, "MyRequests");
+        
+        //Set default RequestFormMode
+        Set(UpdateFormMode,Blank());
+        
+        //Set login user profile
+        Set(VarUserFullName, User().FullName);
+        Set(VarUserEmail, Lower(User().Email));
+        Set(VarUserImage,If(Office365Users.UserPhotoMetadata(Lower(VarUserEmail)).HasPhoto,Office365Users.UserPhotoV2(Lower(VarUserEmail)),'generic-person-icon-1'));
+        
+        //Read master configuration lists into collections
+        Concurrent(
+        ClearCollect(ColCategory, ConfigCategoryList),
+        ClearCollect(ColStatus, ConfigStatusList),
+        ClearCollect(ColSystems, ConfigSystemsList),
+        ClearCollect(ColModType, ConfigModTypeList),
+        ClearCollect(ColRegions, ConfigRegionList),
+        ClearCollect(ColImpact, ConfigImpactLvl)
+        );
+        
+        ClearCollect(ColStages, GroupBy(ColStatus,StageName,StageCodeUnique));
+        
+        //Read user-role configuration lists
+        ClearCollect(ColSystemAdmin, ConfigSysAdminList);
+        //Check if user is system admin
+        Set(VarUserSysAdmin, If(!IsBlank(LookUp(ColSystemAdmin,Title=VarUserEmail,ID)),true,false));
+        
+        //Read CAB & ImplementationGroups
+        ClearCollect(ColGroups, ConfigGroupsList);
+        ClearCollect(ColAccountsList, ITAccountsList);
+        //Read Change ManagerList
+        ClearCollect(ColCMList, ConfigChangeManagers);
+        //Read InfoSecTeam
+        ClearCollect(ColInfoSecTeam, ConfigInfoSecTeam);
+        //Create empty e-CAB collection
+        ClearCollect(
+            ColTempECAB,
+            {Value: "je.poweruser1@johnsonelectric.com"},
+            {Value: "je.poweruser2@johnsonelectric.com"}
+        );
+        Clear(ColTempECAB);
+        
+        
+        //Check if user enter app using Param link, then set RequestFormMode as Edit (if identified as current handler or System Admin) or View only
+        If(!IsBlank(Param("crparam")),
+            //Get record based on cruid
+            Set(SelectedCR,LookUp(ChangeRequestList, Title=Param("crparam"),ThisRecord));
+                If(IsMatch(SelectedCR.CurrentHandlerEmail, Lower(User().Email),MatchOptions.Contains), Set(UpdateFormMode,"Edit"),
+                    If(SelectedCR.StatusCode="102" And (SelectedCR.RequesterEmail=VarUserEmail Or SelectedCR.CreatorEmail=VarUserEmail), Set(UpdateFormMode,"Edit"),Set(UpdateFormMode,"View"))),
+                    Set(UpdateFormMode,"View"));
+        
+        
+        //Set default entry tab based on stage code
+        Switch(SelectedCR.StageCode,
+        "1", Set(RequestNavBar, "ContainerRequestDetails"),
+        "2", Set(RequestNavBar, "ContainerRequestDetails"),
+        "3", Set(RequestNavBar, "ContainerInfoSec"),
+        "4", Set(RequestNavBar, "ContainerCABApprovals"),
+        "5", Set(RequestNavBar, "ContainerCABApprovals"),
+        "6", Set(RequestNavBar, "ContainerImplementationPlan"),
+        "7", Set(RequestNavBar, "ContainerImplementationPlan"),
+        "8", Set(RequestNavBar, "ContainerImplementationPlan"),
+        Set(RequestNavBar, "ContainerRequestDetails"));
+        
+        //Check if logged-in user is the requested Change Implementater, then default to Implementation Tab
+        If(Lower(VarUserEmail)=Lower(SelectedCR.NeedImplementationInput),Set(RequestNavBar, "ContainerImplementationPlan"));
+        
+        //Refresh CAB collection
+        If(!IsBlank(ComboBox_CABGroup_Select.SelectedItems) And Dropdown_Category.Selected.CategoryName<>"Emergency",
+                ClearCollect(ColTempCABMembers, Filter(ITAccountsList, GroupAssignment.Value=ComboBox_CABGroup_Select.Selected.GroupName));
+                ClearCollect(ColTempCABMembersUnique, Distinct(ColTempCABMembers,ITAcctEmail)));
+        
+        //Refresh E-CAB Collection
+        If(Dropdown_Category.Selected.CategoryName="Emergency" And IsBlank(SelectedCR.ECABMembers),
+            Clear(ColTempECAB),
+                If(Dropdown_Category.Selected.CategoryName="Emergency" And !IsBlank(SelectedCR.ECABMembers),
+                    Clear(ColTempECAB);
+                    ForAll(
+                        Split(
+                            SelectedCR.ECABMembers,"; "),
+                        Collect(ColTempECAB, TrimEnds(ThisRecord.Value))
+                    )));
+        
+        //Set ReAssign Variables to false
+        Set(VarReassignIS, false);
+        Set(VarReassignAGM, false);
+        Set(VarReassignCAB, false);
+        Set(VarReassignCM, false);
+        Set(VarReassignReviewer, false);
+    StartScreen: =If(IsBlank(Param("crparam")),Scn_Home,Scn_RequestForm)
+    Theme: =PowerAppsTheme
+
+    Host As hostControl.DefaultHostControlVariant:
+        OnCancel: =false
+        OnEdit: =false
+        OnNew: =false
+        OnSave: =false
+        OnView: =false
+

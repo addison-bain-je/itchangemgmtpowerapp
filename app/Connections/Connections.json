@@ -1,0 +1,133 @@
+{
+  "143aba82-6d05-47d7-8eb7-2f9c59b3cb39": {
+    "appActions": [
+      "UserPhotoMetadata",
+      "UserPhoto_V2",
+      "UserProfile_V2",
+      "UserProfile",
+      "SearchUserV2",
+      "SearchUser"
+    ],
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Office 365 Users",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1686/1.0.1686.3706/office365users/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_office365users",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [
+      "Office365Users"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "143aba82-6d05-47d7-8eb7-2f9c59b3cb39"
+  },
+  "4c9d6ea9-9efd-4ace-8154-e7a6a8c30462": {
+    "appActions": [
+      "providers/PowerPlatform.Governance/Operations/Read",
+      "providers/PowerPlatform.Governance/Operations/Write",
+      "providers/PowerPlatform.Governance/Operations/Delete"
+    ],
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "SharePoint",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1693/1.0.1693.3738/sharepointonline/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_sharepointonline",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {
+      "https://jehl.sharepoint.com/sites/WorkflowDevelopment-IT_Change_Mgmt_DEV": {
+        "dataSources": {
+          "ArchivalList": {
+            "tableName": "80aa878a-b84d-4a8b-9e21-9c581c2d08aa"
+          },
+          "ChangeRequestList": {
+            "tableName": "a648d83b-65d7-4d35-952e-182370a3e034"
+          },
+          "ConfigCategoryList": {
+            "tableName": "95f29e09-a2b7-4960-94ba-f7f2255522b7"
+          },
+          "ConfigChangeManagers": {
+            "tableName": "4e6eefd5-1b41-4ba4-971e-1ea6eb34a073"
+          },
+          "ConfigCRTemplates": {
+            "tableName": "240d729f-5359-4b96-869b-0096d4e62229"
+          },
+          "ConfigGenParam": {
+            "tableName": "10925b8e-9b20-4aed-bb44-266ba28d2383"
+          },
+          "ConfigGroupsList": {
+            "tableName": "c695db43-52ab-41d3-abef-ff1f195fd600"
+          },
+          "ConfigImpactLvl": {
+            "tableName": "580085f8-cd19-4276-ac16-a9c152fd1cbb"
+          },
+          "ConfigInfoSecTeam": {
+            "tableName": "6ce7b155-e1d3-4b2c-a9c8-c65ab0dddcb2"
+          },
+          "ConfigModTypeList": {
+            "tableName": "5bdb3662-6299-4181-af21-cf4068df49ce"
+          },
+          "ConfigRegionList": {
+            "tableName": "058d82e8-a0de-4e23-a7e0-2204b2415d00"
+          },
+          "ConfigStatusList": {
+            "tableName": "2244da34-535e-4674-bf2f-1d38076c7fca"
+          },
+          "ConfigSysAdminList": {
+            "tableName": "d315afa7-96ce-4993-99a8-0556e9a8c856"
+          },
+          "ConfigSystemsList": {
+            "tableName": "6ef8fa5d-32c7-4e72-b6a3-4b9df222edd3"
+          },
+          "ITAccountsList": {
+            "tableName": "b9c52448-1220-40f2-b456-7faf2459b7e7"
+          }
+        }
+      }
+    },
+    "dataSources": [
+      "ArchivalList",
+      "ChangeRequestList",
+      "ConfigCategoryList",
+      "ConfigChangeManagers",
+      "ConfigCRTemplates",
+      "ConfigGenParam",
+      "ConfigGroupsList",
+      "ConfigImpactLvl",
+      "ConfigInfoSecTeam",
+      "ConfigModTypeList",
+      "ConfigRegionList",
+      "ConfigStatusList",
+      "ConfigSystemsList",
+      "ConfigSysAdminList",
+      "ITAccountsList"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "4c9d6ea9-9efd-4ace-8154-e7a6a8c30462"
+  },
+  "581b4a9e-de09-4e8e-b3e4-14921630de1f": {
+    "appActions": [
+      "SendEmailV2"
+    ],
+    "connectionRef": {
+      "apiTier": "Standard",
+      "displayName": "Office 365 Outlook",
+      "iconUri": "https://connectoricons-prod.azureedge.net/releases/v1.0.1686/1.0.1686.3695/office365/icon.png",
+      "id": "/providers/microsoft.powerapps/apis/shared_office365",
+      "parameterHints": {},
+      "parameterHintsV2": {}
+    },
+    "datasets": {},
+    "dataSources": [
+      "Office365Outlook"
+    ],
+    "dependencies": {},
+    "dependents": [],
+    "id": "581b4a9e-de09-4e8e-b3e4-14921630de1f"
+  }
+}
